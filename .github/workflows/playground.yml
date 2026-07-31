@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: CanonFlow-Assay/CSharpAssay
-          ref: e63c9f52d01e8bc950629a66c30425a59f2fa3ce
+          ref: fc3c9516813502fe85d254a7b42423269769c087
           path: .assay
 
       - name: Setup .NET 10

@@ -1,12 +1,15 @@
 # CSharpAssay Playground
 
+[![Refined evidence gate](https://github.com/CanonFlow-Assay/CSharpAssay.Playground/actions/workflows/playground.yml/badge.svg)](https://github.com/CanonFlow-Assay/CSharpAssay.Playground/actions/workflows/playground.yml)
+
 An evidence-first proving ground for CSharpAssay. It combines deliberately
 controlled rule specimens, pinned public refactoring exercises, and manifests
 for larger real applications. The aim is to demonstrate measured improvement
 without calling unfamiliar production code “bad” or claiming universal purity.
 
 Start with [the walkthrough](docs/walkthrough.md), then read the
-[adjudication method](docs/adjudication.md) and [known blind spots](docs/blind-spots.md).
+[adjudication method](docs/adjudication.md), [evidence foundry contract](docs/evidence-foundry.md),
+and [known blind spots](docs/blind-spots.md).
 
 ## Repository lanes
 
