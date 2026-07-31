@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "toolVersion": "0.1.1",
+  "authoritative": false,
+  "verdict": "fail",
+  "projects": 1,
+  "findings": 9,
+  "missingEvidence": 0,
+  "toolFailures": 0,
+  "ruleFindingCounts": {
+    "CSAN0001": 1,
+    "CSAN0003": 2,
+    "CSAN0004": 6
+  },
+  "interpretation": "complete provisional baseline; not release authority and not permission to mutate upstream"
+}

@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/dotnet/eShop",
+  "commit": "9b4f9434f46fdc5c1a6e9e936af2868340cdbc48",
+  "commitUrl": "https://github.com/dotnet/eShop/commit/9b4f9434f46fdc5c1a6e9e936af2868340cdbc48",
+  "license": "MIT",
+  "importMode": "external-clone",
+  "sourceVendored": false,
+  "scope": [
+    "src/Ordering.Domain/Ordering.Domain.csproj"
+  ],
+  "toolVersion": "0.1.1",
+  "authority": "provisional-until-characterization-and-required-tests-are-configured"
+}
