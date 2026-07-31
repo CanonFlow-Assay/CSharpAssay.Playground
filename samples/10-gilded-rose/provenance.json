@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/emilybache/GildedRose-Refactoring-Kata",
+  "commit": "3e0085bfd0da7ca9cc2db23129eb882b9d7184fa",
+  "commitDate": "2026-05-05T06:50:38Z",
+  "license": "MIT",
+  "import": {
+    "scope": "C# xUnit production source",
+    "encodingNormalization": "UTF-8 BOM removed; source tokens otherwise unchanged",
+    "files": [
+      {
+        "upstreamPath": "csharp.xUnit/GildedRose/GildedRose.cs",
+        "localPath": "upstream/GildedRose.cs",
+        "gitBlob": "c08bf5f88803a99858db51bf2f1e336c64f2824b",
+        "localSha256": "e94af2b42428d71bbe061e61d8994037b73e93e4ef3b1b98b4943f4234de7ed7"
+      },
+      {
+        "upstreamPath": "csharp.xUnit/GildedRose/Item.cs",
+        "localPath": "upstream/Item.cs",
+        "gitBlob": "5ad18deaea22a74953a630f09b9be87d2cf8bb33",
+        "localSha256": "ce36d25cbfe83efb855788a7ac50d3cf8084d862f19dfa15ce2a35eab7dbcca3"
+      }
+    ]
+  },
+  "supportingMaterial": [
+    {
+      "upstreamPath": "GildedRoseRequirements.md",
+      "localPath": "UPSTREAM_REQUIREMENTS.md",
+      "gitBlob": "36a925cadabe84e7085f43bef178ef9625b07010",
+      "localSha256": "3b9769399f590054de04736d1e8f44b8bd974e9db088648c7b316a5faacfa7ef",
+      "transformation": "Concise playground summary; not a verbatim copy."
+    },
+    {
+      "upstreamPath": "license.txt",
+      "localPath": "UPSTREAM_LICENSE.txt",
+      "gitBlob": "1eebd817be439e733426772372d37720e2e83215",
+      "localSha256": "ee251aeb4e7f4d6d13835867f167604ca467808a1a341e7f7db815ea8a165901",
+      "transformation": "Verbatim text with a final newline added."
+    }
+  ]
+}

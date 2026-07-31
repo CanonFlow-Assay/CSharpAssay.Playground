@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/samples/00-rule-matrix/">
+    <Project Path="samples/00-rule-matrix/impure/RuleMatrix.Impure.csproj" />
+    <Project Path="samples/00-rule-matrix/refined/RuleMatrix.Refined.csproj" />
+  </Folder>
+  <Folder Name="/samples/10-gilded-rose/">
+    <Project Path="samples/10-gilded-rose/harness/GildedRose.Upstream.csproj" />
+    <Project Path="samples/10-gilded-rose/refined/GildedRose.Refined.csproj" />
+    <Project Path="samples/10-gilded-rose/characterization/GildedRose.Characterization.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Playground.Tests/Playground.Tests.csproj" />
+  </Folder>
+</Solution>

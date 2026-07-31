@@ -1,0 +1,45 @@
+{
+  "profile": "compat",
+  "release": {
+    "allowPreviewToolchain": false,
+    "requiredTargetFrameworks": ["net10.0"],
+    "requiredRules": [
+      "CSAI0001",
+      "CSAI0002",
+      "CSAN0001",
+      "CSAN0002",
+      "CSAN0003",
+      "CSAN0004",
+      "CSAP0001"
+    ],
+    "tests": [
+      {
+        "input": "tests/Playground.Tests/Playground.Tests.csproj",
+        "configuration": "Release",
+        "noBuild": false,
+        "minimumExpectedTests": 9
+      }
+    ]
+  },
+  "boundaries": {
+    "coreProjects": [
+      "samples/00-rule-matrix/refined/RuleMatrix.Refined.csproj",
+      "samples/10-gilded-rose/refined/GildedRose.Refined.csproj"
+    ],
+    "shellProjects": ["tests/Playground.Tests/Playground.Tests.csproj"],
+    "coreNamespaces": [
+      "Playground.RuleMatrix.Refined.Core",
+      "Playground.GildedRose.Refined"
+    ],
+    "shellNamespaces": [
+      "Playground.Tests"
+    ]
+  },
+  "representations": {
+    "resultTypes": [],
+    "optionTypes": [],
+    "closedTypes": []
+  },
+  "domainPrimitives": {},
+  "suppressions": []
+}

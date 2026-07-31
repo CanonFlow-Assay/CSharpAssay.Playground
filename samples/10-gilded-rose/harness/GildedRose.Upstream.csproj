@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Nullable>disable</Nullable>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../upstream/GildedRose.cs" Link="GildedRose.cs" />
+    <Compile Include="../upstream/Item.cs" Link="Item.cs" />
+  </ItemGroup>
+</Project>

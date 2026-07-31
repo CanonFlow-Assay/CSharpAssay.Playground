@@ -27,6 +27,11 @@ bld/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+evidence/generated/
+.assay/
+.upstream-cache/
+__pycache__/
+*.py[cod]
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "selectionPolicy": "Prefer intentionally refactorable or reference applications with clear licenses, pinned revisions, runnable behavior evidence, and bounded import cost.",
+  "samples": [
+    {
+      "id": "gilded-rose-csharp",
+      "repository": "https://github.com/emilybache/GildedRose-Refactoring-Kata",
+      "commit": "3e0085bfd0da7ca9cc2db23129eb882b9d7184fa",
+      "license": "MIT",
+      "status": "imported-scoped",
+      "purpose": "small legacy refactoring baseline with explicit requirements and behavior characterization"
+    },
+    {
+      "id": "racing-car-katas",
+      "repository": "https://github.com/emilybache/Racing-Car-Katas",
+      "commit": "6584af9b6d9bd3d8105b8c8ad4fc544d3c09fed6",
+      "license": "MIT",
+      "status": "queued-manifest-only",
+      "purpose": "dependency seams, testability, and shell/core boundary exercises"
+    },
+    {
+      "id": "eshop-on-web",
+      "repository": "https://github.com/dotnet-architecture/eShopOnWeb",
+      "commit": "4da8212117e87d808d4bbc7da6286fd2147ce606",
+      "license": "MIT",
+      "status": "reference-only",
+      "purpose": "archived realistic ASP.NET Core and EF project-graph observation; never presented as a purification target"
+    }
+  ]
+}

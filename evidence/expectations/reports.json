@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "reports": [
+    {
+      "name": "controlled impure matrix",
+      "path": "evidence/generated/impure/check.json",
+      "verdict": "pass",
+      "authoritative": false,
+      "projects": 1,
+      "testsPassed": 0,
+      "ruleCounts": {
+        "CSAI0001": 2,
+        "CSAI0002": 1,
+        "CSAN0001": 2,
+        "CSAN0002": 1,
+        "CSAN0003": 2,
+        "CSAN0004": 2,
+        "CSAP0001": 2
+      }
+    },
+    {
+      "name": "pinned Gilded Rose upstream",
+      "path": "evidence/generated/upstream/check.json",
+      "verdict": "pass",
+      "authoritative": false,
+      "projects": 1,
+      "testsPassed": 0,
+      "ruleCounts": {
+        "CSAI0001": 0,
+        "CSAI0002": 0,
+        "CSAN0001": 1,
+        "CSAN0002": 0,
+        "CSAN0003": 0,
+        "CSAN0004": 0,
+        "CSAP0001": 0
+      }
+    },
+    {
+      "name": "authoritative refined gate",
+      "path": "evidence/generated/refined/verify.json",
+      "verdict": "pass",
+      "authoritative": true,
+      "projects": 3,
+      "testsPassed": 9,
+      "ruleCounts": {
+        "CSAI0001": 0,
+        "CSAI0002": 0,
+        "CSAN0001": 0,
+        "CSAN0002": 0,
+        "CSAN0003": 0,
+        "CSAN0004": 0,
+        "CSAP0001": 0
+      }
+    }
+  ]
+}
