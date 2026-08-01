@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/dotnet/eShop.git",
+  "commit": "9b4f9434f46fdc5c1a6e9e936af2868340cdbc48",
+  "scope": "Ordering domain persistence-requiredness representation",
+  "claim": "At the pinned revision, six Required attributes in four Ordering domain files carry EF persistence-requiredness metadata.",
+  "nonGoal": "This evidence does not claim the annotations are business validation or that removing them is behavior-preserving without separate unit and EF model characterization.",
+  "files": [
+    {
+      "sourcePath": "src/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "gitBlob": "3f51f71c2f1d77f48659b69c33903e05a668b320",
+      "sha256": "4b3173a9b21c1d4b1878b739a06ce36eaf9b268fd2674718db00426bf17aabd4",
+      "requiredMembers": ["Order.Address"]
+    },
+    {
+      "sourcePath": "src/Ordering.Domain/AggregatesModel/OrderAggregate/OrderItem.cs",
+      "gitBlob": "e021bc8c9ee975fbeec802088e180ebf38b3378d",
+      "sha256": "884710c7db881ab71899e4cbf37bcfe24e135cf94fe7980d830a18a2559409b6",
+      "requiredMembers": ["OrderItem.ProductName"]
+    },
+    {
+      "sourcePath": "src/Ordering.Domain/AggregatesModel/BuyerAggregate/Buyer.cs",
+      "gitBlob": "825cdc73a81c7cd75b286356d0549f7a26cb4cd0",
+      "sha256": "b89936a8a06db1292972e0a5df64b2c0c98ac69c78edc917778832108f7af1eb",
+      "requiredMembers": ["Buyer.IdentityGuid"]
+    },
+    {
+      "sourcePath": "src/Ordering.Domain/AggregatesModel/BuyerAggregate/PaymentMethod.cs",
+      "gitBlob": "c6964291f0fe181a988b06eb051413dc7c12aa33",
+      "sha256": "5f11f63663f0fb40f04e2addc536f852ff0db27f09b1413436b622ba64fe7fb0",
+      "requiredMembers": [
+        "PaymentMethod._alias",
+        "PaymentMethod._cardNumber",
+        "PaymentMethod._cardHolderName"
+      ]
+    },
+    {
+      "sourcePath": "src/Ordering.Infrastructure/EntityConfigurations/OrderEntityTypeConfiguration.cs",
+      "gitBlob": "367dd34dd7977311a2103b7788378da929fca6f9",
+      "sha256": "fa62243ed719ea3029e8e8b88e87ff8547874e7fec1e16c0e8404d14eaa36d08",
+      "requiredMembers": []
+    },
+    {
+      "sourcePath": "src/Ordering.Infrastructure/EntityConfigurations/OrderItemEntityTypeConfiguration.cs",
+      "gitBlob": "e35957098620f147d07606b030a3370defb81cec",
+      "sha256": "0e9685449047faba86c2b457cf09f5c4ff2c94eb4339849f706587477a624cd8",
+      "requiredMembers": []
+    },
+    {
+      "sourcePath": "src/Ordering.Infrastructure/EntityConfigurations/BuyerEntityTypeConfiguration.cs",
+      "gitBlob": "9de21b534d84e58c0541547e4e75b9c27e906d0e",
+      "sha256": "d41c8171e579cfae028145e34b10ae3a6a6c6277f36bf6fe9d2185dd098d6142",
+      "requiredMembers": []
+    },
+    {
+      "sourcePath": "src/Ordering.Infrastructure/EntityConfigurations/PaymentMethodEntityTypeConfiguration.cs",
+      "gitBlob": "cd6697acdf9093d35a4004a143daffe87647c115",
+      "sha256": "4197330f579fa0cb4303bfb719d85672157184912f0dd8515337fe52a2612a8e",
+      "requiredMembers": []
+    }
+  ]
+}

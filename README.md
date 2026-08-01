@@ -34,6 +34,13 @@ dotnet test tests/Playground.Tests/Playground.Tests.csproj \
 ./eng/run-assay.sh /path/to/cs-assay.dll
 ```
 
+To include the pinned external eShop Ordering representation assertion used by
+CI, provide its checkout without moving its branch:
+
+```text
+ESHOP_UPSTREAM_ROOT=/path/to/eshop ./eng/run-assay.sh /path/to/cs-assay.dll
+```
+
 The complete solution includes deliberately impure policy specimens. A
 provisional `check` still exits successfully while reporting those findings;
 the evidence assertion makes their exact presence mandatory. Only `verify` on

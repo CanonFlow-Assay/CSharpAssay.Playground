@@ -51,3 +51,7 @@ dotnet "$assay_dll" verify Playground.Refined.slnx \
   --sarif evidence/generated/refined/verify.sarif
 
 python3 eng/assert-evidence.py
+
+if [[ -n "${ESHOP_UPSTREAM_ROOT:-}" ]]; then
+  python3 eng/assert-eshop-ordering.py "$ESHOP_UPSTREAM_ROOT"
+fi

@@ -32,7 +32,7 @@
       "commit": "9b4f9434f46fdc5c1a6e9e936af2868340cdbc48",
       "license": "MIT",
       "status": "agent-assay-handoff",
-      "purpose": "bounded agent-led assay of Ordering.Domain with human adjudication before any behavior-changing fork"
+      "purpose": "bounded agent-led assay of Ordering.Domain with exact persistence-annotation and EF mapping representation evidence before any behavior-changing fork"
     }
   ]
 }
