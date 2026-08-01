@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "toolVersion": "0.1.1",
+  "authoritative": false,
+  "verdict": "fail",
+  "exitCode": 1,
+  "projects": 1,
+  "removedRequiredAttributes": 6,
+  "removedRequiredMembers": [
+    "Order.Address",
+    "OrderItem.ProductName",
+    "Buyer.IdentityGuid",
+    "PaymentMethod._alias",
+    "PaymentMethod._cardNumber",
+    "PaymentMethod._cardHolderName"
+  ],
+  "trxCounts": {
+    "total": 50,
+    "executed": 50,
+    "passed": 50,
+    "failed": 0,
+    "error": 0,
+    "notExecuted": 0
+  },
+  "requiredMappingTests": [
+    "Order_and_owned_address_mapping_is_characterized",
+    "Order_item_mapping_is_characterized",
+    "Buyer_and_payment_method_mapping_is_characterized",
+    "Optional_order_relationships_and_collection_relationships_are_characterized"
+  ],
+  "findings": [
+    {
+      "ruleId": "CSAN0001",
+      "path": "",
+      "line": 0,
+      "column": 0,
+      "message": "Nullable analysis must remain enabled: compilation nullable context is Disable"
+    },
+    {
+      "ruleId": "CSAN0003",
+      "path": "src/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "line": 50,
+      "column": 76,
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case"
+    },
+    {
+      "ruleId": "CSAN0003",
+      "path": "src/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "line": 50,
+      "column": 105,
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case"
+    },
+    {
+      "ruleId": "CSAN0004",
+      "path": "src/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "line": 11,
+      "column": 17,
+      "message": "Core public contracts must not expose nullable values: eShop.Ordering.Domain.AggregatesModel.OrderAggregate.Order.BuyerId exposes a nullable value"
+    },
+    {
+      "ruleId": "CSAN0004",
+      "path": "src/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "line": 11,
+      "column": 27,
+      "message": "Core public contracts must not expose nullable values: eShop.Ordering.Domain.AggregatesModel.OrderAggregate.Order.BuyerId.get has a nullable return contract"
+    },
+    {
+      "ruleId": "CSAN0004",
+      "path": "src/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "line": 32,
+      "column": 17,
+      "message": "Core public contracts must not expose nullable values: eShop.Ordering.Domain.AggregatesModel.OrderAggregate.Order.PaymentId exposes a nullable value"
+    },
+    {
+      "ruleId": "CSAN0004",
+      "path": "src/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "line": 32,
+      "column": 29,
+      "message": "Core public contracts must not expose nullable values: eShop.Ordering.Domain.AggregatesModel.OrderAggregate.Order.PaymentId.get has a nullable return contract"
+    },
+    {
+      "ruleId": "CSAN0004",
+      "path": "src/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "line": 50,
+      "column": 66,
+      "message": "Core public contracts must not expose nullable values: eShop.Ordering.Domain.AggregatesModel.OrderAggregate.Order.Order(string, string, eShop.Ordering.Domain.AggregatesModel.OrderAggregate.Address, int, string, string, string, System.DateTime, int?, int?) has nullable parameter buyerId"
+    },
+    {
+      "ruleId": "CSAN0004",
+      "path": "src/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs",
+      "line": 50,
+      "column": 87,
+      "message": "Core public contracts must not expose nullable values: eShop.Ordering.Domain.AggregatesModel.OrderAggregate.Order.Order(string, string, eShop.Ordering.Domain.AggregatesModel.OrderAggregate.Address, int, string, string, string, System.DateTime, int?, int?) has nullable parameter paymentMethodId"
+    }
+  ],
+  "interpretation": "candidate-bound provisional evidence; the persistence-metadata change does not claim to fix the nine remaining Assay findings"
+}

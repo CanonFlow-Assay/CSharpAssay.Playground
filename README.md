@@ -17,6 +17,9 @@ and [known blind spots](docs/blind-spots.md).
   admitted stable rule.
 - `samples/10-gilded-rose`: an untouched, pinned upstream slice and a reviewed
   immutable derivative protected by characterization tests.
+- `samples/20-eshop-agent-assay`: a pinned, external-clone handoff for an
+  agent-led assay of eShop's Ordering domain, including separate upstream and
+  reviewed-candidate evidence; source is not vendored.
 - `samples/catalog.json`: imported and queued public repositories with immutable
   revisions and licensing posture.
 - `evidence`: deterministic Assay reports and human adjudication records.
@@ -30,6 +33,13 @@ dotnet build CSharpAssay.Playground.slnx --no-restore -c Release
 dotnet test tests/Playground.Tests/Playground.Tests.csproj \
   --no-build --no-restore -c Release
 ./eng/run-assay.sh /path/to/cs-assay.dll
+```
+
+To include the pinned external eShop Ordering representation assertion used by
+CI, provide its checkout without moving its branch:
+
+```text
+ESHOP_UPSTREAM_ROOT=/path/to/eshop ./eng/run-assay.sh /path/to/cs-assay.dll
 ```
 
 The complete solution includes deliberately impure policy specimens. A

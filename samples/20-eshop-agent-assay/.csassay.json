@@ -1,0 +1,23 @@
+{
+  "$schema": "https://raw.githubusercontent.com/CanonFlow-Assay/CSharpAssay/main/eng/schemas/csassay.schema.json",
+  "profile": "compat",
+  "release": {
+    "allowPreviewToolchain": false,
+    "requiredTargetFrameworks": ["net10.0"],
+    "requiredRules": [],
+    "tests": []
+  },
+  "boundaries": {
+    "coreProjects": ["src/Ordering.Domain/Ordering.Domain.csproj"],
+    "shellProjects": [],
+    "coreNamespaces": ["eShop.Ordering.Domain"],
+    "shellNamespaces": []
+  },
+  "representations": {
+    "resultTypes": [],
+    "optionTypes": [],
+    "closedTypes": []
+  },
+  "domainPrimitives": {},
+  "suppressions": []
+}

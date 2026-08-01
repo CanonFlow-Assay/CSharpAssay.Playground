@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/dotnet/eShop",
+  "commit": "9b4f9434f46fdc5c1a6e9e936af2868340cdbc48",
+  "commitUrl": "https://github.com/dotnet/eShop/commit/9b4f9434f46fdc5c1a6e9e936af2868340cdbc48",
+  "license": "MIT",
+  "importMode": "external-clone",
+  "sourceVendored": false,
+  "scope": [
+    "src/Ordering.Domain/Ordering.Domain.csproj"
+  ],
+  "toolVersion": "0.1.1",
+  "toolCommit": "f5fb8e7dd27da20f6d5c26306dc0e56823e37962",
+  "toolCommitUrl": "https://github.com/CanonFlow-Assay/CSharpAssay/commit/f5fb8e7dd27da20f6d5c26306dc0e56823e37962",
+  "authority": "provisional upstream baseline",
+  "candidate": {
+    "repository": "https://github.com/CanonFlow-Assay/eShop",
+    "branch": "csassay/ordering-domain-purity",
+    "commit": "5e92c725c6b13ff2c9cda6de58228ff04c1fb73f",
+    "commitUrl": "https://github.com/CanonFlow-Assay/eShop/commit/5e92c725c6b13ff2c9cda6de58228ff04c1fb73f",
+    "draftPullRequest": "https://github.com/CanonFlow-Assay/eShop/pull/1",
+    "baseCommit": "9b4f9434f46fdc5c1a6e9e936af2868340cdbc48",
+    "testProject": "tests/Ordering.UnitTests/Ordering.UnitTests.csproj",
+    "testFramework": "MSTest.Sdk 4.0.2 on Microsoft Testing Platform",
+    "expectedTrx": {
+      "total": 50,
+      "passed": 50,
+      "failed": 0,
+      "skipped": 0
+    },
+    "assayResult": {
+      "authority": "provisional",
+      "verdict": "fail",
+      "findings": 9,
+      "missingEvidence": 0,
+      "toolFailures": 0,
+      "claimFixed": false
+    },
+    "dataAnnotationsReflectionMetadataChanged": true,
+    "limitations": [
+      "database round-trip behavior is not executed",
+      "migration and model-snapshot compatibility are not proved",
+      "deployed-schema compatibility is not proved",
+      "alternate DbContexts and model-building paths are not proved",
+      "serialization, validation, and reflection consumers are not characterized",
+      "upstream suitability is not adjudicated"
+    ],
+    "files": [
+      {"sourcePath":"src/Ordering.Domain/AggregatesModel/OrderAggregate/Order.cs","gitBlob":"4c3cc876a9e69971712310d874915025ec66c4ce","sha256":"64d43027e9ff43e9420b9745141dfd5cbd389d5ddcdaf80e872032d23c422b6f"},
+      {"sourcePath":"src/Ordering.Domain/AggregatesModel/OrderAggregate/OrderItem.cs","gitBlob":"6ae2844135bb38cbb9a8e3c9d6878166969b85ca","sha256":"c664227b73e750946985b15a1484908665568620e83dfc2c2a0b836d3de0f7d2"},
+      {"sourcePath":"src/Ordering.Domain/AggregatesModel/BuyerAggregate/Buyer.cs","gitBlob":"efe36410332704796007d49dd0ebcb0b65b8cd1a","sha256":"af496d4e89a4dc3cb7c778b5dbc11a0f6a830f338b7e705b0203d66ae7acb34c"},
+      {"sourcePath":"src/Ordering.Domain/AggregatesModel/BuyerAggregate/PaymentMethod.cs","gitBlob":"3ef74853716f607f6be5913bea2451d5ef0ed9a9","sha256":"232a859e0ec45d4fd93518ea2d6dc80ba1e8187c96294084aa02976c86447c70"},
+      {"sourcePath":"src/Ordering.Infrastructure/EntityConfigurations/OrderEntityTypeConfiguration.cs","gitBlob":"546695001beb9296f58d4b1ce7fa1fa0797b9d04","sha256":"b8644b093061fdc3468673fc3f23d7e8f7f871a24cfda47932f83ff2af7db241"},
+      {"sourcePath":"src/Ordering.Infrastructure/EntityConfigurations/OrderItemEntityTypeConfiguration.cs","gitBlob":"f21e0cf84ab63c28461b3dea555698613335fc3d","sha256":"e5c8ec348d6739ea936666d9eea1bcff2ba767d24003ea835225a067de84fa08"},
+      {"sourcePath":"src/Ordering.Infrastructure/EntityConfigurations/BuyerEntityTypeConfiguration.cs","gitBlob":"6f3c756fd767b3b517151dbdd613213c1a331816","sha256":"b027c7af3a58dfe0593b6a207337eeaf07418a7a36f8d9798a4e554c250150d0"},
+      {"sourcePath":"src/Ordering.Infrastructure/EntityConfigurations/PaymentMethodEntityTypeConfiguration.cs","gitBlob":"4762ebab229b537edcf657e4953db1f810d81844","sha256":"49d4bee190d9da74762a9957bc939c830fdce4b2439f296a5fc6e805ba186f93"},
+      {"sourcePath":"tests/Ordering.UnitTests/Domain/DomainRequirednessBehaviorTests.cs","gitBlob":"8f7582309624d8b9bc430aa46fc6fa2271f11da4","sha256":"be80a7897de534e21c49153a387518577c25d6022599695f0e7124890be77ea6"},
+      {"sourcePath":"tests/Ordering.UnitTests/Domain/OrderingModelMappingTests.cs","gitBlob":"e63fde73463368d00a6b80c3cfa79f9c23db8513","sha256":"1071148024b2f7e5d4c66b006206fe46644e65457fd2dd1da5ef8730e6af1548"}
+    ]
+  }
+}

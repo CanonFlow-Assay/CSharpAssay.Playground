@@ -2,7 +2,7 @@ name: CSharpAssay Playground
 
 on:
   push:
-    branches: [main]
+    branches: [main, agent-assay/eshop]
   pull_request:
     branches: [main]
 
@@ -22,8 +22,22 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: CanonFlow-Assay/CSharpAssay
-          ref: fc3c9516813502fe85d254a7b42423269769c087
+          ref: f5fb8e7dd27da20f6d5c26306dc0e56823e37962
           path: .assay
+
+      - name: Checkout pinned eShop assay subject
+        uses: actions/checkout@v6
+        with:
+          repository: dotnet/eShop
+          ref: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
+          path: .upstream-cache/eShop
+
+      - name: Checkout pinned reviewed eShop candidate
+        uses: actions/checkout@v6
+        with:
+          repository: CanonFlow-Assay/eShop
+          ref: 5e92c725c6b13ff2c9cda6de58228ff04c1fb73f
+          path: .candidate-cache/eShop
 
       - name: Setup .NET 10
         uses: actions/setup-dotnet@v4
@@ -36,7 +50,25 @@ jobs:
           dotnet build .assay/src/CsAssay.Runner/CsAssay.Runner.csproj --no-restore --configuration Release
 
       - name: Run complete playground gate
-        run: ./eng/run-assay.sh .assay/src/CsAssay.Runner/bin/Release/net10.0/cs-assay.dll
+        run: ESHOP_UPSTREAM_ROOT=.upstream-cache/eShop ./eng/run-assay.sh .assay/src/CsAssay.Runner/bin/Release/net10.0/cs-assay.dll
+
+      - name: Run pinned eShop agent assay
+        run: >-
+          ./eng/run-eshop-agent-assay.sh
+          .upstream-cache/eShop
+          .assay/src/CsAssay.Runner/bin/Release/net10.0/cs-assay.dll
+
+      - name: Assert pinned eShop evidence
+        run: python3 ./eng/assert-eshop-evidence.py
+
+      - name: Run pinned eShop candidate tests and assay
+        run: >-
+          ./eng/run-eshop-candidate-evidence.sh
+          .candidate-cache/eShop
+          .assay/src/CsAssay.Runner/bin/Release/net10.0/cs-assay.dll
+
+      - name: Assert candidate evidence closure
+        run: python3 ./eng/assert-eshop-candidate.py .candidate-cache/eShop
 
       - name: Upload JSON and SARIF evidence
         if: always() && hashFiles('evidence/generated/**/*') != ''
