@@ -55,3 +55,8 @@ Do not create a long-lived fork for baseline observation. Once a reviewed patch
 passes the gates, create `CanonFlow-Assay/eShop` as an attributed GitHub fork and
 push only branch `csassay/ordering-domain-purity`. Add a prominent experimental
 assay notice and preserve the upstream MIT license. Never replace fork `main`.
+
+The reviewed candidate is now pinned at `5e92c725c6b13ff2c9cda6de58228ff04c1fb73f`
+and remains behind a separate Draft PR in `CanonFlow-Assay/eShop`. Playground
+candidate evidence does not authorize merging fork `main` or submitting the
+candidate upstream.

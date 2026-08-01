@@ -32,6 +32,13 @@ jobs:
           ref: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
           path: .upstream-cache/eShop
 
+      - name: Checkout pinned reviewed eShop candidate
+        uses: actions/checkout@v6
+        with:
+          repository: CanonFlow-Assay/eShop
+          ref: 5e92c725c6b13ff2c9cda6de58228ff04c1fb73f
+          path: .candidate-cache/eShop
+
       - name: Setup .NET 10
         uses: actions/setup-dotnet@v4
         with:
@@ -53,6 +60,15 @@ jobs:
 
       - name: Assert pinned eShop evidence
         run: python3 ./eng/assert-eshop-evidence.py
+
+      - name: Run pinned eShop candidate tests and assay
+        run: >-
+          ./eng/run-eshop-candidate-evidence.sh
+          .candidate-cache/eShop
+          .assay/src/CsAssay.Runner/bin/Release/net10.0/cs-assay.dll
+
+      - name: Assert candidate evidence closure
+        run: python3 ./eng/assert-eshop-candidate.py .candidate-cache/eShop
 
       - name: Upload JSON and SARIF evidence
         if: always() && hashFiles('evidence/generated/**/*') != ''

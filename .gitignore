@@ -30,6 +30,7 @@ artifacts/
 evidence/generated/
 .assay/
 .upstream-cache/
+.candidate-cache/
 __pycache__/
 *.py[cod]
 
