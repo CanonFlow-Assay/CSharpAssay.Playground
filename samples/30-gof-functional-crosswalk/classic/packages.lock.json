@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dependencies": {
+    "net10.0": {
+      "CsAssay.Analyzers": {
+        "type": "Direct",
+        "requested": "[0.1.1, )",
+        "resolved": "0.1.1",
+        "contentHash": "TsL7gpSinCIJZaUIHTM5c9d7sriAX2RqvMNRgLnMij107JB4Fw2wFfJLaBHKgTMFW5Wud0QV79/cGIG4xota5g=="
+      }
+    }
+  }
+}

@@ -47,6 +47,15 @@ the implementation’s observed behavior. Adding the feature needs a distinct
 decision, tests, and commit; mixing it into this refactor would make the
 equivalence claim false.
 
+### Gang of Four functional crosswalk
+
+The five classic findings are prototype/contextual advisory observations, not
+blocking defects: `CSAF0001 ×3`, `CSAD0002 ×1`, and `CSAI0003 ×1`. The refined
+lane has zero observed findings and ten shared behavior cases, while the
+[sample adjudication](../samples/30-gof-functional-crosswalk/ADJUDICATION.md)
+records when each classic pattern remains preferable and what the evidence
+does not prove.
+
 ## Evidence ownership
 
 - `.csassay.*.json` owns the admitted rules and boundary contract.

@@ -70,6 +70,9 @@ jobs:
       - name: Assert candidate evidence closure
         run: python3 ./eng/assert-eshop-candidate.py .candidate-cache/eShop
 
+      - name: Run GoF functional crosswalk evidence
+        run: ./eng/run-gof-crosswalk.sh
+
       - name: Upload JSON and SARIF evidence
         if: always() && hashFiles('evidence/generated/**/*') != ''
         uses: actions/upload-artifact@v4
