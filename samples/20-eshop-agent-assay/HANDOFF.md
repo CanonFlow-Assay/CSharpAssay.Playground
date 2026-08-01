@@ -12,7 +12,8 @@ behavior or inventing framework guarantees.
 - commit: `9b4f9434f46fdc5c1a6e9e936af2868340cdbc48`;
 - scope: `src/Ordering.Domain/Ordering.Domain.csproj`;
 - policy: this directory's `.csassay.json`;
-- CSharpAssay: exact version `0.1.1`;
+- CSharpAssay: version `0.1.1`, exact source commit
+  `f5fb8e7dd27da20f6d5c26306dc0e56823e37962`;
 - first pass: observation only.
 
 ## Required sequence

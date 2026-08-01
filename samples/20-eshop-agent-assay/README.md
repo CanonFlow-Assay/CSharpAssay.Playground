@@ -13,11 +13,12 @@ zero missing evidence and zero tool failures:
 - five false positives where equality code observes null through
   `object.Equals` or `ReferenceEquals` rather than introducing domain state.
 
-The local CSharpAssay 0.1.1 candidate rerun reports exactly nine findings:
+The pinned CSharpAssay 0.1.1 release commit rerun reports exactly nine findings:
 `CSAN0001` × 1, `CSAN0003` × 2, and `CSAN0004` × 6, with zero missing evidence
-and zero tool failures. The five equality false positives are gone. This is
-still provisional evidence until the package is published and CI reproduces
-`expectations.json` from the final commit.
+and zero tool failures. The five equality false positives are gone. CI rebuilds
+the exact CSharpAssay and eShop commits and checks the report against
+`expectations.json`. The result remains provisional because this focused pass
+does not execute the required characterization and persistence tests.
 
 No production transformation is admitted until Ordering behavior and EF
 mapping are executable in the focused harness.

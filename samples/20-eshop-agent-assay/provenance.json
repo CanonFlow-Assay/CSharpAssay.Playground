@@ -10,5 +10,7 @@
     "src/Ordering.Domain/Ordering.Domain.csproj"
   ],
   "toolVersion": "0.1.1",
+  "toolCommit": "f5fb8e7dd27da20f6d5c26306dc0e56823e37962",
+  "toolCommitUrl": "https://github.com/CanonFlow-Assay/CSharpAssay/commit/f5fb8e7dd27da20f6d5c26306dc0e56823e37962",
   "authority": "provisional-until-characterization-and-required-tests-are-configured"
 }
