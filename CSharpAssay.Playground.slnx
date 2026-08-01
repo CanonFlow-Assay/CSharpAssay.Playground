@@ -8,6 +8,11 @@
     <Project Path="samples/10-gilded-rose/refined/GildedRose.Refined.csproj" />
     <Project Path="samples/10-gilded-rose/characterization/GildedRose.Characterization.csproj" />
   </Folder>
+  <Folder Name="/samples/30-gof-functional-crosswalk/">
+    <Project Path="samples/30-gof-functional-crosswalk/classic/Gof.Classic.csproj" />
+    <Project Path="samples/30-gof-functional-crosswalk/refined/Gof.Refined.csproj" />
+    <Project Path="samples/30-gof-functional-crosswalk/tests/Gof.Crosswalk.Tests.csproj" />
+  </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Playground.Tests/Playground.Tests.csproj" />
   </Folder>

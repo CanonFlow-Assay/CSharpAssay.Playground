@@ -1,0 +1,41 @@
+{
+  "profile": "compat",
+  "release": {
+    "allowPreviewToolchain": false,
+    "requiredTargetFrameworks": ["net10.0"],
+    "requiredRules": [
+      "CSAI0001",
+      "CSAI0002",
+      "CSAN0001",
+      "CSAN0002",
+      "CSAN0003",
+      "CSAN0004",
+      "CSAP0001"
+    ],
+    "tests": [
+      {
+        "input": "tests/Gof.Crosswalk.Tests.csproj",
+        "configuration": "Release",
+        "noBuild": true,
+        "minimumExpectedTests": 10
+      }
+    ]
+  },
+  "boundaries": {
+    "coreProjects": [
+      "samples/30-gof-functional-crosswalk/refined/Gof.Refined.csproj"
+    ],
+    "shellProjects": [
+      "samples/30-gof-functional-crosswalk/tests/Gof.Crosswalk.Tests.csproj"
+    ],
+    "coreNamespaces": ["Playground.Gof.Refined"],
+    "shellNamespaces": ["Playground.Gof.Tests"]
+  },
+  "representations": {
+    "resultTypes": [],
+    "optionTypes": [],
+    "closedTypes": []
+  },
+  "domainPrimitives": {},
+  "suppressions": []
+}

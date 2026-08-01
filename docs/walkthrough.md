@@ -1,5 +1,10 @@
 # From impure metal to reviewed evidence
 
+For the published-package lane, continue to the
+[GoF functional-C# crosswalk](../samples/30-gof-functional-crosswalk/README.md).
+It compares five classic patterns with functional-first alternatives under
+shared behavior tests and exact CSharpAssay 0.1.1 JSON/SARIF evidence.
+
 This walkthrough demonstrates what CSharpAssay can prove today and keeps that
 claim narrower than “the program is correct.” It uses a controlled rule matrix
 for detector coverage and a pinned public kata for behavior-preserving

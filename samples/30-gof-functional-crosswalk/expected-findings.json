@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "packageBaseline": {
+    "tool": "CsAssay.Tool@0.1.1",
+    "analyzer": "CsAssay.Analyzers@0.1.1"
+  },
+  "reports": [
+    {
+      "name": "classic",
+      "path": "evidence/generated/gof/classic/check.json",
+      "sarifPath": "evidence/generated/gof/classic/check.sarif",
+      "verdict": "pass",
+      "authoritative": false,
+      "projects": 1,
+      "testsPassed": 0,
+      "findings": [
+        {
+          "ruleId": "CSAF0001",
+          "messageContains": "IDiscountStrategy",
+          "path": "Strategy.cs",
+          "startLine": 3,
+          "severity": "info",
+          "certainty": "heuristic",
+          "disposition": "advise"
+        },
+        {
+          "ruleId": "CSAF0001",
+          "messageContains": "IShippingQuoteVisitor",
+          "path": "Visitor.cs",
+          "startLine": 3,
+          "severity": "info",
+          "certainty": "heuristic",
+          "disposition": "advise"
+        },
+        {
+          "ruleId": "CSAF0001",
+          "messageContains": "MealOrderBuilder",
+          "path": "Builder.cs",
+          "startLine": 7,
+          "severity": "info",
+          "certainty": "heuristic",
+          "disposition": "advise"
+        },
+        {
+          "ruleId": "CSAD0002",
+          "messageContains": "ApprovalWorkflow",
+          "path": "State.cs",
+          "startLine": 3,
+          "severity": "info",
+          "certainty": "heuristic",
+          "disposition": "advise"
+        },
+        {
+          "ruleId": "CSAI0003",
+          "messageContains": "MenuGroup.Children",
+          "path": "Composite.cs",
+          "startLine": 15,
+          "severity": "info",
+          "certainty": "contextual",
+          "disposition": "advise"
+        }
+      ]
+    },
+    {
+      "name": "refined",
+      "path": "evidence/generated/gof/refined/verify.json",
+      "sarifPath": "evidence/generated/gof/refined/verify.sarif",
+      "verdict": "pass",
+      "authoritative": true,
+      "projects": 1,
+      "testsPassed": 10,
+      "findings": []
+    }
+  ]
+}

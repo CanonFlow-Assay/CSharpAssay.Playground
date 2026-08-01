@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/classic/">
+    <Project Path="classic/Gof.Classic.csproj" />
+  </Folder>
+  <Folder Name="/refined/">
+    <Project Path="refined/Gof.Refined.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Gof.Crosswalk.Tests.csproj" />
+  </Folder>
+</Solution>

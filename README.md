@@ -7,7 +7,8 @@ controlled rule specimens, pinned public refactoring exercises, and manifests
 for larger real applications. The aim is to demonstrate measured improvement
 without calling unfamiliar production code “bad” or claiming universal purity.
 
-Start with [the walkthrough](docs/walkthrough.md), then read the
+Start with the [rich evidence overview](docs/index.html) or
+[the walkthrough](docs/walkthrough.md), then read the
 [adjudication method](docs/adjudication.md), [evidence foundry contract](docs/evidence-foundry.md),
 and [known blind spots](docs/blind-spots.md).
 
@@ -20,6 +21,9 @@ and [known blind spots](docs/blind-spots.md).
 - `samples/20-eshop-agent-assay`: a pinned, external-clone handoff for an
   agent-led assay of eShop's Ordering domain, including separate upstream and
   reviewed-candidate evidence; source is not vendored.
+- `samples/30-gof-functional-crosswalk`: five honest classic GoF patterns,
+  functional-first alternatives, shared behavior tests, and exact 0.1.1
+  advisory evidence from published NuGet packages.
 - `samples/catalog.json`: imported and queued public repositories with immutable
   revisions and licensing posture.
 - `evidence`: deterministic Assay reports and human adjudication records.
@@ -33,6 +37,7 @@ dotnet build CSharpAssay.Playground.slnx --no-restore -c Release
 dotnet test tests/Playground.Tests/Playground.Tests.csproj \
   --no-build --no-restore -c Release
 ./eng/run-assay.sh /path/to/cs-assay.dll
+./eng/run-gof-crosswalk.sh
 ```
 
 To include the pinned external eShop Ordering representation assertion used by
@@ -49,3 +54,8 @@ the refined solution is release authority, and it must pass with zero findings.
 
 Here, “refined” means clean under the pinned, admitted policy and protected by
 the recorded behavior tests. It does not mean universally correct or pure.
+
+The GoF crosswalk deliberately restores `CsAssay.Tool` and
+`CsAssay.Analyzers` 0.1.1 from NuGet rather than referencing CSharpAssay source.
+See the [published-baseline notes](docs/csharp-assay-0.1.1.md) for the supported
+lane and known limitations.
