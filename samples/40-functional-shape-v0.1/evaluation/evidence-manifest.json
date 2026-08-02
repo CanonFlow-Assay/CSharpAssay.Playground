@@ -15,7 +15,9 @@
     "referenceBaselineCommit": "b1e4a17a95b91b5ac077406ad66decd1aa6b50e8",
     "builderCommit": "948531bc234c03dfc30087c7eacac81f00c89017",
     "sourceBindingAndRedTeamCommit": "519aa46eec84d7d227a4f4b1c09e109f87eb194d",
-    "completedMutationMatrixCommit": "96de74ad7ee99ef345595fcd49b6c958ee763f25"
+    "completedMutationMatrixCommit": "96de74ad7ee99ef345595fcd49b6c958ee763f25",
+    "advisoryJudgeCommit": "2adc8047f97387b974df7d6d46038c3d2fd8b3d6",
+    "evidenceStabilizationCommit": "e280b1f"
   },
   "packages": {
     "tool": "CsAssay.Tool@0.1.2",

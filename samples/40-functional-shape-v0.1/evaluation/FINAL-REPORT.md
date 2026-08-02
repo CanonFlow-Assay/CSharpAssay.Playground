@@ -8,10 +8,10 @@ Shape v0.1 is ready for human review as a bounded contract plus reference
 exercise. It is not a shipped CSharpAssay feature, template, profile, package,
 or proof of universal functional purity. No branch has been merged.
 
-Draft PR links are added after creation:
+Draft PRs:
 
-- CSharpAssay normative contract: pending
-- CSharpAssay.Playground reference and evaluation: pending
+- [CSharpAssay normative contract #5](https://github.com/CanonFlow-Assay/CSharpAssay/pull/5)
+- [CSharpAssay.Playground reference and evaluation #3](https://github.com/CanonFlow-Assay/CSharpAssay.Playground/pull/3)
 
 ## Provenance
 
