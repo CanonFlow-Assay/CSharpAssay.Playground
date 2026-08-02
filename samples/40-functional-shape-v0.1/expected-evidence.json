@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "packageBaseline": {
+    "tool": "CsAssay.Tool@0.1.2",
+    "analyzer": "CsAssay.Analyzers@0.1.2"
+  },
+  "projects": 6,
+  "tests": {
+    "Shape.Behavior.Tests": 16,
+    "Shape.Architecture.Tests": 7
+  },
+  "findings": [
+    {
+      "ruleId": "CSAN0003",
+      "path": "tests/Shape.Behavior.Tests/OrderWorkflowTests.cs",
+      "disposition": "advise",
+      "fingerprint": "39aace398c6dfde1d63634e10b44da12fe8b28f2a0cdffb7a104b6b87545dfeb"
+    },
+    {
+      "ruleId": "CSAN0004",
+      "path": "src/Shape.Api/OrderEndpoint.cs",
+      "disposition": "advise",
+      "fingerprint": "e80ad240981790cf6160789c17d769368944088cbc7a89c522b883e6725c69b5"
+    },
+    {
+      "ruleId": "CSAN0004",
+      "path": "src/Shape.Api/OrderEndpoint.cs",
+      "disposition": "advise",
+      "fingerprint": "6be70f8afd8753fada7877005cab020cfac13fefab928dd70cbaf5a527b93864"
+    }
+  ]
+}

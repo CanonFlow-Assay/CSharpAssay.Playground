@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../Shape.Domain/Shape.Domain.csproj" />
+    <ProjectReference Include="../Shape.Application/Shape.Application.csproj" />
+  </ItemGroup>
+</Project>

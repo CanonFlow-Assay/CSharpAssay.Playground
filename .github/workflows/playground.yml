@@ -73,6 +73,9 @@ jobs:
       - name: Run GoF functional crosswalk evidence
         run: ./eng/run-gof-crosswalk.sh
 
+      - name: Run Functional Shape v0.1 evidence
+        run: ./eng/run-functional-shape.sh
+
       - name: Upload JSON and SARIF evidence
         if: always() && hashFiles('evidence/generated/**/*') != ''
         uses: actions/upload-artifact@v4

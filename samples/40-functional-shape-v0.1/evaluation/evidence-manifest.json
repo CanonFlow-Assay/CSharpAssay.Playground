@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "eventDate": "2026-08-02",
+  "contract": {
+    "repository": "CanonFlow-Assay/CSharpAssay",
+    "branch": "feature/functional-shape-v0.1-contract",
+    "commit": "5b3766bf5ff00ed4b8d0ccf06c01ac3ac22d1c14",
+    "baseCommit": "35b2e9ae935eae758834a70ae4140faaaa280a53",
+    "documentSha256": "1bd27fa82a1b8ee6eafcd7cc51f872acf1e1077b415a698438ca635ce853d046"
+  },
+  "reference": {
+    "repository": "CanonFlow-Assay/CSharpAssay.Playground",
+    "branch": "feature/functional-shape-v0.1-reference",
+    "baseCommit": "426c543ef8610d9ba601037c899885d870993c4f",
+    "referenceBaselineCommit": "b1e4a17aa92eb1c4047aac5c4b66b4b23fbface6",
+    "builderCommit": "948531bc234c03dfc30087c7eacac81f00c89017",
+    "sourceBindingAndRedTeamCommit": "519aa46eec84d7d227a4f4b1c09e109f87eb194d",
+    "completedMutationMatrixCommit": "96de74ad7ee99ef345595fcd49b6c958ee763f25",
+    "advisoryJudgeCommit": "2adc8046016aff8b525ec81e8a57cf4150153078",
+    "evidenceStabilizationCommit": "e280b1fa390a2360364f3d9f849fe3d459c101a7",
+    "humanReviewCorrectionsCommit": "6946bd5d0afcefe007fd661199b09556f6e017b9"
+  },
+  "packages": {
+    "tool": "CsAssay.Tool@0.1.2",
+    "analyzer": "CsAssay.Analyzers@0.1.2",
+    "analyzerAssemblySha256": "139e7f9c1c8c43257d08ac5ea7e64d9b221b42173ec6cafa706175accdbd7d78",
+    "domainLockSha256": "0b77ff0a2a8eedc8eab22a8bb7072e9294dbf31bc5b72aff675a99815f81a10e",
+    "applicationLockSha256": "3531289f943ce22edcab63fbab84ae693bfb5ea2632d6aaa7c55daf1b48c7e71"
+  },
+  "policy": {
+    "sha256": "8383c873ba29559e7184e4912907a42e5f5bc26ec3409d7a193d893e039a5613",
+    "expectedEvidenceSha256": "4ff1dd14a11fa8110f9687bcb93b15feed2e7f998333ab218676d978633dff34",
+    "inputLockSha256": "ccc812b3f93187360cf3f1c04d325b0f4dc02b1b66d89369fde65c4420057da4"
+  },
+  "positiveEvidence": {
+    "verdict": "pass",
+    "authoritative": true,
+    "projectsLoaded": 6,
+    "fullPlaygroundTestsPassed": 42,
+    "testsPassed": 23,
+    "testsFailed": 0,
+    "blockingFindings": 0,
+    "advisoryFindings": {
+      "CSAN0003": 1,
+      "CSAN0004": 2
+    },
+    "jsonSha256": "027d2f725feb2993d50b4a5015f058541f862ff7d2f626bfb24d7827b53d454b",
+    "localJsonSha256": "0b4d295f89ba0d7968e323d14f8528fa52ee71e209919b10a9bb9bf993613dbc",
+    "sarifSha256": "e4a0ffb14f053953d0fe124484c7168a0ac417625b9f7005ec243bc362794148",
+    "qualificationRun": "https://github.com/CanonFlow-Assay/CSharpAssay.Playground/actions/runs/30739230025",
+    "jsonEnvironmentNote": "JSON includes runner OS/toolchain evidence; hashes are deterministic within an unchanged qualified environment.",
+    "byteIdenticalRepeat": true,
+    "byteIdenticalAcrossCleanHarnessInvocations": true
+  },
+  "llmJudgment": {
+    "verdict": "advisory-accept",
+    "authoritative": false
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "evaluationDate": "2026-08-02",
+  "evaluator": "independent-llm-as-judge",
+  "nonAuthoritative": true,
+  "verdict": "advisory-accept",
+  "referenceHead": "96de74ad7ee99ef345595fcd49b6c958ee763f25",
+  "builderRange": "b1e4a17..948531b",
+  "independentEvaluationRange": "948531b..96de74a",
+  "contractCompletionFollowUpRange": "519aa46..96de74a",
+  "contract": {
+    "repositoryCommit": "8ef9a70b1b354130b52c1eff8e4b57afef2c1700",
+    "path": "docs/FUNCTIONAL-CSHARP-PROFILE.md",
+    "sha256": "54be4be99328e9f56e83358075f0cc112989bbc16e36c46527e74c32ea5771b2"
+  },
+  "initialRejection": {
+    "head": "519aa46eec84d7d227a4f4b1c09e109f87eb194d",
+    "verdict": "advisory-reject",
+    "classification": "incomplete-deterministic-evidence",
+    "summary": "Two contract-mandated independent mutations initially had no recorded run or explicit coverage-gap result.",
+    "formerlyMissingEvents": [
+      {
+        "id": "missing-required-project",
+        "reason": "The compiler-missing-generated-member probe says Shape.Domain remained loaded and does not exercise a missing required project."
+      },
+      {
+        "id": "domain-serialization-or-transport-leakage",
+        "reason": "Neither RED-TEAM.md nor red-team-results.json records this required mutation."
+      }
+    ],
+    "resolvedAt": "96de74ad7ee99ef345595fcd49b6c958ee763f25",
+    "resolution": "Both probes now have durable explicit coverage-gap results, which satisfies contract section 11."
+  },
+  "absoluteBlocker": {
+    "present": false,
+    "classification": "none",
+    "summary": "The independent mutation matrix is complete; all required events were rejected or recorded as explicit coverage gaps."
+  },
+  "scores": {
+    "contractFidelity": 9,
+    "behaviorAdequacy": 7,
+    "boundaryClarity": 9,
+    "builderScopeDiscipline": 10,
+    "findingHonesty": 9,
+    "aiAgentSafety": 8,
+    "overclaimControl": 9,
+    "knownGapDisclosure": 10
+  },
+  "deterministicEvidenceAcceptedAsAuthoritative": {
+    "baselineVerdict": "pass",
+    "authoritative": true,
+    "projectsLoaded": 6,
+    "testsPassed": 16,
+    "testsFailed": 0,
+    "requiredRulesCompleted": 7,
+    "blockingFindings": 0,
+    "remainingAdvisories": {
+      "total": 3,
+      "byRule": {
+        "CSAN0003": 1,
+        "CSAN0004": 2
+      }
+    },
+    "missingEvidence": 0,
+    "toolFailures": 0,
+    "jsonSha256": "74198722054cc9c6ff197cbfd99e37ee28205c0ce82d99f8a11d1cb14e990e7a",
+    "sarifSha256": "dad047c97d217562bbbe38b9d6961a1bfbc142ef99083ff2456a58405ab5a44f"
+  },
+  "builderAssessment": {
+    "bounded": true,
+    "businessChange": "Reject orders with more than five lines without performing storage effects.",
+    "policyWeakened": false,
+    "productExpanded": false,
+    "addedEf": false,
+    "addedMessaging": false,
+    "addedTemplate": false,
+    "addedAnalyzerRuleCliOrPackageBehavior": false
+  },
+  "independentFindings": [
+    {
+      "id": "source-binding-repair",
+      "classification": "repaired-and-retested",
+      "commit": "519aa46eec84d7d227a4f4b1c09e109f87eb194d",
+      "cleanEvidenceExitCode": 0,
+      "modifiedSourceExitCode": 1,
+      "newSourceExitCode": 1,
+      "scope": "non-generated C# files under sample src and tests"
+    },
+    {
+      "id": "datetime-now-undetected",
+      "classification": "known-coverage-gap",
+      "statement": "A direct DateTime.Now read in Domain is undetected by CSharpAssay 0.1.2 and the six architecture tests.",
+      "mutatedVerifyVerdict": "pass",
+      "mutatedAuthoritative": true,
+      "hiddenEffectFinding": false,
+      "remainingAdvisories": 3
+    },
+    {
+      "id": "missing-declared-core-project",
+      "classification": "known-coverage-gap",
+      "statement": "A nonexistent path added to boundaries.coreProjects is omitted from the project inventory and does not prevent authority.",
+      "verifyExitCode": 0,
+      "mutatedVerifyVerdict": "pass",
+      "mutatedAuthoritative": true,
+      "reportedProjectCount": 6,
+      "absentProjectReported": false
+    },
+    {
+      "id": "domain-serialization-concern-undetected",
+      "classification": "known-coverage-gap",
+      "statement": "A JsonPropertyName attribute on Shape.Domain.OrderId.Value is undetected by CSharpAssay 0.1.2 and the six architecture tests.",
+      "buildExitCode": 0,
+      "architectureTestsPassed": 6,
+      "verifyExitCode": 0,
+      "mutatedVerifyVerdict": "pass",
+      "mutatedAuthoritative": true,
+      "serializationFinding": false,
+      "remainingAdvisories": 3
+    }
+  ],
+  "dissentAndUncertainty": [
+    "Null rejection in Result and Option is visible in source but is not directly exercised for every case by behavior tests.",
+    "The successful API response mapping is not directly characterized.",
+    "Public construction can create OrderId or AcceptedOrder values outside the decision workflow; the intended invariant strength needs human confirmation.",
+    "Expected findings are bound by rule ID and count rather than fingerprint, path, disposition, and message.",
+    "The standalone freshness assertion binds C# source but does not independently bind project, policy, or documentation files."
+  ],
+  "humanReviewQuestions": [
+    "Are direct null-payload tests required for every Result and Option case before accepting the representation?",
+    "Is a behavior test for successful Created<OrderResponse> mapping required?",
+    "Is public construction of potentially invalid OrderId and AcceptedOrder state intentional and sufficiently disclosed?",
+    "Should expected findings be bound by fingerprint, path, and disposition?",
+    "Should standalone freshness checking also bind project, policy, and expected-evidence files?",
+    "Are the DateTime.Now, nonexistent declared core path, and Domain serialization gaps prominent enough to prevent consumers from inferring those properties from authoritative:true?"
+  ],
+  "recommendation": "Proceed to human review while preserving all three v0.1 coverage gaps and the three advisory findings; do not demand product fixes based solely on this advisory.",
+  "authorityStatement": "This LLM judgment is non-authoritative and cannot override compiler, test, CSharpAssay, provenance, hash, or human-review evidence."
+}

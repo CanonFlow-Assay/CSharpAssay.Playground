@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="CsAssay.Analyzers"
+                      VersionOverride="0.1.2"
+                      PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Shape.Domain/Shape.Domain.csproj" />
+  </ItemGroup>
+</Project>

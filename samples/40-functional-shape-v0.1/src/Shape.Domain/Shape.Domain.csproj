@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Closed case nesting and the approved Option name are intentional. -->
+    <NoWarn>$(NoWarn);CA1034;CA1716</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CsAssay.Analyzers"
+                      VersionOverride="0.1.2"
+                      PrivateAssets="all" />
+  </ItemGroup>
+</Project>

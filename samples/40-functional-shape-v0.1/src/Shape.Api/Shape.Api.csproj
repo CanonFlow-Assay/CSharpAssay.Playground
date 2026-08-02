@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <ItemGroup>
+    <ProjectReference Include="../Shape.Domain/Shape.Domain.csproj" />
+    <ProjectReference Include="../Shape.Application/Shape.Application.csproj" />
+    <ProjectReference Include="../Shape.Infrastructure/Shape.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>
