@@ -35,6 +35,19 @@ The Domain project suppresses compiler design guideline `CA1716` for the
 preapproved public name `Option<T>` and `CA1034` for its intentionally nested,
 closed cases. Neither suppression is a CSharpAssay diagnostic suppression.
 
+## Independent coverage gaps
+
+Disposable negative tests established three properties that Shape v0.1 does
+not enforce:
+
+- a direct `DateTime.Now` read in Domain is not detected;
+- a nonexistent path added to `boundaries.coreProjects` is omitted without
+  preventing `authoritative:true`;
+- a `JsonPropertyName` serialization concern on a Domain value is not detected.
+
+These are limitations, not accepted design practices. Human review owns them.
+The complete commands and results are preserved under `evaluation/`.
+
 - `IOrderStore` is an honest one-method Application port. If `CSAF0001`
   advises a delegate, the interface may remain preferable for DI ownership,
   discoverability, cancellation semantics, and later adapter evolution.

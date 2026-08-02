@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "eventDate": "2026-08-02",
+  "contract": {
+    "repository": "CanonFlow-Assay/CSharpAssay",
+    "branch": "feature/functional-shape-v0.1-contract",
+    "commit": "8ef9a70b1b354130b52c1eff8e4b57afef2c1700",
+    "baseCommit": "35b2e9ae935eae758834a70ae4140faaaa280a53",
+    "documentSha256": "54be4be99328e9f56e83358075f0cc112989bbc16e36c46527e74c32ea5771b2"
+  },
+  "reference": {
+    "repository": "CanonFlow-Assay/CSharpAssay.Playground",
+    "branch": "feature/functional-shape-v0.1-reference",
+    "baseCommit": "426c543ef8610d9ba601037c899885d870993c4f",
+    "referenceBaselineCommit": "b1e4a17a95b91b5ac077406ad66decd1aa6b50e8",
+    "builderCommit": "948531bc234c03dfc30087c7eacac81f00c89017",
+    "sourceBindingAndRedTeamCommit": "519aa46eec84d7d227a4f4b1c09e109f87eb194d",
+    "completedMutationMatrixCommit": "96de74ad7ee99ef345595fcd49b6c958ee763f25"
+  },
+  "packages": {
+    "tool": "CsAssay.Tool@0.1.2",
+    "analyzer": "CsAssay.Analyzers@0.1.2",
+    "analyzerAssemblySha256": "139e7f9c1c8c43257d08ac5ea7e64d9b221b42173ec6cafa706175accdbd7d78",
+    "domainLockSha256": "0b77ff0a2a8eedc8eab22a8bb7072e9294dbf31bc5b72aff675a99815f81a10e",
+    "applicationLockSha256": "3531289f943ce22edcab63fbab84ae693bfb5ea2632d6aaa7c55daf1b48c7e71"
+  },
+  "policy": {
+    "sha256": "13cdcbf4923dd40e2f8a291d61548c544c2cd4c4279236302703b956f0ec35e9",
+    "expectedEvidenceSha256": "ce835e63a90f4c128910c8663f5e9d96be9cb3bdb08abd2227de947f661a033a"
+  },
+  "positiveEvidence": {
+    "verdict": "pass",
+    "authoritative": true,
+    "projectsLoaded": 6,
+    "testsPassed": 16,
+    "testsFailed": 0,
+    "blockingFindings": 0,
+    "advisoryFindings": {
+      "CSAN0003": 1,
+      "CSAN0004": 2
+    },
+    "jsonSha256": "74198722054cc9c6ff197cbfd99e37ee28205c0ce82d99f8a11d1cb14e990e7a",
+    "sarifSha256": "dad047c97d217562bbbe38b9d6961a1bfbc142ef99083ff2456a58405ab5a44f",
+    "byteIdenticalRepeat": true
+  },
+  "llmJudgment": {
+    "verdict": "advisory-accept",
+    "authoritative": false
+  }
+}

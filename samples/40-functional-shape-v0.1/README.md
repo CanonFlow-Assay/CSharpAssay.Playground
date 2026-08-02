@@ -41,6 +41,9 @@ Result/Option shape, direct analyzer scope, published package identity, and
 configured CSharpAssay evidence. Architecture tests—not a new analyzer—own the
 dependency rules. Advisory findings remain visible and require adjudication.
 
+The complete builder, independent red-team, and non-authoritative judge record
+is in [`evaluation/FINAL-REPORT.md`](evaluation/FINAL-REPORT.md).
+
 It does not prove EF, messaging, serialization round-trip, concurrency,
 performance, security, universal purity, business correctness, template
 installation, or organization-wide suitability. An LLM judgment is advisory
