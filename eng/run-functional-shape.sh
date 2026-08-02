@@ -18,6 +18,9 @@ find "$sample_root" -type d \( -name bin -o -name obj \) \
 mkdir -p "$scratch/dotnet-home" "$scratch/nuget-packages" "$scratch/tools"
 export DOTNET_CLI_HOME="$scratch/dotnet-home"
 export NUGET_PACKAGES="$scratch/nuget-packages"
+# Candidate provenance is recorded separately. Excluding the Git suffix from
+# generated AssemblyInfo avoids a recursive artifact-hash/candidate-SHA cycle.
+export IncludeSourceRevisionInInformationalVersion=false
 
 dotnet tool install CsAssay.Tool \
   --version 0.1.2 \

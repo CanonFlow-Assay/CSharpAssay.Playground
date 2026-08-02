@@ -67,9 +67,12 @@ No blocking finding remains. Three shell advisories are retained:
 
 The harness clears only this sample's generated build trees before evidence
 collection. Two complete clean-harness invocations, each containing two
-no-source-change verification runs, produced byte-identical artifacts:
+no-source-change verification runs, produced byte-identical artifacts. The
+disposable build excludes the SDK informational-version Git suffix to avoid a
+recursive candidate-SHA/artifact-hash cycle; candidate provenance remains
+recorded separately in Git, the PR, and this manifest.
 
-- JSON: `40cd742763d1e6a69c4823cd03cc3cbda79ec9bfdd8ebb93ef2cd0de27e73f92`
+- JSON: `0b4d295f89ba0d7968e323d14f8528fa52ee71e209919b10a9bb9bf993613dbc`
 - SARIF: `e4a0ffb14f053953d0fe124484c7168a0ac417625b9f7005ec243bc362794148`
 
 The policy, package-lock, analyzer assembly, contract, and expected-evidence
