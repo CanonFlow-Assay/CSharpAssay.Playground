@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "evaluationDate": "2026-08-02",
+  "acceptedCommit": "948531bc234c03dfc30087c7eacac81f00c89017",
+  "contractSha256": "54be4be99328e9f56e83358075f0cc112989bbc16e36c46527e74c32ea5771b2",
+  "toolchain": {
+    "tool": "CsAssay.Tool@0.1.2",
+    "analyzer": "CsAssay.Analyzers@0.1.2",
+    "sdk": "10.0.301",
+    "runtime": "10.0.9",
+    "msbuild": "10.0.301",
+    "roslyn": "5.6.0.0"
+  },
+  "verdict": "accepted-with-recorded-gaps",
+  "absoluteBlocker": false,
+  "majorClarification": true,
+  "baseline": {
+    "exitCode": 0,
+    "buildErrors": 0,
+    "buildWarnings": 0,
+    "testsPassed": 16,
+    "testsFailed": 0,
+    "verdict": "pass",
+    "authoritative": true,
+    "findings": {
+      "CSAN0003": 1,
+      "CSAN0004": 2
+    },
+    "jsonSha256": "74198722054cc9c6ff197cbfd99e37ee28205c0ce82d99f8a11d1cb14e990e7a",
+    "sarifSha256": "dad047c97d217562bbbe38b9d6961a1bfbc142ef99083ff2456a58405ab5a44f"
+  },
+  "results": [
+    {
+      "id": "required-test-zero-execution",
+      "classification": "expected-rejection",
+      "exitCode": 3,
+      "verdict": "toolFailure",
+      "authoritative": false,
+      "tests": {
+        "architecturePassed": 6,
+        "behaviorOutcome": "notRun",
+        "behaviorTotal": 0
+      },
+      "missingEvidenceCodes": [
+        "CSASSAY-REQUIRED-TESTS-NOT-RUN"
+      ],
+      "toolFailureCodes": [
+        "CSASSAY-TEST-RUN-FAILED"
+      ],
+      "jsonSha256": "15c816e1160ed50661a4a19034413ac590aeef8a18aa19bfcb6a7e5b0aad38ab",
+      "sarifSha256": "66f2bbd723740c61db6736ae81be5557a14cd97563fee386ed67cbe5fbc7600d"
+    },
+    {
+      "id": "compiler-missing-generated-member",
+      "classification": "expected-rejection",
+      "exitCode": 2,
+      "verdict": "inconclusive",
+      "authoritative": false,
+      "compilerDiagnostic": "CS0103",
+      "requiredRuleOutcomes": {
+        "completed": 0,
+        "incomplete": 7
+      },
+      "missingEvidenceCodes": [
+        "CSASSAY-COMPILER-ERRORS",
+        "CSASSAY-REQUIRED-RULE-INCOMPLETE",
+        "CSASSAY-REQUIRED-TESTS-NOT-RUN"
+      ],
+      "toolFailureCodes": [],
+      "jsonSha256": "ea06ad08f01eda46ca5f35d1a6f0735181f2763a8e72f6ad74ea1ebb316d2624",
+      "sarifSha256": "2c6380a100a90e7f263eb394d68c68e3aa479a597746a66f9c46015affdc597e"
+    },
+    {
+      "id": "forbidden-domain-project-reference",
+      "classification": "expected-rejection",
+      "architectureTestExitCode": 2,
+      "testsPassed": 5,
+      "testsFailed": 1,
+      "failedTest": "Project_reference_graph_matches_the_contract"
+    },
+    {
+      "id": "analyzer-anti-bypass",
+      "classification": "expected-rejection-and-reviewed-rollback",
+      "probes": [
+        {"property": "RunAnalyzers=false", "exitCode": 1, "code": "CSASSAY-BUILD-GATE-DISABLED"},
+        {"property": "RunAnalyzersDuringBuild=false", "exitCode": 1, "code": "CSASSAY-BUILD-GATE-DISABLED"},
+        {"property": "NoWarn=CSAN0003", "exitCode": 1, "code": "CSASSAY-BUILD-GATE-SUPPRESSED"},
+        {"property": "WarningsNotAsErrors=CSAN0003", "exitCode": 1, "code": "CSASSAY-BUILD-GATE-SUPPRESSED"},
+        {"property": "CsAssayEnforceOnBuild=false", "exitCode": 0, "classification": "enforcement-disabled-not-pass"}
+      ]
+    },
+    {
+      "id": "stale-evidence-after-source-mutation",
+      "classification": "original-false-pass-with-candidate-fix",
+      "acceptedAssertion": {
+        "exitCode": 0,
+        "acceptedStaleEvidence": true
+      },
+      "recordedSourceSha256": "161a2ce67d4994f10600e02fb85509ff968b437b83c62e560194f2fcb43c5dbd",
+      "currentSourceSha256": "d9093b75ad87c641ef5ff00f13dc8ecb780a29e0b98745ef14835b964e6bad60",
+      "sourceHashMatches": false,
+      "manualDetectionPossible": true,
+      "candidateFixRetest": {
+        "acceptedCommit": "948531bc234c03dfc30087c7eacac81f00c89017",
+        "scriptStatus": "candidate-in-this-branch",
+        "cleanAssertionExitCode": 0,
+        "existingSourceModificationExitCode": 1,
+        "newSourceAdditionExitCode": 1,
+        "rejectionMessage": "evidence source inventory or hash is stale",
+        "testedPaths": [
+          "src/Shape.Domain/Orders.cs",
+          "src/Shape.Domain/NewUnrecordedSource.cs"
+        ],
+        "result": "both-tested-stale-source-paths-rejected"
+      }
+    },
+    {
+      "id": "domain-hidden-datetime-effect",
+      "classification": "coverage-gap",
+      "buildExitCode": 0,
+      "architectureTestExitCode": 0,
+      "architectureTestsPassed": 6,
+      "verifyExitCode": 0,
+      "verdict": "pass",
+      "authoritative": true,
+      "testsPassed": 16,
+      "findings": {
+        "CSAN0003": 1,
+        "CSAN0004": 2
+      },
+      "hiddenEffectFinding": false,
+      "jsonSha256": "bb888c5cb79f39728b988f1dabb1c39467dca51968d97356ca75e3ce04bbdd2d",
+      "sarifSha256": "dad047c97d217562bbbe38b9d6961a1bfbc142ef99083ff2456a58405ab5a44f"
+    }
+  ],
+  "environmentFailures": [
+    {
+      "command": "./eng/run-functional-shape.sh",
+      "exitCode": 127,
+      "reason": "dotnet absent from PATH",
+      "csAssayExecuted": false
+    },
+    {
+      "command": "PATH=/root/.dotnet:$PATH ./eng/run-functional-shape.sh",
+      "exitCode": 131,
+      "reason": "DOTNET_ROOT unset for installed tool apphost",
+      "csAssayExecuted": false
+    }
+  ]
+}

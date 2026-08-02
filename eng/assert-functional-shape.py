@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from collections import Counter
@@ -52,12 +53,32 @@ def assert_packages(expected: dict[str, Any]) -> None:
         )
 
 
+def assert_source_binding(evidence: dict[str, Any]) -> None:
+    recorded = {
+        source["path"]: source["sha256"]
+        for source in evidence["sources"]
+        if source["path"].startswith(("src/", "tests/"))
+        and "/obj/" not in source["path"]
+        and "/bin/" not in source["path"]
+    }
+    current = {
+        path.relative_to(SAMPLE).as_posix(): hashlib.sha256(
+            path.read_bytes()
+        ).hexdigest()
+        for root in (SAMPLE / "src", SAMPLE / "tests")
+        for path in root.rglob("*.cs")
+        if "obj" not in path.parts and "bin" not in path.parts
+    }
+    require(recorded == current, "evidence source inventory or hash is stale")
+
+
 def main() -> int:
     try:
         expected = load(EXPECTED)
         report = load(REPORT)
         evidence = report["evidence"]
         assert_packages(expected)
+        assert_source_binding(evidence)
 
         require(report["schemaVersion"] == "1.2.0", "wrong evidence schema")
         require(report["verdict"] == "pass", "verify verdict is not pass")
