@@ -1,0 +1,64 @@
+{
+  "$schema": "https://raw.githubusercontent.com/CanonFlow-Assay/CSharpAssay/v0.1.2/eng/schemas/csassay.schema.json",
+  "profile": "compat",
+  "release": {
+    "allowPreviewToolchain": false,
+    "requiredTargetFrameworks": ["net10.0"],
+    "requiredRules": [
+      "CSAI0001",
+      "CSAI0002",
+      "CSAN0001",
+      "CSAN0002",
+      "CSAN0003",
+      "CSAN0004",
+      "CSAP0001"
+    ],
+    "tests": [
+      {
+        "input": "tests/Shape.Behavior.Tests/Shape.Behavior.Tests.csproj",
+        "configuration": "Release",
+        "noBuild": true,
+        "minimumExpectedTests": 8
+      },
+      {
+        "input": "tests/Shape.Architecture.Tests/Shape.Architecture.Tests.csproj",
+        "configuration": "Release",
+        "noBuild": true,
+        "minimumExpectedTests": 6
+      }
+    ]
+  },
+  "boundaries": {
+    "coreProjects": [
+      "src/Shape.Domain/Shape.Domain.csproj",
+      "src/Shape.Application/Shape.Application.csproj"
+    ],
+    "shellProjects": [
+      "src/Shape.Infrastructure/Shape.Infrastructure.csproj",
+      "src/Shape.Api/Shape.Api.csproj",
+      "tests/Shape.Behavior.Tests/Shape.Behavior.Tests.csproj",
+      "tests/Shape.Architecture.Tests/Shape.Architecture.Tests.csproj"
+    ],
+    "coreNamespaces": ["Shape.Domain", "Shape.Application"],
+    "shellNamespaces": [
+      "Shape.Infrastructure",
+      "Shape.Api",
+      "Shape.Behavior.Tests",
+      "Shape.Architecture.Tests"
+    ]
+  },
+  "representations": {
+    "resultTypes": ["Shape.Domain.Result`2"],
+    "optionTypes": ["Shape.Domain.Option`1"],
+    "closedTypes": [
+      "Shape.Domain.Result`2",
+      "Shape.Domain.Option`1"
+    ]
+  },
+  "domainPrimitives": {
+    "Shape.Domain.OrderId": ["orderId"],
+    "Shape.Domain.ProductCode": ["productCode"],
+    "Shape.Domain.Quantity": ["quantity"]
+  },
+  "suppressions": []
+}

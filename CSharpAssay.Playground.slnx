@@ -13,6 +13,14 @@
     <Project Path="samples/30-gof-functional-crosswalk/refined/Gof.Refined.csproj" />
     <Project Path="samples/30-gof-functional-crosswalk/tests/Gof.Crosswalk.Tests.csproj" />
   </Folder>
+  <Folder Name="/samples/40-functional-shape-v0.1/">
+    <Project Path="samples/40-functional-shape-v0.1/src/Shape.Domain/Shape.Domain.csproj" />
+    <Project Path="samples/40-functional-shape-v0.1/src/Shape.Application/Shape.Application.csproj" />
+    <Project Path="samples/40-functional-shape-v0.1/src/Shape.Infrastructure/Shape.Infrastructure.csproj" />
+    <Project Path="samples/40-functional-shape-v0.1/src/Shape.Api/Shape.Api.csproj" />
+    <Project Path="samples/40-functional-shape-v0.1/tests/Shape.Behavior.Tests/Shape.Behavior.Tests.csproj" />
+    <Project Path="samples/40-functional-shape-v0.1/tests/Shape.Architecture.Tests/Shape.Architecture.Tests.csproj" />
+  </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Playground.Tests/Playground.Tests.csproj" />
   </Folder>

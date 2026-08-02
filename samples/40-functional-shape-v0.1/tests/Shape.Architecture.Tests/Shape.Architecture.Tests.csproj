@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+    <NoWarn>$(NoWarn);CA1707</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Shape.Domain/Shape.Domain.csproj" />
+    <ProjectReference Include="../../src/Shape.Application/Shape.Application.csproj" />
+    <ProjectReference Include="../../src/Shape.Infrastructure/Shape.Infrastructure.csproj" />
+    <ProjectReference Include="../../src/Shape.Api/Shape.Api.csproj" />
+  </ItemGroup>
+</Project>

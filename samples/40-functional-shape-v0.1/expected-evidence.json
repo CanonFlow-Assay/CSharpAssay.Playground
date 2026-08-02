@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "packageBaseline": {
+    "tool": "CsAssay.Tool@0.1.2",
+    "analyzer": "CsAssay.Analyzers@0.1.2"
+  },
+  "projects": 6,
+  "tests": {
+    "Shape.Behavior.Tests": 8,
+    "Shape.Architecture.Tests": 6
+  },
+  "findings": [
+    "CSAN0003",
+    "CSAN0004",
+    "CSAN0004"
+  ]
+}

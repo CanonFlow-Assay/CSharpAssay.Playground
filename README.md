@@ -18,6 +18,8 @@ and [known blind spots](docs/blind-spots.md).
   admitted stable rule.
 - `samples/10-gilded-rose`: an untouched, pinned upstream slice and a reviewed
   immutable derivative protected by characterization tests.
+- `samples/40-functional-shape-v0.1`: a hand-authored Domain → Application →
+  API/Infrastructure reference using published CSharpAssay 0.1.2 evidence.
 - `samples/20-eshop-agent-assay`: a pinned, external-clone handoff for an
   agent-led assay of eShop's Ordering domain, including separate upstream and
   reviewed-candidate evidence; source is not vendored.
