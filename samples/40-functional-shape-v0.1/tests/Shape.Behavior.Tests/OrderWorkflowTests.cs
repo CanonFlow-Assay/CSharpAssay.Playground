@@ -1,4 +1,6 @@
 using System.Collections.Immutable;
+using System.Diagnostics;
+using System.Reflection;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Shape.Api;
 using Shape.Application;
@@ -172,6 +174,58 @@ public sealed class OrderWorkflowTests
         Assert.Equal("empty_order", unprocessable.Value?.Code);
     }
 
+    [Fact]
+    public void Api_boundary_maps_domain_success_to_created()
+    {
+        var accepted = Assert.IsType<
+            Result<AcceptedOrder, OrderError>.Success>(
+                OrderDecisions.Accept(ValidSubmission()));
+        var receipt = new OrderReceipt(
+            accepted.Value.OrderId,
+            accepted.Value.Lines.Length);
+        var result = new Result<OrderReceipt, OrderError>.Success(receipt);
+
+        var response = OrderEndpoint.ToResponse(result);
+
+        var created = Assert.IsType<Created<OrderResponse>>(response.Result);
+        Assert.Equal($"/orders/{receipt.OrderId.Value}", created.Location);
+        Assert.Equal(receipt.OrderId.Value, created.Value?.OrderId);
+        Assert.Equal(1, created.Value?.StoredLineCount);
+    }
+
+    [Fact]
+    public void Success_null_payload_is_rejected() =>
+        AssertNullPayloadRejected(
+            typeof(Result<string, OrderError>.Success));
+
+    [Fact]
+    public void Failure_null_payload_is_rejected() =>
+        AssertNullPayloadRejected(
+            typeof(Result<string, OrderError>.Failure));
+
+    [Fact]
+    public void Some_null_payload_is_rejected() =>
+        AssertNullPayloadRejected(typeof(Option<string>.Some));
+
+    [Fact]
+    public void Result_handling_covers_success_and_failure()
+    {
+        Assert.Equal(
+            "success:value",
+            DescribeResult(new Result<string, OrderError>.Success("value")));
+        Assert.Equal(
+            "failure:InvalidOrderId",
+            DescribeResult(new Result<string, OrderError>.Failure(
+                new OrderError.InvalidOrderId())));
+    }
+
+    [Fact]
+    public void Option_handling_covers_some_and_none()
+    {
+        Assert.Equal("some:value", DescribeOption(new Option<string>.Some("value")));
+        Assert.Equal("none", DescribeOption(new Option<string>.None()));
+    }
+
     private static OrderSubmission ValidSubmission() =>
         new(
             Guid.NewGuid(),
@@ -182,4 +236,30 @@ public sealed class OrderWorkflowTests
         Enumerable.Range(1, count)
             .Select(index => new OrderLineInput($"SKU-{index}", 1))
             .ToImmutableArray();
+
+    private static void AssertNullPayloadRejected(Type caseType)
+    {
+        var arguments = new object?[1];
+        var exception = Assert.Throws<TargetInvocationException>(() =>
+            caseType.GetConstructors().Single().Invoke(arguments));
+        Assert.IsType<ArgumentNullException>(exception.InnerException);
+    }
+
+    private static string DescribeResult(Result<string, OrderError> result) =>
+        result switch
+        {
+            Result<string, OrderError>.Success success =>
+                $"success:{success.Value}",
+            Result<string, OrderError>.Failure failure =>
+                $"failure:{failure.Error.GetType().Name}",
+            _ => throw new UnreachableException(),
+        };
+
+    private static string DescribeOption(Option<string> option) =>
+        option switch
+        {
+            Option<string>.Some some => $"some:{some.Value}",
+            Option<string>.None => "none",
+            _ => throw new UnreachableException(),
+        };
 }

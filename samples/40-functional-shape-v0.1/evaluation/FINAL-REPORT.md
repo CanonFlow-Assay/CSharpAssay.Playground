@@ -17,8 +17,8 @@ Draft PRs:
 
 | Surface | Base | Event commit |
 |---|---|---|
-| Normative contract | `35b2e9ae935eae758834a70ae4140faaaa280a53` | `8ef9a70b1b354130b52c1eff8e4b57afef2c1700` |
-| Playground reference | `426c543ef8610d9ba601037c899885d870993c4f` | `b1e4a17a95b91b5ac077406ad66decd1aa6b50e8` |
+| Normative contract | `35b2e9ae935eae758834a70ae4140faaaa280a53` | `5b3766bf5ff00ed4b8d0ccf06c01ac3ac22d1c14` |
+| Playground reference | `426c543ef8610d9ba601037c899885d870993c4f` | `b1e4a17aa92eb1c4047aac5c4b66b4b23fbface6` |
 | Builder event | `b1e4a17` | `948531bc234c03dfc30087c7eacac81f00c89017` |
 | Source binding and first red-team event | `948531b` | `519aa46eec84d7d227a4f4b1c09e109f87eb194d` |
 | Completed mutation matrix | `519aa46` | `96de74ad7ee99ef345595fcd49b6c958ee763f25` |
@@ -39,15 +39,20 @@ six are rejected as `TooManyLines(5, 6)`, map to
 six sample files and did not alter representations, dependencies, package
 pins, analyzer scope, required rules, or CSharpAssay behavior.
 
-Release build completed with zero warnings and errors. Tests passed 16/16:
+Review corrections close public invalid-state construction: validated values
+have non-public constructors, defaultable value structs are not used, and only
+the Domain assembly can construct `AcceptedOrder` after validation.
 
-- Behavior: 10 passed, 0 failed, 0 skipped.
-- Architecture: 6 passed, 0 failed, 0 skipped.
+Release build completed with zero warnings and errors. Shape tests passed
+23/23:
+
+- Behavior: 16 passed, 0 failed, 0 skipped.
+- Architecture: 7 passed, 0 failed, 0 skipped.
 
 ## CSharpAssay evidence
 
 Published 0.1.2 loaded all six projects, completed all seven required rules,
-ran all 16 configured tests, reported no missing evidence or tool failure, and
+ran all 23 configured tests, reported no missing evidence or tool failure, and
 returned `pass`, exit 0, `authoritative:true`.
 
 No blocking finding remains. Three shell advisories are retained:
@@ -61,12 +66,19 @@ The harness clears only this sample's generated build trees before evidence
 collection. Two complete clean-harness invocations, each containing two
 no-source-change verification runs, produced byte-identical artifacts:
 
-- JSON: `9a498712ec75f93eec95cbe146f4131c55c4a84848cf600b5977b7095eef9f3f`
-- SARIF: `dad047c97d217562bbbe38b9d6961a1bfbc142ef99083ff2456a58405ab5a44f`
+- JSON: `990b2045041fcd529ecb2a23db1a853a79becbe093e48c26a4315aa403edc633`
+- SARIF: `e4a0ffb14f053953d0fe124484c7168a0ac417625b9f7005ec243bc362794148`
 
 The policy, package-lock, analyzer assembly, contract, and expected-evidence
 hashes are recorded in `evidence-manifest.json`. Evidence source paths and
 SHA-256 values are checked against the current non-generated C# inventory.
+The standalone assertion also binds the policy, sample solution, every project
+file, and the exact finding expectation file. Findings are matched by rule ID,
+path, disposition, and stable CSharpAssay fingerprint.
+
+Focused mutation checks changed each bound input independently. Policy,
+project, and expected-evidence mutations each made the assertion exit 1 with a
+specific stale-input error; restoring the reviewed bytes returned exit 0.
 
 ## Independent evaluation
 
@@ -101,10 +113,11 @@ runs were preserved as explicit coverage gaps, it accepted the evaluation as
 complete. The judgment is non-authoritative and cannot override compiler,
 test, CSharpAssay, hash, or human evidence.
 
-Open human questions include direct null-case tests, successful API response
-characterization, public construction paths for domain values, binding finding
-fingerprints rather than counts, and whether standalone freshness checks must
-also bind policy/project files.
+The review-requested null-case tests, successful API response characterization,
+valid-state construction closure, exact finding identities, and standalone
+input binding are now deterministic candidate evidence. The earlier judge
+record remains non-authoritative historical evidence from before these human
+corrections.
 
 ## Limits and human action
 

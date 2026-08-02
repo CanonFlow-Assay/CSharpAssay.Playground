@@ -76,6 +76,25 @@ public sealed class ShapeArchitectureTests
             typeof(InMemoryOrderStore).GetInterfaces());
     }
 
+    [Fact]
+    public void Validated_domain_state_has_no_public_constructors()
+    {
+        Type[] validatedTypes =
+        [
+            typeof(OrderId),
+            typeof(ProductCode),
+            typeof(Quantity),
+            typeof(CustomerNote),
+            typeof(OrderLine),
+            typeof(AcceptedOrder),
+        ];
+
+        foreach (var type in validatedTypes)
+        {
+            Assert.Empty(type.GetConstructors(BindingFlags.Public | BindingFlags.Instance));
+        }
+    }
+
     private static string[] ReferencedAssemblies(Assembly assembly) =>
         assembly.GetReferencedAssemblies()
             .Select(reference => reference.Name)

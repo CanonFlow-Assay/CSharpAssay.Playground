@@ -12,10 +12,13 @@ public static class OrderDecisions
     {
         ArgumentNullException.ThrowIfNull(submission);
 
-        if (submission.OrderId == Guid.Empty)
+        ArgumentNullException.ThrowIfNull(submission.CustomerNote);
+
+        var orderId = OrderId.Create(submission.OrderId);
+        if (orderId is Result<OrderId, OrderError>.Failure orderIdFailure)
         {
             return new Result<AcceptedOrder, OrderError>.Failure(
-                new OrderError.InvalidOrderId());
+                orderIdFailure.Error);
         }
 
         if (submission.Lines.IsDefaultOrEmpty)
@@ -64,7 +67,7 @@ public static class OrderDecisions
 
         return new Result<AcceptedOrder, OrderError>.Success(
             new AcceptedOrder(
-                new OrderId(submission.OrderId),
+                ((Result<OrderId, OrderError>.Success)orderId).Value,
                 lines.MoveToImmutable(),
                 ((Result<Option<CustomerNote>, OrderError>.Success)note).Value));
     }

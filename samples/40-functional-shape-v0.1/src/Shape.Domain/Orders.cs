@@ -9,7 +9,18 @@ public sealed record OrderSubmission(
 
 public sealed record OrderLineInput(string ProductCode, int Quantity);
 
-public readonly record struct OrderId(Guid Value);
+public sealed record OrderId
+{
+    private OrderId(Guid value) => Value = value;
+
+    public Guid Value { get; }
+
+    internal static Result<OrderId, OrderError> Create(Guid value) =>
+        value == Guid.Empty
+            ? new Result<OrderId, OrderError>.Failure(
+                new OrderError.InvalidOrderId())
+            : new Result<OrderId, OrderError>.Success(new OrderId(value));
+}
 
 public sealed record ProductCode
 {
@@ -25,7 +36,7 @@ public sealed record ProductCode
                 new ProductCode(value.Trim()));
 }
 
-public readonly record struct Quantity
+public sealed record Quantity
 {
     private Quantity(int value) => Value = value;
 
@@ -52,12 +63,48 @@ public sealed record CustomerNote
                 new CustomerNote(value.Trim()));
 }
 
-public sealed record OrderLine(ProductCode ProductCode, Quantity Quantity);
+public sealed record OrderLine
+{
+    internal OrderLine(ProductCode productCode, Quantity quantity)
+    {
+        ArgumentNullException.ThrowIfNull(productCode);
+        ArgumentNullException.ThrowIfNull(quantity);
+        ProductCode = productCode;
+        Quantity = quantity;
+    }
 
-public sealed record AcceptedOrder(
-    OrderId OrderId,
-    ImmutableArray<OrderLine> Lines,
-    Option<CustomerNote> CustomerNote);
+    public ProductCode ProductCode { get; }
+
+    public Quantity Quantity { get; }
+}
+
+public sealed record AcceptedOrder
+{
+    internal AcceptedOrder(
+        OrderId orderId,
+        ImmutableArray<OrderLine> lines,
+        Option<CustomerNote> customerNote)
+    {
+        ArgumentNullException.ThrowIfNull(orderId);
+        ArgumentNullException.ThrowIfNull(customerNote);
+        if (lines.IsDefaultOrEmpty)
+        {
+            throw new ArgumentException(
+                "An accepted order must contain validated lines.",
+                nameof(lines));
+        }
+
+        OrderId = orderId;
+        Lines = lines;
+        CustomerNote = customerNote;
+    }
+
+    public OrderId OrderId { get; }
+
+    public ImmutableArray<OrderLine> Lines { get; }
+
+    public Option<CustomerNote> CustomerNote { get; }
+}
 
 public abstract record OrderError
 {

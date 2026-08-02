@@ -4,20 +4,20 @@
   "contract": {
     "repository": "CanonFlow-Assay/CSharpAssay",
     "branch": "feature/functional-shape-v0.1-contract",
-    "commit": "8ef9a70b1b354130b52c1eff8e4b57afef2c1700",
+    "commit": "5b3766bf5ff00ed4b8d0ccf06c01ac3ac22d1c14",
     "baseCommit": "35b2e9ae935eae758834a70ae4140faaaa280a53",
-    "documentSha256": "54be4be99328e9f56e83358075f0cc112989bbc16e36c46527e74c32ea5771b2"
+    "documentSha256": "1bd27fa82a1b8ee6eafcd7cc51f872acf1e1077b415a698438ca635ce853d046"
   },
   "reference": {
     "repository": "CanonFlow-Assay/CSharpAssay.Playground",
     "branch": "feature/functional-shape-v0.1-reference",
     "baseCommit": "426c543ef8610d9ba601037c899885d870993c4f",
-    "referenceBaselineCommit": "b1e4a17a95b91b5ac077406ad66decd1aa6b50e8",
+    "referenceBaselineCommit": "b1e4a17aa92eb1c4047aac5c4b66b4b23fbface6",
     "builderCommit": "948531bc234c03dfc30087c7eacac81f00c89017",
     "sourceBindingAndRedTeamCommit": "519aa46eec84d7d227a4f4b1c09e109f87eb194d",
     "completedMutationMatrixCommit": "96de74ad7ee99ef345595fcd49b6c958ee763f25",
-    "advisoryJudgeCommit": "2adc8047f97387b974df7d6d46038c3d2fd8b3d6",
-    "evidenceStabilizationCommit": "e280b1f"
+    "advisoryJudgeCommit": "2adc8046016aff8b525ec81e8a57cf4150153078",
+    "evidenceStabilizationCommit": "e280b1fa390a2360364f3d9f849fe3d459c101a7"
   },
   "packages": {
     "tool": "CsAssay.Tool@0.1.2",
@@ -27,22 +27,23 @@
     "applicationLockSha256": "3531289f943ce22edcab63fbab84ae693bfb5ea2632d6aaa7c55daf1b48c7e71"
   },
   "policy": {
-    "sha256": "13cdcbf4923dd40e2f8a291d61548c544c2cd4c4279236302703b956f0ec35e9",
-    "expectedEvidenceSha256": "ce835e63a90f4c128910c8663f5e9d96be9cb3bdb08abd2227de947f661a033a"
+    "sha256": "8383c873ba29559e7184e4912907a42e5f5bc26ec3409d7a193d893e039a5613",
+    "expectedEvidenceSha256": "4ff1dd14a11fa8110f9687bcb93b15feed2e7f998333ab218676d978633dff34",
+    "inputLockSha256": "ccc812b3f93187360cf3f1c04d325b0f4dc02b1b66d89369fde65c4420057da4"
   },
   "positiveEvidence": {
     "verdict": "pass",
     "authoritative": true,
     "projectsLoaded": 6,
-    "testsPassed": 16,
+    "testsPassed": 23,
     "testsFailed": 0,
     "blockingFindings": 0,
     "advisoryFindings": {
       "CSAN0003": 1,
       "CSAN0004": 2
     },
-    "jsonSha256": "9a498712ec75f93eec95cbe146f4131c55c4a84848cf600b5977b7095eef9f3f",
-    "sarifSha256": "dad047c97d217562bbbe38b9d6961a1bfbc142ef99083ff2456a58405ab5a44f",
+    "jsonSha256": "990b2045041fcd529ecb2a23db1a853a79becbe093e48c26a4315aa403edc633",
+    "sarifSha256": "e4a0ffb14f053953d0fe124484c7168a0ac417625b9f7005ec243bc362794148",
     "byteIdenticalRepeat": true,
     "byteIdenticalAcrossCleanHarnessInvocations": true
   },

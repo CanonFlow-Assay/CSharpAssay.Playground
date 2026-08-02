@@ -18,13 +18,13 @@
         "input": "tests/Shape.Behavior.Tests/Shape.Behavior.Tests.csproj",
         "configuration": "Release",
         "noBuild": true,
-        "minimumExpectedTests": 10
+        "minimumExpectedTests": 16
       },
       {
         "input": "tests/Shape.Architecture.Tests/Shape.Architecture.Tests.csproj",
         "configuration": "Release",
         "noBuild": true,
-        "minimumExpectedTests": 6
+        "minimumExpectedTests": 7
       }
     ]
   },

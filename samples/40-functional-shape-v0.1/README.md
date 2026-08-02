@@ -32,7 +32,8 @@ dotnet test samples/40-functional-shape-v0.1/Shape.slnx \
 
 The last command runs CSharpAssay twice and rejects missing projects, compiler
 errors, missing tests/evidence, tool failures, incomplete admitted rules,
-unexpected findings, changed counts, or non-identical JSON/SARIF.
+unexpected finding identities, stale source/policy/project/expectation inputs,
+or non-identical JSON/SARIF.
 
 ## Evidence boundary
 

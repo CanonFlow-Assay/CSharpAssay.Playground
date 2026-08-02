@@ -4,8 +4,9 @@ The accepted reference requires zero admitted blocking findings in Domain and
 Application. It does not require zero advisory findings.
 
 The expected finding inventory is machine-readable in
-`expected-evidence.json`. Every observed finding must be listed there and
-classified before the Draft PR is eligible for human review.
+`expected-evidence.json`. Every observed finding is bound by rule ID, path,
+disposition, and CSharpAssay fingerprint before the Draft PR is eligible for
+human review.
 
 ## Standing human decisions
 
@@ -34,6 +35,13 @@ completed with no admitted blocking finding.
 The Domain project suppresses compiler design guideline `CA1716` for the
 preapproved public name `Option<T>` and `CA1034` for its intentionally nested,
 closed cases. Neither suppression is a CSharpAssay diagnostic suppression.
+
+Validated `OrderId`, `ProductCode`, `Quantity`, `CustomerNote`, `OrderLine`,
+and `AcceptedOrder` values expose no public constructor. `OrderId` and
+`Quantity` are reference types so a CLR-default struct cannot bypass their
+factories. Behavior tests directly prove null case payload rejection and total
+handling of both `Result` and `Option` cases; architecture tests bind the
+non-public construction boundary.
 
 ## Independent coverage gaps
 

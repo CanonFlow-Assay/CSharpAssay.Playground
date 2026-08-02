@@ -14,6 +14,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SAMPLE = ROOT / "samples/40-functional-shape-v0.1"
 EXPECTED = SAMPLE / "expected-evidence.json"
+INPUTS = SAMPLE / "evidence-inputs.json"
 REPORT = ROOT / "evidence/generated/functional-shape-v0.1/verify.json"
 SARIF = ROOT / "evidence/generated/functional-shape-v0.1/verify.sarif"
 REQUIRED_RULES = {
@@ -30,6 +31,10 @@ def load(path: Path) -> dict[str, Any]:
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise AssertionError(message)
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def assert_packages(expected: dict[str, Any]) -> None:
@@ -72,13 +77,48 @@ def assert_source_binding(evidence: dict[str, Any]) -> None:
     require(recorded == current, "evidence source inventory or hash is stale")
 
 
+def assert_input_binding(evidence: dict[str, Any], inputs: dict[str, Any]) -> None:
+    policy = SAMPLE / ".csassay.json"
+    expected_hash = sha256(EXPECTED)
+    policy_hash = sha256(policy)
+    require(inputs["policySha256"] == policy_hash, "policy input lock is stale")
+    require(
+        evidence["policy"]["sha256"] == policy_hash,
+        "evidence policy hash is stale",
+    )
+    require(
+        inputs["expectedEvidenceSha256"] == expected_hash,
+        "expected-evidence input lock is stale",
+    )
+
+    current_projects = {
+        path.relative_to(SAMPLE).as_posix(): sha256(path)
+        for path in [SAMPLE / "Shape.slnx", *sorted(SAMPLE.rglob("*.csproj"))]
+    }
+    require(
+        inputs["projectFiles"] == current_projects,
+        "solution or project input lock is stale",
+    )
+
+
+def finding_identity(finding: dict[str, Any]) -> dict[str, str]:
+    return {
+        "ruleId": finding["ruleId"],
+        "path": finding["location"]["path"],
+        "disposition": finding["disposition"],
+        "fingerprint": finding["fingerprint"],
+    }
+
+
 def main() -> int:
     try:
         expected = load(EXPECTED)
+        inputs = load(INPUTS)
         report = load(REPORT)
         evidence = report["evidence"]
         assert_packages(expected)
         assert_source_binding(evidence)
+        assert_input_binding(evidence, inputs)
 
         require(report["schemaVersion"] == "1.2.0", "wrong evidence schema")
         require(report["verdict"] == "pass", "verify verdict is not pass")
@@ -124,16 +164,31 @@ def main() -> int:
             "configured test did not pass cleanly",
         )
 
-        actual = Counter(finding["ruleId"] for finding in evidence["findings"])
-        require(actual == Counter(expected["findings"]), "finding inventory changed")
-        sarif = load(SARIF)
-        sarif_counts = Counter(
-            result["ruleId"]
-            for run in sarif["runs"]
-            for result in run.get("results", [])
+        actual_findings = sorted(
+            (finding_identity(finding) for finding in evidence["findings"]),
+            key=lambda finding: finding["fingerprint"],
         )
-        require(sarif_counts == actual, "SARIF and JSON finding counts differ")
+        expected_findings = sorted(
+            expected["findings"],
+            key=lambda finding: finding["fingerprint"],
+        )
+        require(actual_findings == expected_findings, "finding identity changed")
+        sarif = load(SARIF)
+        sarif_findings = sorted(
+            ({
+                "ruleId": result["ruleId"],
+                "path": result["locations"][0]["physicalLocation"]
+                    ["artifactLocation"]["uri"],
+                "disposition": result["properties"]["disposition"].lower(),
+                "fingerprint": result["partialFingerprints"]["csAssay/v1"],
+            }
+            for run in sarif["runs"]
+            for result in run.get("results", [])),
+            key=lambda finding: finding["fingerprint"],
+        )
+        require(sarif_findings == expected_findings, "SARIF finding identity changed")
 
+        actual = Counter(finding["ruleId"] for finding in actual_findings)
         rendered = ", ".join(f"{rule}={count}" for rule, count in sorted(actual.items()))
         print(f"Shape v0.1 evidence ok ({rendered or 'zero findings'})")
     except (AssertionError, KeyError, OSError, json.JSONDecodeError) as error:
