@@ -70,9 +70,12 @@ collection. Two complete clean-harness invocations, each containing two
 no-source-change verification runs, produced byte-identical artifacts. The
 disposable build excludes the SDK informational-version Git suffix to avoid a
 recursive candidate-SHA/artifact-hash cycle; candidate provenance remains
-recorded separately in Git, the PR, and this manifest.
+recorded separately in Git, the PR, and this manifest. JSON also records the
+runner OS/toolchain, so local and GitHub JSON hashes differ while each
+unchanged environment remains byte-deterministic.
 
-- JSON: `0b4d295f89ba0d7968e323d14f8528fa52ee71e209919b10a9bb9bf993613dbc`
+- GitHub qualification JSON: `027d2f725feb2993d50b4a5015f058541f862ff7d2f626bfb24d7827b53d454b`
+- Local repeated JSON: `0b4d295f89ba0d7968e323d14f8528fa52ee71e209919b10a9bb9bf993613dbc`
 - SARIF: `e4a0ffb14f053953d0fe124484c7168a0ac417625b9f7005ec243bc362794148`
 
 The policy, package-lock, analyzer assembly, contract, and expected-evidence

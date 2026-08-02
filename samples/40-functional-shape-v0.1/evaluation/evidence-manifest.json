@@ -44,8 +44,11 @@
       "CSAN0003": 1,
       "CSAN0004": 2
     },
-    "jsonSha256": "0b4d295f89ba0d7968e323d14f8528fa52ee71e209919b10a9bb9bf993613dbc",
+    "jsonSha256": "027d2f725feb2993d50b4a5015f058541f862ff7d2f626bfb24d7827b53d454b",
+    "localJsonSha256": "0b4d295f89ba0d7968e323d14f8528fa52ee71e209919b10a9bb9bf993613dbc",
     "sarifSha256": "e4a0ffb14f053953d0fe124484c7168a0ac417625b9f7005ec243bc362794148",
+    "qualificationRun": "https://github.com/CanonFlow-Assay/CSharpAssay.Playground/actions/runs/30739230025",
+    "jsonEnvironmentNote": "JSON includes runner OS/toolchain evidence; hashes are deterministic within an unchanged qualified environment.",
     "byteIdenticalRepeat": true,
     "byteIdenticalAcrossCleanHarnessInvocations": true
   },
