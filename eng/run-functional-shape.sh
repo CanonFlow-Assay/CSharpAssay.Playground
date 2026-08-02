@@ -9,6 +9,12 @@ scratch="$(mktemp -d "${TMPDIR:-/tmp}/csassay-shape.XXXXXX")"
 trap 'rm -rf "$scratch"' EXIT
 
 cd "$repo_root"
+
+# CSharpAssay inventories compiler inputs. Remove only this sample's generated
+# build trees so stale Debug/Release inputs cannot change artifact bytes.
+find "$sample_root" -type d \( -name bin -o -name obj \) \
+  -prune -exec rm -rf -- {} +
+
 mkdir -p "$scratch/dotnet-home" "$scratch/nuget-packages" "$scratch/tools"
 export DOTNET_CLI_HOME="$scratch/dotnet-home"
 export NUGET_PACKAGES="$scratch/nuget-packages"

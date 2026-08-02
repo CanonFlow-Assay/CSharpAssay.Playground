@@ -39,9 +39,10 @@
       "CSAN0003": 1,
       "CSAN0004": 2
     },
-    "jsonSha256": "74198722054cc9c6ff197cbfd99e37ee28205c0ce82d99f8a11d1cb14e990e7a",
+    "jsonSha256": "9a498712ec75f93eec95cbe146f4131c55c4a84848cf600b5977b7095eef9f3f",
     "sarifSha256": "dad047c97d217562bbbe38b9d6961a1bfbc142ef99083ff2456a58405ab5a44f",
-    "byteIdenticalRepeat": true
+    "byteIdenticalRepeat": true,
+    "byteIdenticalAcrossCleanHarnessInvocations": true
   },
   "llmJudgment": {
     "verdict": "advisory-accept",

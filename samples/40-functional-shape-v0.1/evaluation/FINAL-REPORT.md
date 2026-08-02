@@ -57,9 +57,11 @@ No blocking finding remains. Three shell advisories are retained:
 | `CSAN0003` | 1 | Test intentionally passes transport `null` to prove one-time conversion to `Option.None`. |
 | `CSAN0004` | 2 | Nullable API request property and constructor parameter remain shell concerns. |
 
-Two no-source-change verification runs produced byte-identical artifacts:
+The harness clears only this sample's generated build trees before evidence
+collection. Two complete clean-harness invocations, each containing two
+no-source-change verification runs, produced byte-identical artifacts:
 
-- JSON: `74198722054cc9c6ff197cbfd99e37ee28205c0ce82d99f8a11d1cb14e990e7a`
+- JSON: `9a498712ec75f93eec95cbe146f4131c55c4a84848cf600b5977b7095eef9f3f`
 - SARIF: `dad047c97d217562bbbe38b9d6961a1bfbc142ef99083ff2456a58405ab5a44f`
 
 The policy, package-lock, analyzer assembly, contract, and expected-evidence
