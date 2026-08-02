@@ -22,6 +22,7 @@ Draft PRs:
 | Builder event | `b1e4a17` | `948531bc234c03dfc30087c7eacac81f00c89017` |
 | Source binding and first red-team event | `948531b` | `519aa46eec84d7d227a4f4b1c09e109f87eb194d` |
 | Completed mutation matrix | `519aa46` | `96de74ad7ee99ef345595fcd49b6c958ee763f25` |
+| Human-review corrections | `2efedbccd1d5af46753176dd4a13e74a53a5683a` | `6946bd5d0afcefe007fd661199b09556f6e017b9` |
 
 The executable reference consumes published `CsAssay.Tool` 0.1.2 and
 `CsAssay.Analyzers` 0.1.2. It has no source reference to CSharpAssay.
