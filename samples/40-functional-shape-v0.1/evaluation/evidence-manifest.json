@@ -36,6 +36,7 @@
     "verdict": "pass",
     "authoritative": true,
     "projectsLoaded": 6,
+    "fullPlaygroundTestsPassed": 42,
     "testsPassed": 23,
     "testsFailed": 0,
     "blockingFindings": 0,
@@ -43,7 +44,7 @@
       "CSAN0003": 1,
       "CSAN0004": 2
     },
-    "jsonSha256": "990b2045041fcd529ecb2a23db1a853a79becbe093e48c26a4315aa403edc633",
+    "jsonSha256": "40cd742763d1e6a69c4823cd03cc3cbda79ec9bfdd8ebb93ef2cd0de27e73f92",
     "sarifSha256": "e4a0ffb14f053953d0fe124484c7168a0ac417625b9f7005ec243bc362794148",
     "byteIdenticalRepeat": true,
     "byteIdenticalAcrossCleanHarnessInvocations": true

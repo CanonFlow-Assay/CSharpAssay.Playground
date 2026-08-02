@@ -50,6 +50,8 @@ Release build completed with zero warnings and errors. Shape tests passed
 - Behavior: 16 passed, 0 failed, 0 skipped.
 - Architecture: 7 passed, 0 failed, 0 skipped.
 
+The complete Playground solution passed 42/42 tests.
+
 ## CSharpAssay evidence
 
 Published 0.1.2 loaded all six projects, completed all seven required rules,
@@ -67,7 +69,7 @@ The harness clears only this sample's generated build trees before evidence
 collection. Two complete clean-harness invocations, each containing two
 no-source-change verification runs, produced byte-identical artifacts:
 
-- JSON: `990b2045041fcd529ecb2a23db1a853a79becbe093e48c26a4315aa403edc633`
+- JSON: `40cd742763d1e6a69c4823cd03cc3cbda79ec9bfdd8ebb93ef2cd0de27e73f92`
 - SARIF: `e4a0ffb14f053953d0fe124484c7168a0ac417625b9f7005ec243bc362794148`
 
 The policy, package-lock, analyzer assembly, contract, and expected-evidence
