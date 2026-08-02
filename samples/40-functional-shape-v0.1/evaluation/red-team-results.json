@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "evaluationDate": "2026-08-02",
   "acceptedCommit": "948531bc234c03dfc30087c7eacac81f00c89017",
+  "contractCompletionFollowUpCommit": "519aa46eec84d7d227a4f4b1c09e109f87eb194d",
   "contractSha256": "54be4be99328e9f56e83358075f0cc112989bbc16e36c46527e74c32ea5771b2",
   "toolchain": {
     "tool": "CsAssay.Tool@0.1.2",
@@ -71,6 +72,27 @@
       "sarifSha256": "2c6380a100a90e7f263eb394d68c68e3aa479a597746a66f9c46015affdc597e"
     },
     {
+      "id": "missing-declared-core-project",
+      "classification": "coverage-gap",
+      "mutation": "append src/Shape.Absent/Shape.Absent.csproj to boundaries.coreProjects",
+      "policySha256": "3233ecc4dd0b010a039a8943f42b38a3cc19e06b9292a67e96b69e0340c45d19",
+      "verifyExitCode": 0,
+      "verdict": "pass",
+      "authoritative": true,
+      "reportedProjectCount": 6,
+      "reportedLoadedProjectCount": 6,
+      "absentProjectReported": false,
+      "testsPassed": 16,
+      "missingEvidenceCodes": [],
+      "toolFailureCodes": [],
+      "requiredRuleOutcomes": {
+        "completed": 7,
+        "incomplete": 0
+      },
+      "jsonSha256": "637ee7df6c81e5c99d3c4543742b5a6f919642cf3488786f8eedf5354f089b96",
+      "sarifSha256": "2dcf9fdad0cdfbc5a70027604fbb5cffde0356b2a09bbab893aa6001cad315d0"
+    },
+    {
       "id": "forbidden-domain-project-reference",
       "classification": "expected-rejection",
       "architectureTestExitCode": 2,
@@ -130,6 +152,33 @@
       },
       "hiddenEffectFinding": false,
       "jsonSha256": "bb888c5cb79f39728b988f1dabb1c39467dca51968d97356ca75e3ce04bbdd2d",
+      "sarifSha256": "dad047c97d217562bbbe38b9d6961a1bfbc142ef99083ff2456a58405ab5a44f"
+    },
+    {
+      "id": "direct-domain-serialization-concern",
+      "classification": "coverage-gap",
+      "mutation": "System.Text.Json.Serialization.JsonPropertyNameAttribute on Shape.Domain.OrderId.Value",
+      "restoreExitCode": 0,
+      "buildExitCode": 0,
+      "architectureTestExitCode": 0,
+      "architectureTestsPassed": 6,
+      "verifyExitCode": 0,
+      "verdict": "pass",
+      "authoritative": true,
+      "testsPassed": 16,
+      "findings": {
+        "CSAN0003": 1,
+        "CSAN0004": 2
+      },
+      "serializationFinding": false,
+      "missingEvidenceCodes": [],
+      "toolFailureCodes": [],
+      "requiredRuleOutcomes": {
+        "completed": 7,
+        "incomplete": 0
+      },
+      "sourceSha256": "a367759caa58346f3a112b3632a304c307c52ed874646f614feedc17366b2ce2",
+      "jsonSha256": "0561f8adae3975553c41904fe8d933a6778a2ae0c1a6205eb2a04ed79eca74ec",
       "sarifSha256": "dad047c97d217562bbbe38b9d6961a1bfbc142ef99083ff2456a58405ab5a44f"
     }
   ],
