@@ -57,6 +57,7 @@ public static class OrderEndpoint
         error switch
         {
             OrderError.EmptyOrder => "empty_order",
+            OrderError.TooManyLines => "too_many_order_lines",
             OrderError.InvalidOrderId => "invalid_order_id",
             OrderError.InvalidProductCode => "invalid_product_code",
             OrderError.InvalidQuantity => "invalid_quantity",

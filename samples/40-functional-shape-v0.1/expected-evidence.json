@@ -6,7 +6,7 @@
   },
   "projects": 6,
   "tests": {
-    "Shape.Behavior.Tests": 8,
+    "Shape.Behavior.Tests": 10,
     "Shape.Architecture.Tests": 6
   },
   "findings": [

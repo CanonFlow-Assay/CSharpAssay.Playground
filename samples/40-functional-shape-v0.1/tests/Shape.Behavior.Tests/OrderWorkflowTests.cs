@@ -99,6 +99,54 @@ public sealed class OrderWorkflowTests
     }
 
     [Fact]
+    public async Task Five_line_order_is_accepted()
+    {
+        var store = new InMemoryOrderStore();
+        var handler = new SubmitOrderHandler(store);
+        var submission = ValidSubmission() with
+        {
+            Lines = CreateLines(5),
+        };
+
+        var result = await handler.HandleAsync(
+            submission,
+            TestContext.Current.CancellationToken);
+
+        var success = Assert.IsType<
+            Result<OrderReceipt, OrderError>.Success>(result);
+        Assert.Equal(5, success.Value.StoredLineCount);
+        Assert.Single(store.Snapshot());
+        Assert.Equal(5, store.Snapshot()[0].Lines.Length);
+    }
+
+    [Fact]
+    public async Task Six_line_order_is_rejected_without_storage_effects()
+    {
+        var store = new InMemoryOrderStore();
+        var handler = new SubmitOrderHandler(store);
+        var submission = ValidSubmission() with
+        {
+            Lines = CreateLines(6),
+        };
+
+        var result = await handler.HandleAsync(
+            submission,
+            TestContext.Current.CancellationToken);
+
+        var failure = Assert.IsType<
+            Result<OrderReceipt, OrderError>.Failure>(result);
+        var error = Assert.IsType<OrderError.TooManyLines>(failure.Error);
+        Assert.Equal(5, error.Maximum);
+        Assert.Equal(6, error.Actual);
+        Assert.Empty(store.Snapshot());
+
+        var response = OrderEndpoint.ToResponse(result);
+        var unprocessable = Assert.IsType<
+            UnprocessableEntity<OrderErrorResponse>>(response.Result);
+        Assert.Equal("too_many_order_lines", unprocessable.Value?.Code);
+    }
+
+    [Fact]
     public void Api_boundary_maps_null_note_to_none()
     {
         var request = new OrderRequest(
@@ -129,4 +177,9 @@ public sealed class OrderWorkflowTests
             Guid.NewGuid(),
             [new OrderLineInput("SKU-1", 2)],
             new Option<string>.None());
+
+    private static ImmutableArray<OrderLineInput> CreateLines(int count) =>
+        Enumerable.Range(1, count)
+            .Select(index => new OrderLineInput($"SKU-{index}", 1))
+            .ToImmutableArray();
 }

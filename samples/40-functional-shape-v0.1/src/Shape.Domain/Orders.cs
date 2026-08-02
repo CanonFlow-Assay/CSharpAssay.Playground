@@ -67,6 +67,8 @@ public abstract record OrderError
 
     public sealed record EmptyOrder : OrderError;
 
+    public sealed record TooManyLines(int Maximum, int Actual) : OrderError;
+
     public sealed record InvalidOrderId : OrderError;
 
     public sealed record InvalidProductCode : OrderError;

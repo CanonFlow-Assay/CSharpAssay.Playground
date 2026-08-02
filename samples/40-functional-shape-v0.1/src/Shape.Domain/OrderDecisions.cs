@@ -5,6 +5,8 @@ namespace Shape.Domain;
 
 public static class OrderDecisions
 {
+    private const int MaximumLineCount = 5;
+
     public static Result<AcceptedOrder, OrderError> Accept(
         OrderSubmission submission)
     {
@@ -20,6 +22,14 @@ public static class OrderDecisions
         {
             return new Result<AcceptedOrder, OrderError>.Failure(
                 new OrderError.EmptyOrder());
+        }
+
+        if (submission.Lines.Length > MaximumLineCount)
+        {
+            return new Result<AcceptedOrder, OrderError>.Failure(
+                new OrderError.TooManyLines(
+                    MaximumLineCount,
+                    submission.Lines.Length));
         }
 
         var lines = ImmutableArray.CreateBuilder<OrderLine>(
