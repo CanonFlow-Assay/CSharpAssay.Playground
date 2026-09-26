@@ -28,14 +28,14 @@ run_reports() {
   dotnet tool run cs-assay -- check \
     "$sample_root/classic/Gof.Classic.csproj" \
     --policy "$sample_root/classic.policy.json" \
-    --profile compat \
+    --profile native \
     --json "$output_root/classic/check.json" \
     --sarif "$output_root/classic/check.sarif"
 
   dotnet tool run cs-assay -- verify \
     "$sample_root/refined/Gof.Refined.csproj" \
     --policy "$sample_root/refined.policy.json" \
-    --profile compat \
+    --profile native \
     --json "$output_root/refined/verify.json" \
     --sarif "$output_root/refined/verify.sarif"
 }

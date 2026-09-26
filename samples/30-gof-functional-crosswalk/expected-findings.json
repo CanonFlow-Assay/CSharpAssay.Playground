@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "packageBaseline": {
-    "tool": "CsAssay.Tool@0.1.1",
-    "analyzer": "CsAssay.Analyzers@0.1.1"
+    "tool": "CsAssay.Tool@0.2.0-rc.1",
+    "analyzer": "CsAssay.Analyzers@0.2.0-rc.1"
   },
   "reports": [
     {

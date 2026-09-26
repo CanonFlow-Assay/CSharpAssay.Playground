@@ -33,25 +33,21 @@ dotnet run \
 dotnet "$assay_dll" check \
   samples/00-rule-matrix/impure/RuleMatrix.Impure.csproj \
   --policy .csassay.impure.json \
-  --profile compat \
+  --profile native \
   --json evidence/generated/impure/check.json \
   --sarif evidence/generated/impure/check.sarif
 
 dotnet "$assay_dll" check \
   samples/10-gilded-rose/harness/GildedRose.Upstream.csproj \
   --policy .csassay.gildedrose-upstream.json \
-  --profile compat \
+  --profile native \
   --json evidence/generated/upstream/check.json \
   --sarif evidence/generated/upstream/check.sarif
 
 dotnet "$assay_dll" verify Playground.Refined.slnx \
   --policy .csassay.refined.json \
-  --profile compat \
+  --profile native \
   --json evidence/generated/refined/verify.json \
   --sarif evidence/generated/refined/verify.sarif
 
 python3 eng/assert-evidence.py
-
-if [[ -n "${ESHOP_UPSTREAM_ROOT:-}" ]]; then
-  python3 eng/assert-eshop-ordering.py "$ESHOP_UPSTREAM_ROOT"
-fi

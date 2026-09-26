@@ -4,7 +4,7 @@
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="CsAssay.Analyzers" Version="0.1.1" />
+    <PackageVersion Include="CsAssay.Analyzers" Version="0.2.0-rc.1" />
     <PackageVersion Include="xunit.v3" Version="3.2.2" />
   </ItemGroup>
 </Project>

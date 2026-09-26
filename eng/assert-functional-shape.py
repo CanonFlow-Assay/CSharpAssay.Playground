@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail unless Shape v0.1 matches its reviewed 0.1.2 evidence contract."""
+"""Fail unless Shape v0.1 matches its reviewed 0.2.0-rc.1 evidence contract."""
 
 from __future__ import annotations
 
@@ -9,6 +9,8 @@ import sys
 from collections import Counter
 from pathlib import Path
 from typing import Any
+
+from native_evidence import assert_native_profile
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,16 +42,16 @@ def sha256(path: Path) -> str:
 def assert_packages(expected: dict[str, Any]) -> None:
     require(
         expected["packageBaseline"] == {
-            "tool": "CsAssay.Tool@0.1.2",
-            "analyzer": "CsAssay.Analyzers@0.1.2",
+            "tool": "CsAssay.Tool@0.2.0-rc.1",
+            "analyzer": "CsAssay.Analyzers@0.2.0-rc.1",
         },
         "published package baseline changed",
     )
     for project_name in ("Shape.Domain", "Shape.Application"):
         lock = load(SAMPLE / f"src/{project_name}/packages.lock.json")
-        package = lock["dependencies"]["net10.0"]["CsAssay.Analyzers"]
+        package = lock["dependencies"]["net11.0"]["CsAssay.Analyzers"]
         require(package["type"] == "Direct", f"{project_name}: analyzer not direct")
-        require(package["resolved"] == "0.1.2", f"{project_name}: analyzer not 0.1.2")
+        require(package["resolved"] == "0.2.0-rc.1", f"{project_name}: analyzer not 0.2.0-rc.1")
 
     for project in SAMPLE.rglob("*.csproj"):
         require(
@@ -116,6 +118,7 @@ def main() -> int:
         inputs = load(INPUTS)
         report = load(REPORT)
         evidence = report["evidence"]
+        assert_native_profile(evidence)
         assert_packages(expected)
         assert_source_binding(evidence)
         assert_input_binding(evidence, inputs)
@@ -123,7 +126,7 @@ def main() -> int:
         require(report["schemaVersion"] == "1.2.0", "wrong evidence schema")
         require(report["verdict"] == "pass", "verify verdict is not pass")
         require(report["exitCode"] == 0, "verify recorded nonzero exit")
-        require(evidence["toolVersion"] == "0.1.2", "wrong tool version")
+        require(evidence["toolVersion"] == "0.2.0-rc.1", "wrong tool version")
         require(evidence["authoritative"] is True, "verify is not authoritative")
         require(len(evidence["projects"]) == expected["projects"], "wrong project count")
         require(all(project["loaded"] for project in evidence["projects"]), "project not loaded")

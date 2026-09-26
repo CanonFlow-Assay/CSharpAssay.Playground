@@ -1,0 +1,10 @@
+<Project>
+  <Target Name="RequireNet11" BeforeTargets="PrepareForBuild;CollectPackageReferences">
+    <Error Condition="'$(TargetFramework)' != '' and !$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^net11\.0(-.+)?$'))"
+           Code="CSASSAY-NET11-REQUIRED"
+           Text="This repository supports .NET 11 only. Use net11.0 and the SDK pinned in global.json." />
+    <Error Condition="'$(LangVersion)' != 'preview'"
+           Code="CSASSAY-NATIVE-LANGUAGE-REQUIRED"
+           Text=".NET 11 RC1 native unions require LangVersion=preview." />
+  </Target>
+</Project>

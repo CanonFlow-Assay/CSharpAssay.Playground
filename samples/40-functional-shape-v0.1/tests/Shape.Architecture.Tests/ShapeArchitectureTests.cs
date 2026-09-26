@@ -127,7 +127,7 @@ public sealed class ShapeArchitectureTests
         return package is not null
             && string.Equals(
                 package.Attribute("VersionOverride")?.Value,
-                "0.1.2",
+                "0.2.0-rc.1",
                 StringComparison.Ordinal)
             && string.Equals(
                 package.Attribute("PrivateAssets")?.Value,

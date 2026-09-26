@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/CanonFlow-Assay/CSharpAssay/v0.1.2/eng/schemas/csassay.schema.json",
-  "profile": "compat",
+  "$schema": "https://raw.githubusercontent.com/CanonFlow-Assay/CSharpAssay/main/eng/schemas/csassay.schema.json",
+  "profile": "native",
   "release": {
-    "allowPreviewToolchain": false,
-    "requiredTargetFrameworks": ["net10.0"],
+    "allowPreviewToolchain": true,
+    "requiredTargetFrameworks": ["net11.0"],
     "requiredRules": [
       "CSAI0001",
       "CSAI0002",

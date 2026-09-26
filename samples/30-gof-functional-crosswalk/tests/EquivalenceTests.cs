@@ -7,9 +7,14 @@ namespace Playground.Gof.Tests;
 
 public sealed class EquivalenceTests
 {
+    public static TheoryData<decimal, decimal> CheckoutTotals => new()
+    {
+        { 100m, 85m },
+        { 19.99m, 16.99m }
+    };
+
     [Theory]
-    [InlineData(100, 85)]
-    [InlineData(19.99, 16.99)]
+    [MemberData(nameof(CheckoutTotals))]
     public void Strategy_preserves_checkout_total(decimal subtotal, decimal expected)
     {
         var classic = Classic.ClassicPricing.Checkout(

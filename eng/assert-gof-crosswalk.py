@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail unless GoF reports match the reviewed 0.1.1 evidence contract."""
+"""Fail unless GoF reports match the reviewed 0.2.0-rc.1 evidence contract."""
 
 from __future__ import annotations
 
@@ -9,6 +9,8 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from native_evidence import assert_native_profile
+
 
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_PATH = ROOT / "samples/30-gof-functional-crosswalk/expected-findings.json"
@@ -16,7 +18,7 @@ ALL_RULES = {
     "CSAA0001", "CSAA0002", "CSAD0001", "CSAD0002", "CSAE0001",
     "CSAE0002", "CSAF0001", "CSAF0002", "CSAI0001", "CSAI0002",
     "CSAI0003", "CSAN0001", "CSAN0002", "CSAN0003", "CSAN0004",
-    "CSAP0001", "CSAU0001", "CSAU0002", "CSAU0003", "CSAU0004",
+    "CSAP0001", "CSAU0001", "CSAU0002", "CSAU0004",
 }
 REQUIRED_RULES = {
     "CSAI0001", "CSAI0002", "CSAN0001", "CSAN0002", "CSAN0003",
@@ -37,19 +39,19 @@ def require(condition: bool, message: str) -> None:
 def assert_package_baseline() -> None:
     manifest = load(ROOT / ".config/dotnet-tools.json")
     tool = manifest["tools"]["csassay.tool"]
-    require(tool["version"] == "0.1.1", "tool manifest is not pinned to 0.1.1")
+    require(tool["version"] == "0.2.0-rc.1", "tool manifest is not pinned to 0.2.0-rc.1")
     require(tool["rollForward"] is False, "tool manifest permits roll-forward")
 
     for lane in ("classic", "refined"):
         lock_path = ROOT / f"samples/30-gof-functional-crosswalk/{lane}/packages.lock.json"
-        dependency = load(lock_path)["dependencies"]["net10.0"]["CsAssay.Analyzers"]
+        dependency = load(lock_path)["dependencies"]["net11.0"]["CsAssay.Analyzers"]
         require(dependency["type"] == "Direct", f"{lane}: analyzer is not direct")
-        require(dependency["resolved"] == "0.1.1", f"{lane}: analyzer is not 0.1.1")
+        require(dependency["resolved"] == "0.2.0-rc.1", f"{lane}: analyzer is not 0.2.0-rc.1")
 
     for project in ROOT.glob("samples/30-gof-functional-crosswalk/**/*.csproj"):
         project_text = project.read_text(encoding="utf-8")
         require("/CSharpAssay" not in project_text, f"{project}: source reference found")
-    print("GoF package baseline ok: published tool and analyzer 0.1.1")
+    print("GoF package baseline ok: local tool and analyzer 0.2.0-rc.1")
 
 
 def assert_documentation() -> None:
@@ -64,7 +66,7 @@ def assert_documentation() -> None:
     for rule_id in ("CSAF0001", "CSAD0002", "CSAI0003"):
         require(rule_id in adjudication, f"adjudication omits {rule_id}")
         require(rule_id in site, f"rich documentation omits {rule_id}")
-    require("CSharpAssay 0.1.1" in site, "rich documentation omits version baseline")
+    require("CSharpAssay 0.2.0-rc.1" in site, "rich documentation omits version baseline")
     print("GoF documentation ok: crosswalk, adjudication, and rich site present")
 
 
@@ -72,6 +74,7 @@ def assert_json(expected: dict[str, Any]) -> Counter[str]:
     name = expected["name"]
     report = load(ROOT / expected["path"])
     evidence = report["evidence"]
+    assert_native_profile(evidence)
     findings = evidence["findings"]
 
     require(report["verdict"] == expected["verdict"], f"{name}: wrong verdict")
@@ -85,7 +88,7 @@ def assert_json(expected: dict[str, Any]) -> Counter[str]:
     require(not evidence["missingEvidence"], f"{name}: required evidence is missing")
 
     actual_rules = {rule["id"] for rule in evidence["rules"]}
-    require(actual_rules == ALL_RULES, f"{name}: admitted rule inventory changed")
+    require(actual_rules == ALL_RULES, f"{name}: rule catalogue inventory changed")
     actual_required = {rule["id"] for rule in evidence["rules"] if rule["required"]}
     require(actual_required == REQUIRED_RULES, f"{name}: required rule inventory changed")
     require(
@@ -144,8 +147,8 @@ def main() -> int:
         expected = load(EXPECTED_PATH)
         require(
             expected["packageBaseline"] == {
-                "tool": "CsAssay.Tool@0.1.1",
-                "analyzer": "CsAssay.Analyzers@0.1.1",
+                "tool": "CsAssay.Tool@0.2.0-rc.1",
+                "analyzer": "CsAssay.Analyzers@0.2.0-rc.1",
             },
             "package baseline changed",
         )

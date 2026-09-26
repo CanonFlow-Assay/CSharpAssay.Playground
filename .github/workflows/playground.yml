@@ -2,85 +2,48 @@ name: CSharpAssay Playground
 
 on:
   push:
-    branches: [main, agent-assay/eshop]
+    branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      assay_ref:
+        description: CSharpAssay revision containing the .NET 11 migration
+        required: true
+        default: main
 
 permissions:
   contents: read
 
 jobs:
   evidence:
-    name: Refined evidence gate
+    name: .NET 11 RC1 native evidence gate
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout playground
-        uses: actions/checkout@v6
-
-      - name: Checkout pinned CSharpAssay
+      - uses: actions/checkout@v6
+      - name: Checkout matching CSharpAssay source
         uses: actions/checkout@v6
         with:
           repository: CanonFlow-Assay/CSharpAssay
-          ref: f5fb8e7dd27da20f6d5c26306dc0e56823e37962
+          ref: ${{ inputs.assay_ref || vars.CSHARP_ASSAY_REF || 'main' }}
           path: .assay
-
-      - name: Checkout pinned eShop assay subject
-        uses: actions/checkout@v6
-        with:
-          repository: dotnet/eShop
-          ref: 9b4f9434f46fdc5c1a6e9e936af2868340cdbc48
-          path: .upstream-cache/eShop
-
-      - name: Checkout pinned reviewed eShop candidate
-        uses: actions/checkout@v6
-        with:
-          repository: CanonFlow-Assay/eShop
-          ref: 5e92c725c6b13ff2c9cda6de58228ff04c1fb73f
-          path: .candidate-cache/eShop
-
-      - name: Setup .NET 10
+      - name: Setup .NET 11 RC1
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 10.0.301
-
-      - name: Build pinned CSharpAssay runner
-        run: |
-          dotnet restore .assay/src/CsAssay.Runner/CsAssay.Runner.csproj --locked-mode
-          dotnet build .assay/src/CsAssay.Runner/CsAssay.Runner.csproj --no-restore --configuration Release
-
-      - name: Run complete playground gate
-        run: ESHOP_UPSTREAM_ROOT=.upstream-cache/eShop ./eng/run-assay.sh .assay/src/CsAssay.Runner/bin/Release/net10.0/cs-assay.dll
-
-      - name: Run pinned eShop agent assay
-        run: >-
-          ./eng/run-eshop-agent-assay.sh
-          .upstream-cache/eShop
-          .assay/src/CsAssay.Runner/bin/Release/net10.0/cs-assay.dll
-
-      - name: Assert pinned eShop evidence
-        run: python3 ./eng/assert-eshop-evidence.py
-
-      - name: Run pinned eShop candidate tests and assay
-        run: >-
-          ./eng/run-eshop-candidate-evidence.sh
-          .candidate-cache/eShop
-          .assay/src/CsAssay.Runner/bin/Release/net10.0/cs-assay.dll
-
-      - name: Assert candidate evidence closure
-        run: python3 ./eng/assert-eshop-candidate.py .candidate-cache/eShop
-
-      - name: Run GoF functional crosswalk evidence
+          global-json-file: global.json
+      - name: Build local .NET 11 packages
+        run: ./eng/prepare-assay.sh .assay
+      - name: Run playground gate
+        run: ./eng/run-assay.sh .assay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
+      - name: Run native GoF crosswalk
         run: ./eng/run-gof-crosswalk.sh
-
-      - name: Run Functional Shape v0.1 evidence
+      - name: Run Functional Shape evidence
         run: ./eng/run-functional-shape.sh
-
-      - name: Upload JSON and SARIF evidence
+      - name: Upload evidence
         if: always() && hashFiles('evidence/generated/**/*') != ''
         uses: actions/upload-artifact@v4
         with:
-          name: csharp-assay-playground-evidence
+          name: csharp-assay-net11-evidence
           path: evidence/generated/
           if-no-files-found: error
           retention-days: 14

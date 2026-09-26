@@ -1,12 +1,12 @@
 {
   "version": 2,
   "dependencies": {
-    "net10.0": {
+    "net11.0": {
       "CsAssay.Analyzers": {
         "type": "Direct",
-        "requested": "[0.1.1, )",
-        "resolved": "0.1.1",
-        "contentHash": "TsL7gpSinCIJZaUIHTM5c9d7sriAX2RqvMNRgLnMij107JB4Fw2wFfJLaBHKgTMFW5Wud0QV79/cGIG4xota5g=="
+        "requested": "[0.2.0-rc.1, )",
+        "resolved": "0.2.0-rc.1",
+        "contentHash": "CYa2mSv+5BzFw4LzO3y+5p0JP53Dw1nHVSnhi5vRaBvLf8f8BBxro8Z79/MIY3ktYpAmmGJyapOkXqC/E+fTsQ=="
       }
     }
   }

@@ -23,7 +23,7 @@ export NUGET_PACKAGES="$scratch/nuget-packages"
 export IncludeSourceRevisionInInformationalVersion=false
 
 dotnet tool install CsAssay.Tool \
-  --version 0.1.2 \
+  --version 0.2.0-rc.1 \
   --tool-path "$scratch/tools" \
   --configfile NuGet.config \
   --no-cache
@@ -41,7 +41,7 @@ mkdir -p "$generated_root" "$repeat_root"
 
 "$tool" check "$sample_root/Shape.slnx" \
   --policy "$sample_root/.csassay.json" \
-  --profile compat \
+  --profile native \
   --json "$generated_root/check.json" \
   --sarif "$generated_root/check.sarif" \
   --html "$generated_root/check.html"
@@ -50,7 +50,7 @@ run_verify() {
   local output_root="$1"
   "$tool" verify "$sample_root/Shape.slnx" \
     --policy "$sample_root/.csassay.json" \
-    --profile compat \
+    --profile native \
     --json "$output_root/verify.json" \
     --sarif "$output_root/verify.sarif" \
     --html "$output_root/verify.html"

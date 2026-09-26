@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <PackageReference Include="CsAssay.Analyzers"
-                      VersionOverride="0.1.2"
+                      VersionOverride="0.2.0-rc.1"
                       PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>

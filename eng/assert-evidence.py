@@ -10,6 +10,8 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from native_evidence import assert_native_profile
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -31,6 +33,7 @@ def assert_report(expected: dict[str, Any]) -> None:
 
     report = load_json(path)
     evidence = report["evidence"]
+    assert_native_profile(evidence)
     require(report["verdict"] == expected["verdict"], f"{name}: wrong verdict")
     require(report["exitCode"] == 0, f"{name}: nonzero recorded exit code")
     require(
