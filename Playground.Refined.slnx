@@ -3,6 +3,10 @@
     <Project Path="samples/00-rule-matrix/refined/RuleMatrix.Refined.csproj" />
     <Project Path="samples/10-gilded-rose/refined/GildedRose.Refined.csproj" />
   </Folder>
+  <Folder Name="/samples/50-decision-assistance/">
+    <Project Path="samples/50-decision-assistance/src/DecisionAssist.Domain/DecisionAssist.Domain.csproj" />
+    <Project Path="samples/50-decision-assistance/src/DecisionAssist.Cli/DecisionAssist.Cli.csproj" />
+  </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Playground.Tests/Playground.Tests.csproj" />
   </Folder>

@@ -39,6 +39,8 @@ jobs:
         run: ./eng/run-gof-crosswalk.sh
       - name: Run Functional Shape evidence
         run: ./eng/run-functional-shape.sh
+      - name: Run decision assistance experiment offline
+        run: python3 eng/run-decision-assistance.py
       - name: Upload evidence
         if: always() && hashFiles('evidence/generated/**/*') != ''
         uses: actions/upload-artifact@v4

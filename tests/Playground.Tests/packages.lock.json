@@ -123,6 +123,15 @@
           "xunit.v3.runner.common": "[3.2.2]"
         }
       },
+      "decisionassist.cli": {
+        "type": "Project",
+        "dependencies": {
+          "DecisionAssist.Domain": "[1.0.0, )"
+        }
+      },
+      "decisionassist.domain": {
+        "type": "Project"
+      },
       "gildedrose.refined": {
         "type": "Project"
       },

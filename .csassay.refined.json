@@ -17,22 +17,28 @@
         "input": "tests/Playground.Tests/Playground.Tests.csproj",
         "configuration": "Release",
         "noBuild": false,
-        "minimumExpectedTests": 9
+        "minimumExpectedTests": 40
       }
     ]
   },
   "boundaries": {
     "coreProjects": [
       "samples/00-rule-matrix/refined/RuleMatrix.Refined.csproj",
-      "samples/10-gilded-rose/refined/GildedRose.Refined.csproj"
+      "samples/10-gilded-rose/refined/GildedRose.Refined.csproj",
+      "samples/50-decision-assistance/src/DecisionAssist.Domain/DecisionAssist.Domain.csproj"
     ],
-    "shellProjects": ["tests/Playground.Tests/Playground.Tests.csproj"],
+    "shellProjects": [
+      "tests/Playground.Tests/Playground.Tests.csproj",
+      "samples/50-decision-assistance/src/DecisionAssist.Cli/DecisionAssist.Cli.csproj"
+    ],
     "coreNamespaces": [
       "Playground.RuleMatrix.Refined.Core",
-      "Playground.GildedRose.Refined"
+      "Playground.GildedRose.Refined",
+      "Playground.DecisionAssist.Domain"
     ],
     "shellNamespaces": [
-      "Playground.Tests"
+      "Playground.Tests",
+      "Playground.DecisionAssist.Cli"
     ]
   },
   "representations": {

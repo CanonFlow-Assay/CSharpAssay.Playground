@@ -26,6 +26,7 @@ The preparation script populates ignored `.packages/`, uses a checkout-local pac
 - `10-gilded-rose`: pinned upstream source, .NET 11 harness, characterization tests, and immutable derivative.
 - `30-gof-functional-crosswalk`: behavior-equivalent functional alternatives; shipment and recursive menu use native C# unions.
 - `40-functional-shape-v0.1`: domain/application/shell boundaries, behavior and architecture tests, and locally packaged .NET 11 evidence.
+- `50-decision-assistance`: native union advice, a real isolated boundary mutation, deterministic investigation feedback, and an opt-in Jev adapter. See [the slice contract](samples/50-decision-assistance/README.md).
 - `20-eshop-agent-assay`: historical external .NET 10 case study, excluded from the current gate. The separate eShop repository is outside this migration.
 
 Impure samples must produce their expected findings. Only complete `verify` evidence on refined projects is release authority. Historical evidence retains its original SDK and package identity.
@@ -33,3 +34,5 @@ Impure samples must produce their expected findings. Only complete `verify` evid
 CI selects the paired CSharpAssay revision using repository variable `CSHARP_ASSAY_REF` or workflow input `assay_ref`; default: `main`. That revision must contain the .NET 11 migration.
 
 See the [migration report](docs/net11-migration.md).
+
+Run `python3 eng/run-decision-assistance.py` after the Release build to reproduce the offline decision-assistance experiment. CI runs this slice without credentials or model requests.

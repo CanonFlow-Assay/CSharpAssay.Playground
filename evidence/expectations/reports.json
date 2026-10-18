@@ -40,8 +40,8 @@
       "path": "evidence/generated/refined/verify.json",
       "verdict": "pass",
       "authoritative": true,
-      "projects": 3,
-      "testsPassed": 9,
+      "projects": 5,
+      "testsPassed": 40,
       "ruleCounts": {
         "CSAI0001": 0,
         "CSAI0002": 0,

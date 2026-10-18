@@ -21,6 +21,11 @@
     <Project Path="samples/40-functional-shape-v0.1/tests/Shape.Behavior.Tests/Shape.Behavior.Tests.csproj" />
     <Project Path="samples/40-functional-shape-v0.1/tests/Shape.Architecture.Tests/Shape.Architecture.Tests.csproj" />
   </Folder>
+  <Folder Name="/samples/50-decision-assistance/">
+    <Project Path="samples/50-decision-assistance/src/DecisionAssist.Domain/DecisionAssist.Domain.csproj" />
+    <Project Path="samples/50-decision-assistance/src/DecisionAssist.Cli/DecisionAssist.Cli.csproj" />
+    <Project Path="samples/50-decision-assistance/probe/AmountProbe.csproj" />
+  </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Playground.Tests/Playground.Tests.csproj" />
   </Folder>

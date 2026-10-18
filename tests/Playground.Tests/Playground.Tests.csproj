@@ -2,5 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="../../samples/00-rule-matrix/refined/RuleMatrix.Refined.csproj" />
     <ProjectReference Include="../../samples/10-gilded-rose/refined/GildedRose.Refined.csproj" />
+    <ProjectReference Include="../../samples/50-decision-assistance/src/DecisionAssist.Domain/DecisionAssist.Domain.csproj" />
+    <ProjectReference Include="../../samples/50-decision-assistance/src/DecisionAssist.Cli/DecisionAssist.Cli.csproj" />
   </ItemGroup>
 </Project>
