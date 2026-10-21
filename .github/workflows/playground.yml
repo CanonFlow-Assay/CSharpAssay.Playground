@@ -10,7 +10,7 @@ on:
       assay_ref:
         description: Matching CSharpAssay revision containing .NET 11 and the assess API
         required: true
-        default: main
+        default: 238b56a99b1d7be92e9523262bd55cb9f4b26202
 
 permissions:
   contents: read

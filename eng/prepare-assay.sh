@@ -15,5 +15,7 @@ export NUGET_PACKAGES="$repo_root/.packages/cache"
 rm -rf "$NUGET_PACKAGES/csassay.analyzers/0.2.0-rc.1" \
        "$NUGET_PACKAGES/csassay.tool/0.2.0-rc.1"
 dotnet tool restore --configfile NuGet.config
-dotnet restore CSharpAssay.Playground.slnx --force-evaluate --configfile NuGet.config
+# Refresh the rebuilt local package identity across every authored project.
+# The subsequent all-sample and evidence gates still require locked restore.
+dotnet restore AllSamples.slnx --force-evaluate --configfile NuGet.config
 echo "Prepared CsAssay 0.2.0-rc.1 packages for .NET 11."

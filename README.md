@@ -59,7 +59,9 @@ The preparation script populates ignored `.packages/`, uses a checkout-local pac
 
 Impure samples must produce their expected findings. Only complete `verify` evidence on refined projects is release authority. Historical evidence retains its original SDK and package identity.
 
-CI selects the paired CSharpAssay revision using repository variable `CSHARP_ASSAY_REF` or workflow input `assay_ref`; default: `main`. That revision must contain the .NET 11 migration.
+CI defaults to the paired engine assessment commit `238b56a99b1d7be92e9523262bd55cb9f4b26202`. Repository variable `CSHARP_ASSAY_REF` or workflow input `assay_ref` can select another reviewed revision containing .NET 11 and the `assess` API.
+
+Follow the [local Forgejo review workflow](docs/local-review-workflow.md): local tests, commits and PRs precede consolidated external publication.
 
 See the [migration report](docs/net11-migration.md).
 

@@ -6,7 +6,7 @@
         "type": "Direct",
         "requested": "[0.2.0-rc.1, )",
         "resolved": "0.2.0-rc.1",
-        "contentHash": "YUof+jhrL7he5Ksj+HeHR27Qky00ulMjItZDTaQEVT8bXgjytPnDXGtG1+oXXcQ9a+cqG/fIh+Dl9WdpUD1nqw=="
+        "contentHash": "pMDpWQUPlkhAY2yaallzdMdzihywBK+fiaxweoc5rsnw8QqWvfj3h5VbhgbLM5dz62xoyyALhP7gm4j9JqfZBg=="
       },
       "shape.domain": {
         "type": "Project"
