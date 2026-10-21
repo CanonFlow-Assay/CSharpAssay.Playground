@@ -17,7 +17,11 @@ public sealed record MutationEvidence(
     ExperimentState State,
     Observation Covered,
     Observation HasBoundaryAssertion,
-    VerificationVerdict VerificationVerdict);
+    VerificationVerdict VerificationVerdict)
+{
+    public string Task { get; init; } = "synthetic-zero-boundary-mutation";
+    public string InvestigationContext { get; init; } = string.Empty;
+}
 
 public readonly union Advice(Recommendation, ReviewRequired, AdviceUnavailable);
 public sealed record Recommendation(NextAction Action, string Basis);
@@ -32,7 +36,7 @@ public static class Assistance
         !testsCompleted ? new IncompleteTestRun() :
         survived ? new SurvivingMutation() : new KilledMutation();
 
-    public static bool Eligible(MutationEvidence evidence) => evidence.State is SurvivingMutation;
+    public static bool Eligible(MutationEvidence evidence) => Baseline(evidence) is Recommendation;
 
     public static Advice Baseline(MutationEvidence evidence) => evidence.State switch
     {
@@ -47,7 +51,8 @@ public static class Assistance
     {
         { Covered: Observation.Absent } => new Recommendation(NextAction.InspectReachability, "observed-no-coverage"),
         { HasBoundaryAssertion: Observation.Absent } => new Recommendation(NextAction.InspectAssertion, "declared-boundary-test-gap"),
-        _ => new Recommendation(NextAction.ReviewContract, "equivalence-and-intent-need-review")
+        { Covered: Observation.Present, HasBoundaryAssertion: Observation.Present } => new Recommendation(NextAction.ReviewContract, "equivalence-and-intent-need-review"),
+        _ => new ReviewRequired("Coverage or assertion evidence is missing; obtain context before requesting model advice.")
     };
 
     public static Advice Suggest(MutationEvidence evidence, NextAction action) =>
@@ -57,7 +62,7 @@ public static class Assistance
 
     public static string ActionText(NextAction action) => action switch
     {
-        NextAction.InspectAssertion => "Inspect the zero-boundary assertion.",
+        NextAction.InspectAssertion => "Inspect the assertion for the declared requirement.",
         NextAction.InspectReachability => "Check whether the selected tests exercise the mutated path.",
         NextAction.ReviewContract => "Review the expected behavior and possible equivalent behavior.",
         NextAction.HumanReview => "Ask a reviewer for missing context.",

@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       assay_ref:
-        description: CSharpAssay revision containing the .NET 11 migration
+        description: Matching CSharpAssay revision containing .NET 11 and the assess API
         required: true
         default: main
 
@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: CanonFlow-Assay/CSharpAssay
-          ref: ${{ inputs.assay_ref || vars.CSHARP_ASSAY_REF || 'main' }}
+          ref: ${{ inputs.assay_ref || vars.CSHARP_ASSAY_REF || '238b56a99b1d7be92e9523262bd55cb9f4b26202' }}
           path: .assay
       - name: Setup .NET 11 RC1
         uses: actions/setup-dotnet@v4
@@ -33,14 +33,33 @@ jobs:
           global-json-file: global.json
       - name: Build local .NET 11 packages
         run: ./eng/prepare-assay.sh .assay
+      - name: Enforce every sample's strict .NET 11 mandate
+        run: ./eng/run-all-samples.sh
       - name: Run playground gate
         run: ./eng/run-assay.sh .assay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
       - name: Run native GoF crosswalk
         run: ./eng/run-gof-crosswalk.sh
       - name: Run Functional Shape evidence
         run: ./eng/run-functional-shape.sh
+      - name: Test local advice gateway offline
+        run: python3 eng/test-local-advice.py
+      - name: Test mutation execution failure boundaries
+        run: python3 eng/test-mutation-cases.py
+      - name: Test order investigation evidence boundaries
+        run: python3 eng/test-shape-investigations.py
+
       - name: Run decision assistance experiment offline
         run: python3 eng/run-decision-assistance.py
+      - name: Evaluate decision scenarios offline
+        run: python3 eng/evaluate-decision-assistance.py
+      - name: Measure order-sample coverage and mutations offline
+        run: python3 eng/run-shape-investigations.py
+      - name: Verify CsvHelper functional consumer and offline investigations
+        run: ./eng/run-csvhelper.sh .assay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
+      - name: Qualify Polly and packaged new-application workflow offline
+        env:
+          ASSAY_RUNNER: ${{ github.workspace }}/.assay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
+        run: ./eng/run-application-workflow.sh
       - name: Upload evidence
         if: always() && hashFiles('evidence/generated/**/*') != ''
         uses: actions/upload-artifact@v4

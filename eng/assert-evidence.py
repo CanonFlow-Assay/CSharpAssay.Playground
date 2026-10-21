@@ -46,8 +46,9 @@ def assert_report(expected: dict[str, Any]) -> None:
 
     actual_findings = Counter(item["ruleId"] for item in evidence["findings"])
     expected_counts = expected["ruleCounts"]
+    advisory_counts = expected.get("advisoryRuleCounts", {})
     expected_findings = Counter(
-        {rule_id: count for rule_id, count in expected_counts.items() if count}
+        {rule_id: count for rule_id, count in (expected_counts | advisory_counts).items() if count}
     )
     require(actual_findings == expected_findings, f"{name}: unexpected finding inventory")
 
@@ -57,6 +58,11 @@ def assert_report(expected: dict[str, Any]) -> None:
         require(rules[rule_id]["required"], f"{name}: {rule_id} is not marked required")
         require(rules[rule_id]["outcome"] == "completed", f"{name}: {rule_id} did not complete")
         require(rules[rule_id]["findingCount"] == count, f"{name}: wrong {rule_id} count")
+
+    for rule_id, count in advisory_counts.items():
+        require(rule_id in rules and not rules[rule_id]["required"], f"{name}: advisory authority changed for {rule_id}")
+        require(rules[rule_id]["outcome"] == "completed" and rules[rule_id]["findingCount"] == count, f"{name}: advisory evidence changed for {rule_id}")
+        require(all(f["disposition"] == "advise" and not f["suppressed"] for f in evidence["findings"] if f["ruleId"] == rule_id), f"{name}: advisory was suppressed or promoted")
 
     tests_passed = sum(test["passed"] for test in evidence["tests"])
     require(tests_passed == expected["testsPassed"], f"{name}: wrong passed-test count")

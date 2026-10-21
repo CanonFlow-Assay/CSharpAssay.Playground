@@ -1,5 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>CanonFlow.DecisionAssist</PackageId>
+    <Version>0.1.0-preview.1</Version>
+    <Description>Typed deterministic investigation decisions with bounded advisory selection.</Description>
+  </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../../../../src/Assay.Workflow.Domain/Assay.Workflow.Domain.csproj" />
     <PackageReference Include="CsAssay.Analyzers" PrivateAssets="all" />
   </ItemGroup>
 </Project>

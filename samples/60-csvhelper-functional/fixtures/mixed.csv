@@ -1,0 +1,4 @@
+Id,Amount,Active,Note
+1,12.50,true,"hello, csv"
+bad,wrong,unknown,untrusted
+2,7.25,0,"quote ""inside"""

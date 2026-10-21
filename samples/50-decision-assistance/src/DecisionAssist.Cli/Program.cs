@@ -2,11 +2,17 @@ using System.Text.Json;
 using Playground.DecisionAssist.Cli;
 using Playground.DecisionAssist.Domain;
 
-if (args.Length < 1 || args.Length > 3 ||
-    args.Skip(1).Any(option => option is not ("--jev" or "--firm")) ||
-    args.Skip(1).Distinct(StringComparer.Ordinal).Count() != args.Length - 1)
+if (args is ["--list-providers"])
 {
-    Console.Error.WriteLine("Usage: decision-assist <experiment.json> [--jev] [--firm]");
+    Console.WriteLine(JsonSerializer.Serialize(new { providers = ProviderAdvice.Names, defaultProvider = "none", automaticFallback = false }));
+    return 0;
+}
+if (args.Length < 1 || args.Length > 3 ||
+    args.Skip(1).Any(option => option is not ("--jev" or "--firm") && !option.StartsWith("--provider=", StringComparison.Ordinal)) ||
+    args.Skip(1).Distinct(StringComparer.Ordinal).Count() != args.Length - 1 ||
+    args.Skip(1).Count(option => option == "--jev" || option.StartsWith("--provider=", StringComparison.Ordinal)) > 1)
+{
+    Console.Error.WriteLine("Usage: decision-assist <experiment.json> [--provider=<name>|--jev] [--firm]; or --list-providers");
     return 64;
 }
 
@@ -32,26 +38,43 @@ try
         root.GetProperty("survived").GetBoolean()),
         ReadObservation(root.GetProperty("covered")),
         ReadObservation(root.GetProperty("hasBoundaryAssertion")),
-        VerificationVerdict.Inconclusive);
+        VerificationVerdict.Inconclusive)
+    {
+        Task = ReadText(root, "task", "synthetic-zero-boundary-mutation", 128),
+        InvestigationContext = ReadText(root, "investigationContext", string.Empty, 1024)
+    };
     Advice baseline = Assistance.Baseline(evidence);
     Advice advice = baseline;
     var provider = "deterministic-baseline";
-    if (args.Contains("--jev", StringComparer.Ordinal))
+    var requestedModel = "none";
+    var selected = args.Skip(1).FirstOrDefault(option => option.StartsWith("--provider=", StringComparison.Ordinal));
+    var name = selected is null ? (args.Contains("--jev", StringComparer.Ordinal) ? "jev" : "none") : selected[11..];
+    if (name != "none")
     {
+        var configuration = ProviderAdvice.Configure(name, key => Environment.GetEnvironmentVariable(key) ?? string.Empty);
+        if (configuration is not ProviderSettings settings)
+        {
+            Console.Error.WriteLine("Invalid provider configuration; see the sample README.");
+            return 64;
+        }
         using var handler = new HttpClientHandler { AllowAutoRedirect = false };
-        using var client = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(5) };
-        using var deadline = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-        advice = await JevAdvice.RequestAsync(client, evidence, Environment.GetEnvironmentVariable("TYPESAFE_API_KEY") ?? string.Empty, deadline.Token);
-        provider = "jev-optional-unqualified";
+        using var client = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(30) };
+        using var deadline = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+        advice = await ProviderAdvice.RequestAsync(client, settings, evidence, Environment.GetEnvironmentVariable(settings.KeyVariable) ?? string.Empty, deadline.Token);
+        provider = name + "-optional-unqualified";
+        requestedModel = settings.Model;
     }
     var tone = args.Contains("--firm", StringComparer.Ordinal) ? FeedbackTone.Firm : FeedbackTone.Coaching;
     Console.WriteLine(JsonSerializer.Serialize(new
     {
         schema = "playground-decision-advice/0.1",
         sourceSha256 = evidence.SourceSha256,
+        task = evidence.Task,
+        investigationContext = evidence.InvestigationContext,
         provider,
-        requestedModel = provider == "jev-optional-unqualified" ? "jev-latest" : "none",
+        requestedModel,
         modelRevision = "NotObserved",
+        providerRequestEligible = name != "none" && Assistance.Eligible(evidence),
         deterministicAction = baseline switch { Recommendation suggestion => suggestion.Action.ToString(), ReviewRequired => "HumanReview", AdviceUnavailable => "None" },
         deterministicMessage = Assistance.Explain(baseline, tone),
         adviceStatus = advice switch { Recommendation => "suggested", ReviewRequired => "review", AdviceUnavailable => "unavailable" },
@@ -62,9 +85,9 @@ try
     }));
     return 0;
 }
-catch (Exception failure) when (failure is IOException or UnauthorizedAccessException or JsonException or KeyNotFoundException or InvalidOperationException)
+catch (Exception failure) when (failure is IOException or UnauthorizedAccessException or JsonException or KeyNotFoundException or InvalidOperationException or ArgumentException)
 {
-    Console.Error.WriteLine("Cannot read a valid synthetic experiment receipt.");
+    Console.Error.WriteLine("Invalid experiment or provider configuration; use --list-providers and the sample README.");
     return 2;
 }
 
@@ -77,4 +100,11 @@ static Observation ReadObservation(JsonElement value)
         JsonValueKind.Null => Observation.Unknown,
         _ => throw new JsonException("Expected a boolean observation or null at the input boundary.")
     };
+}
+
+static string ReadText(JsonElement root, string name, string fallback, int maximumLength)
+{
+    var text = root.TryGetProperty(name, out var value) ? value.GetString() ?? throw new JsonException() : fallback;
+    return text.Length <= maximumLength && !text.Any(char.IsControl)
+        ? text : throw new JsonException("Invalid bounded sample metadata.");
 }

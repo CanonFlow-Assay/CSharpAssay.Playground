@@ -123,14 +123,20 @@
           "xunit.v3.runner.common": "[3.2.2]"
         }
       },
+      "CanonFlow.Assay.Workflow": {
+        "type": "Project"
+      },
+      "CanonFlow.DecisionAssist": {
+        "type": "Project",
+        "dependencies": {
+          "CanonFlow.Assay.Workflow": "[0.1.0-preview.1, )"
+        }
+      },
       "decisionassist.cli": {
         "type": "Project",
         "dependencies": {
-          "DecisionAssist.Domain": "[1.0.0, )"
+          "CanonFlow.DecisionAssist": "[0.1.0-preview.1, )"
         }
-      },
-      "decisionassist.domain": {
-        "type": "Project"
       },
       "gildedrose.refined": {
         "type": "Project"

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "policySha256": "c99231c7081c732709f57ff62858217d04423690980911fa2e6b923ec73b7423",
-  "expectedEvidenceSha256": "955de58b0391004d3d309aca14a308256139302bab0ba60ef63018d386f1e235",
+  "policySha256": "81482a47dd6b3833a8647d2babeed31a7688969e8c7eeafbb83c2f3cbb4e4240",
+  "expectedEvidenceSha256": "e198fc034f2542626396466be8f1dc069bec37f8bf990dd51451e64e739728aa",
   "projectFiles": {
     "Shape.slnx": "0e0397f134f0cf488ac7f5867f6dcea687a6c586db2a9d95a981e3b44f958021",
     "src/Shape.Api/Shape.Api.csproj": "886088920cf99e5601143055ea1b57859f785ca1f77b60199aa7bc3cf037096d",
@@ -9,6 +9,6 @@
     "src/Shape.Domain/Shape.Domain.csproj": "c0bea21b1762e2de5623889bb39fa583e119574180dfe424d92411c395454457",
     "src/Shape.Infrastructure/Shape.Infrastructure.csproj": "d6a6bc43573d932f15b2d7f59e4a5e104f702e402d9446c06afe0f33a5016223",
     "tests/Shape.Architecture.Tests/Shape.Architecture.Tests.csproj": "ae5fc3ac66ade6db571d6b70a2654aa757ab1e05e6a927632be86c55a0b869aa",
-    "tests/Shape.Behavior.Tests/Shape.Behavior.Tests.csproj": "ae5fc3ac66ade6db571d6b70a2654aa757ab1e05e6a927632be86c55a0b869aa"
+    "tests/Shape.Behavior.Tests/Shape.Behavior.Tests.csproj": "edc3aeeba122d401d4e64faa66e088115f1e12af893e67e1a79ca7dcc4aeb86a"
   }
 }

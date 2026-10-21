@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+daa_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export PYTHONPATH="$daa_root/eng${PYTHONPATH:+:$PYTHONPATH}"
+exec python3 -m assay_workflow.cli "$@"

@@ -3,7 +3,9 @@
   "profile": "native",
   "release": {
     "allowPreviewToolchain": true,
-    "requiredTargetFrameworks": ["net11.0"],
+    "requiredTargetFrameworks": [
+      "net11.0"
+    ],
     "requiredRules": [
       "CSAI0001",
       "CSAI0002",
@@ -18,7 +20,7 @@
         "input": "tests/Shape.Behavior.Tests/Shape.Behavior.Tests.csproj",
         "configuration": "Release",
         "noBuild": true,
-        "minimumExpectedTests": 16
+        "minimumExpectedTests": 55
       },
       {
         "input": "tests/Shape.Architecture.Tests/Shape.Architecture.Tests.csproj",
@@ -39,7 +41,10 @@
       "tests/Shape.Behavior.Tests/Shape.Behavior.Tests.csproj",
       "tests/Shape.Architecture.Tests/Shape.Architecture.Tests.csproj"
     ],
-    "coreNamespaces": ["Shape.Domain", "Shape.Application"],
+    "coreNamespaces": [
+      "Shape.Domain",
+      "Shape.Application"
+    ],
     "shellNamespaces": [
       "Shape.Infrastructure",
       "Shape.Api",
@@ -48,17 +53,27 @@
     ]
   },
   "representations": {
-    "resultTypes": ["Shape.Domain.Result`2"],
-    "optionTypes": ["Shape.Domain.Option`1"],
+    "resultTypes": [
+      "Shape.Domain.Result`2"
+    ],
+    "optionTypes": [
+      "Shape.Domain.Option`1"
+    ],
     "closedTypes": [
       "Shape.Domain.Result`2",
       "Shape.Domain.Option`1"
     ]
   },
   "domainPrimitives": {
-    "Shape.Domain.OrderId": ["orderId"],
-    "Shape.Domain.ProductCode": ["productCode"],
-    "Shape.Domain.Quantity": ["quantity"]
+    "Shape.Domain.OrderId": [
+      "orderId"
+    ],
+    "Shape.Domain.ProductCode": [
+      "productCode"
+    ],
+    "Shape.Domain.Quantity": [
+      "quantity"
+    ]
   },
   "suppressions": []
 }

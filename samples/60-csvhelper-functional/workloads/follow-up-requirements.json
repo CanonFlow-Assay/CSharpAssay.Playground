@@ -1,0 +1,14 @@
+{
+  "schema": "csv-follow-up-requirements/0.1",
+  "reviewStatus": "Agent-authored before implementation; independent human review pending.",
+  "requirements": [
+    {"id":"allocation-profile", "text":"Measure cumulative allocations for field inputs, conversion outcomes, issue builder and complete valid-row decisions before and after optimization; record runtime and production source hashes. Probes are stage micro-measurements, not sampled stack traces or a retained-heap profile."},
+    {"id":"allocation-preservation", "text":"Preserve all public conversion outcomes, accumulated errors, immutable field snapshots, cancellation identity and existing mutation expectations. Compare optimized importer to the archived original benchmark using identical physical fixtures and both runtime modes."},
+    {"id":"export-roundtrip", "text":"A bounded streaming exporter emits the exact four-column schema, explicit culture and typed written/failure/cancelled outcomes; supports notes up to 1024 characters including quotes, Unicode and newlines; preserves full decimal precision; caller owns the writer."},
+    {"id":"export-boundaries", "text":"Reject oversized notes and excess rows with explicit terminal outcomes; cancellation and IO failures terminate explicitly without exposing raw input or exception text. Source-enumerator exceptions remain caller exceptions. No atomic durability guarantee is made."},
+    {"id":"export-equivalence", "text":"Original CsvHelper read/write mapping and functional import/export must produce identical complete quoted UTF-8 output bytes on 50000-row invariant and German fixtures. Hash outputs and re-import them to the registered full reference outside timing before accepting round-trip timings."},
+    {"id":"review-handoff", "text":"Prepare a source/evidence-bound packet covering every advisory, all mutation requirements and the retained survivor, with a separate human response template and blinded advice-study protocol. Never mark human work complete from agent judgments."},
+    {"id":"provider-evaluation", "text":"Reuse the bounded six-request OpenAI/Jev comparison only when process keys exist. Record unavailable credentials explicitly and keep human usefulness separate from action agreement."},
+    {"id":"framework-decision", "text":"Keep the native net11 authoritative gate and the unchanged-source upstream assessment separate. Broader engine framework support, Windows/multi-target upstream qualification and human adoption remain explicit external milestones."}
+  ]
+}

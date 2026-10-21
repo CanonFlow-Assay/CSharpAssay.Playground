@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="src/Assay.Workflow.Domain/Assay.Workflow.Domain.csproj" />
+  <Project Path="src/Assay.Workflow.Cli/Assay.Workflow.Cli.csproj" />
+  <Project Path="samples/50-decision-assistance/src/DecisionAssist.Domain/DecisionAssist.Domain.csproj" />
+  <Project Path="samples/70-polly-resilience/src/PollyAssay.Domain/PollyAssay.Domain.csproj" />
+  <Project Path="samples/70-polly-resilience/src/PollyAssay.Adapter/PollyAssay.Adapter.csproj" />
+  <Project Path="samples/70-polly-resilience/worker/PollyAssay.Worker.csproj" />
+  <Project Path="tests/Assay.Workflow.Tests/Assay.Workflow.Tests.csproj" />
+</Solution>

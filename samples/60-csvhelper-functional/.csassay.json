@@ -1,0 +1,63 @@
+{
+  "$schema": "https://raw.githubusercontent.com/CanonFlow-Assay/CSharpAssay/main/eng/schemas/csassay.schema.json",
+  "profile": "native",
+  "release": {
+    "allowPreviewToolchain": true,
+    "requiredTargetFrameworks": [
+      "net11.0"
+    ],
+    "requiredRules": [
+      "CSAI0001",
+      "CSAI0002",
+      "CSAN0001",
+      "CSAN0002",
+      "CSAN0003",
+      "CSAN0004",
+      "CSAP0001"
+    ],
+    "tests": [
+      {
+        "input": "tests/CsvFunctional.Tests/CsvFunctional.Tests.csproj",
+        "configuration": "Release",
+        "noBuild": true,
+        "minimumExpectedTests": 118
+      }
+    ]
+  },
+  "boundaries": {
+    "coreProjects": [
+      "src/CsvFunctional.Domain/CsvFunctional.Domain.csproj"
+    ],
+    "shellProjects": [
+      "src/CsvFunctional.Adapter/CsvFunctional.Adapter.csproj",
+      "tests/CsvFunctional.Tests/CsvFunctional.Tests.csproj",
+      "src/CsvFunctional.Cli/CsvFunctional.Cli.csproj",
+      "workloads/CsvFunctional.Workloads/CsvFunctional.Workloads.csproj"
+    ],
+    "coreNamespaces": [
+      "CsvFunctional.Domain"
+    ],
+    "shellNamespaces": [
+      "CsvFunctional.Adapter",
+      "CsvFunctional.Tests",
+      "CsvFunctional.Cli",
+      "CsvFunctional.Workloads"
+    ]
+  },
+  "representations": {
+    "resultTypes": [
+      "CsvFunctional.Domain.Conversion`1"
+    ],
+    "optionTypes": [],
+    "closedTypes": [
+      "CsvFunctional.Domain.FieldInput",
+      "CsvFunctional.Domain.Conversion`1",
+      "CsvFunctional.Domain.RowOutcome",
+      "CsvFunctional.Domain.ImportEvent",
+      "CsvFunctional.Domain.ExportRowOutcome",
+      "CsvFunctional.Domain.ExportEvent"
+    ]
+  },
+  "domainPrimitives": {},
+  "suppressions": []
+}

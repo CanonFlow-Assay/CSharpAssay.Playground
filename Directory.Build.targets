@@ -1,10 +1,29 @@
 <Project>
   <Target Name="RequireNet11" BeforeTargets="PrepareForBuild;CollectPackageReferences">
+    <PropertyGroup>
+      <_AssayNegativeControl>false</_AssayNegativeControl>
+      <_AssayImpureFixture>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)samples/00-rule-matrix/impure/RuleMatrix.Impure.csproj'))</_AssayImpureFixture>
+      <_AssayUpstreamFixture>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)samples/10-gilded-rose/harness/GildedRose.Upstream.csproj'))</_AssayUpstreamFixture>
+      <_AssayCharacterizationFixture>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)samples/10-gilded-rose/characterization/GildedRose.Characterization.csproj'))</_AssayCharacterizationFixture>
+      <_AssayNegativeControl Condition="'$(MSBuildProjectFullPath)' == '$(_AssayImpureFixture)' or '$(MSBuildProjectFullPath)' == '$(_AssayUpstreamFixture)' or '$(MSBuildProjectFullPath)' == '$(_AssayCharacterizationFixture)'">true</_AssayNegativeControl>
+    </PropertyGroup>
+    <Error Condition="'$(NETCoreSdkVersion)' != '11.0.100-rc.1.26425.128'"
+           Code="CSASSAY-SDK-PIN-REQUIRED"
+           Text="Use exactly SDK 11.0.100-rc.1.26425.128 from global.json; another SDK cannot qualify these samples." />
     <Error Condition="'$(TargetFramework)' != '' and !$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFramework)', '^net11\.0(-.+)?$'))"
            Code="CSASSAY-NET11-REQUIRED"
            Text="This repository supports .NET 11 only. Use net11.0 and the SDK pinned in global.json." />
+    <Error Condition="'$(TargetFrameworks)' != '' and !$([System.Text.RegularExpressions.Regex]::IsMatch('$(TargetFrameworks)', '^net11\.0(-[^;]+)?(;net11\.0(-[^;]+)?)*$'))"
+           Code="CSASSAY-NET11-REQUIRED"
+           Text="Every target in TargetFrameworks must be .NET 11. Mixed legacy targeting cannot qualify." />
     <Error Condition="'$(LangVersion)' != 'preview'"
            Code="CSASSAY-NATIVE-LANGUAGE-REQUIRED"
            Text=".NET 11 RC1 native unions require LangVersion=preview." />
+    <Error Condition="'$(_AssayNegativeControl)' != 'true' and '$(Nullable)' != 'enable'"
+           Code="CSASSAY-NULLABLE-REQUIRED"
+           Text="Authored positive samples require Nullable=enable. Only the three reviewed negative/upstream fixture projects may demonstrate disabled analysis." />
+    <Error Condition="'$(_AssayNegativeControl)' != 'true' and '$(TreatWarningsAsErrors)' != 'true'"
+           Code="CSASSAY-WARNINGS-AS-ERRORS-REQUIRED"
+           Text="Authored positive samples require TreatWarningsAsErrors=true." />
   </Target>
 </Project>

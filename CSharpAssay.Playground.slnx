@@ -29,4 +29,5 @@
   <Folder Name="/tests/">
     <Project Path="tests/Playground.Tests/Playground.Tests.csproj" />
   </Folder>
+  <Project Path="src/Assay.Workflow.Domain/Assay.Workflow.Domain.csproj" />
 </Solution>
