@@ -1,0 +1,23 @@
+{
+  "members": [
+    {
+      "id": "Content",
+      "type": "System.String",
+      "required": true
+    },
+    {
+      "id": "Status",
+      "type": "System.String",
+      "required": true
+    }
+  ],
+  "outcomes": [
+    "cancelled",
+    "degraded",
+    "exhausted",
+    "permanent",
+    "rejected",
+    "success",
+    "timeout"
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "requirements": [
+    {
+      "criteria": [
+        {
+          "id": "stock-acceptance",
+          "testNames": [
+            "Inventory.Tests.ReservationTests.ConcurrentReservationsConserveStock"
+          ],
+          "text": "Stock remains nonnegative under concurrent reservations."
+        }
+      ],
+      "description": "Stock remains nonnegative under concurrent reservations.",
+      "id": "stock",
+      "probeIds": [
+        "stock-behavior"
+      ]
+    },
+    {
+      "criteria": [
+        {
+          "id": "idempotency-acceptance",
+          "testNames": [
+            "Inventory.Tests.ReservationTests.ConcurrentReplaysCommitOnce"
+          ],
+          "text": "A request key commits once; replays preserve the receipt and changed input conflicts."
+        }
+      ],
+      "description": "A request key commits once; replays preserve the receipt and changed input conflicts.",
+      "id": "idempotency",
+      "probeIds": [
+        "idempotency-behavior"
+      ]
+    },
+    {
+      "criteria": [
+        {
+          "id": "atomicity-acceptance",
+          "testNames": [
+            "Inventory.Tests.ReservationTests.ExceptionAfterStockWriteRollsBackAllTables"
+          ],
+          "text": "Stock, reservation and outbox commit atomically; injected failure rolls all back."
+        }
+      ],
+      "description": "Stock, reservation and outbox commit atomically; injected failure rolls all back.",
+      "id": "atomicity",
+      "probeIds": [
+        "atomicity-behavior"
+      ]
+    },
+    {
+      "criteria": [
+        {
+          "id": "cancellation-acceptance",
+          "testNames": [
+            "Inventory.Tests.ReservationTests.CancellationAfterStockWriteRollsBack"
+          ],
+          "text": "Cancelled database work does not commit stock or outbox."
+        }
+      ],
+      "description": "Cancelled database work does not commit stock or outbox.",
+      "id": "cancellation",
+      "probeIds": [
+        "cancellation-behavior"
+      ]
+    },
+    {
+      "criteria": [
+        {
+          "id": "persistence-acceptance",
+          "testNames": [
+            "Inventory.Tests.ReservationTests.ReopenedStoreRetainsReceipt"
+          ],
+          "text": "A new connection retains the committed idempotency receipt."
+        }
+      ],
+      "description": "A new connection retains the committed idempotency receipt.",
+      "id": "persistence",
+      "probeIds": [
+        "persistence-behavior"
+      ]
+    },
+    {
+      "criteria": [
+        {
+          "id": "http-acceptance",
+          "testNames": [
+            "Inventory.Tests.ReservationTests.HttpReserveReturnsCreatedReceipt"
+          ],
+          "text": "The real HTTP endpoint projects explicit outcomes and status codes."
+        }
+      ],
+      "description": "The real HTTP endpoint projects explicit outcomes and status codes.",
+      "id": "http",
+      "probeIds": [
+        "http-behavior"
+      ]
+    },
+    {
+      "criteria": [
+        {
+          "id": "wire-acceptance",
+          "testNames": [
+            "Inventory.Tests.ReservationTests.HttpReplayReturnsStableReceipt"
+          ],
+          "text": "The pinned response wire names and closed outcome mapping stay compatible."
+        }
+      ],
+      "description": "The pinned response wire names and closed outcome mapping stay compatible.",
+      "id": "wire",
+      "probeIds": [
+        "inventory-contract"
+      ]
+    },
+    {
+      "criteria": [
+        {
+          "id": "limit-acceptance",
+          "testNames": [
+            "Inventory.Tests.LimitTests.OverLimitDomainRequestIsInvalid",
+            "Inventory.Tests.LimitTests.HttpOverLimitRequestDoesNotWrite",
+            "Inventory.Tests.ReservationTests.HistoricalReceiptRemainsReplayable"
+          ],
+          "text": "Limit new reservations to at most three units while preserving historical idempotent replay."
+        }
+      ],
+      "description": "Limit new reservations to at most three units while preserving historical idempotent replay.",
+      "id": "maximum-per-request",
+      "probeIds": [
+        "maximum-behavior"
+      ]
+    }
+  ],
+  "schema": "assay-requirements/0.1"
+}

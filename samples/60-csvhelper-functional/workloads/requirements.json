@@ -1,0 +1,16 @@
+{
+  "schema": "csv-streaming-requirements/0.1",
+  "reviewStatus": "Agent-authored before implementation; human independent review pending.",
+  "scope": "Independent streaming workload; not a blind or human-adjudicated benchmark.",
+  "requirements": [
+    {"id":"stream-complete", "text":"Stream at least 50000 valid logical records without retaining emitted events; preserve aggregate identifiers, amounts, activity and note content."},
+    {"id":"chunk-independent", "text":"Results must be independent of source read chunk sizes, including one-character reads across escaped quotes and multiline fields."},
+    {"id":"stream-rejections", "text":"Mixed invalid records must produce three ordered conversion issues and must not discard following valid records."},
+    {"id":"stream-demand", "text":"Requesting the first event from a million-record source must not consume the whole source; early disposal leaves the caller's reader open."},
+    {"id":"stream-cancellation", "text":"Cancelling after accepted records must terminate with an explicit cancellation outcome, without accepting another data record."},
+    {"id":"stream-limit", "text":"Exactly the configured number of data records may be emitted; the next record is a RowLimit terminal outcome."},
+    {"id":"stream-culture", "text":"Comma-delimited input with quoted German numeric amounts preserves decimal values independently of read boundaries."},
+    {"id":"benchmark-equivalence", "text":"On valid generated inputs, direct CsvHelper mapping and the functional adapter must produce equal complete output digests before timings are reported."},
+    {"id":"benchmark-measurement", "text":"Record warmed repeated elapsed time and process-wide managed allocation deltas, runtime, fixture inputs, source/artifact hashes and raw samples. No CI performance threshold or superiority claim."}
+  ]
+}

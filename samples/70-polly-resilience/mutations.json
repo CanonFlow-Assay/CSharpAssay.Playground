@@ -1,0 +1,60 @@
+{
+  "schema": "assay-mutations/0.1",
+  "cases": [
+    {
+      "id": "retry-permanent",
+      "path": "samples/70-polly-resilience/src/PollyAssay.Domain/FetchDecisions.cs",
+      "before": "reply.Kind == ReplyKind.Transient",
+      "after": "reply.Kind != ReplyKind.Success",
+      "requirementId": "fetch",
+      "expectedState": "Killed",
+      "reviewStatus": "agent-authored; independent human review pending"
+    },
+    {
+      "id": "attempt-budget",
+      "path": "samples/70-polly-resilience/src/PollyAssay.Adapter/FetchClient.cs",
+      "before": "MaxRetryAttempts = options.MaximumAttempts - 1,\n                Delay = TimeSpan.Zero,\n                ShouldHandle = args => new ValueTask<bool>(args.Outcome.Exception is null && args.Outcome.Result is { } reply && FetchDecisions.ShouldRetry(reply))\n",
+      "after": "MaxRetryAttempts = options.MaximumAttempts,\n                Delay = TimeSpan.Zero,\n                ShouldHandle = args => new ValueTask<bool>(args.Outcome.Exception is null && args.Outcome.Result is { } reply && FetchDecisions.ShouldRetry(reply))\n",
+      "requirementId": "fetch",
+      "expectedState": "Killed",
+      "reviewStatus": "agent-authored; independent human review pending"
+    },
+    {
+      "id": "drop-cancellation",
+      "path": "samples/70-polly-resilience/src/PollyAssay.Adapter/FetchClient.cs",
+      "before": "var reply = await pipeline.ExecuteAsync(token => transport(token), cancellationToken).ConfigureAwait(false);\n            return FetchDecisions.Project",
+      "after": "var reply = await pipeline.ExecuteAsync(token => transport(CancellationToken.None), cancellationToken).ConfigureAwait(false);\n            return FetchDecisions.Project",
+      "requirementId": "deadline",
+      "expectedState": "Killed",
+      "reviewStatus": "agent-authored; independent human review pending"
+    },
+    {
+      "id": "content-corruption",
+      "path": "samples/70-polly-resilience/src/PollyAssay.Domain/FetchDecisions.cs",
+      "before": "Fetched value => new(\"success\", value.Content)",
+      "after": "Fetched value => new(\"success\", value.Content + \"corrupted\")",
+      "requirementId": "fetch",
+      "expectedState": "Killed",
+      "reviewStatus": "agent-authored; independent human review pending"
+    },
+    {
+      "id": "fallback-hidden",
+      "path": "samples/70-polly-resilience/src/PollyAssay.Domain/FetchDecisions.cs",
+      "before": "FetchDegraded value => new(\"degraded\", value.Content)",
+      "after": "FetchDegraded value => new(\"success\", value.Content)",
+      "requirementId": "contract",
+      "expectedState": "Killed",
+      "reviewStatus": "agent-authored; independent human review pending"
+    },
+    {
+      "id": "retry-equivalent",
+      "path": "samples/70-polly-resilience/src/PollyAssay.Domain/FetchDecisions.cs",
+      "before": "reply.Kind == ReplyKind.Transient",
+      "after": "reply.Kind is ReplyKind.Transient",
+      "requirementId": "fetch",
+      "expectedState": "Survived",
+      "reviewStatus": "agent-authored; independent human review pending"
+    }
+  ],
+  "authority": "Declared consumer mutations; retained equivalent candidate, no exclusions."
+}

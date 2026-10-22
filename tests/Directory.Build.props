@@ -10,4 +10,27 @@
   <ItemGroup>
     <PackageReference Include="xunit.v3" />
   </ItemGroup>
+  <Target Name="ConfigureAssayCoverageProfile" BeforeTargets="AssignTargetPaths"
+          Condition="Exists('$(MSBuildProjectDirectory)/coverlet.mtp.appsettings.json')">
+    <ItemGroup>
+      <None Update="coverlet.mtp.appsettings.json" CopyToOutputDirectory="Always" />
+    </ItemGroup>
+  </Target>
+  <Target Name="BindAssayCoverageSourceRoot" AfterTargets="ReferencedPathMaps"
+          Condition="'$(_sourceRootMappingFilePath)' != ''">
+    <PropertyGroup>
+      <_AssayCoveragePhysicalRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)../'))</_AssayCoveragePhysicalRoot>
+    </PropertyGroup>
+    <!-- Decode this repository's explicit compiler PathMap, including when a
+         standalone application lives inside another Git checkout. -->
+    <Error Condition="!$([System.String]::Copy('$(PathMap)').Contains('$(_AssayCoveragePhysicalRoot)=/_/'))"
+           Code="ASSAY-COVERAGE-PATHMAP-REQUIRED"
+           Text="Coverage source mapping requires the application's declared root PathMap." />
+    <ItemGroup>
+      <_AssayCoverageProject Include="@(AnnotatedProjects->'%(FullPath)')" />
+      <_AssayCoverageMapping Include="@(_AssayCoverageProject->'%(Identity)|$(_AssayCoveragePhysicalRoot)=/_/')" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(_sourceRootMappingFilePath)" Lines="@(_AssayCoverageMapping)"
+                      Overwrite="true" Encoding="Unicode" WriteOnlyWhenDifferent="true" />
+  </Target>
 </Project>

@@ -1,0 +1,31 @@
+{
+  "members": [
+    {
+      "id": "status",
+      "type": "System.String",
+      "required": true
+    },
+    {
+      "id": "reservationId",
+      "type": "System.String",
+      "required": true
+    },
+    {
+      "id": "remaining",
+      "type": "System.Int32",
+      "required": true
+    },
+    {
+      "id": "reason",
+      "type": "System.String",
+      "required": true
+    }
+  ],
+  "outcomes": [
+    "reserved",
+    "replayed",
+    "invalid",
+    "out-of-stock",
+    "conflict"
+  ]
+}

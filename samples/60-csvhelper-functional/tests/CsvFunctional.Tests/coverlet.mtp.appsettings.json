@@ -1,0 +1,12 @@
+{
+  "Coverlet": {
+    "Include": "[CsvFunctional.Domain]*,[CsvFunctional.Adapter]*",
+    "Exclude": "",
+    "ExcludeByAttribute": "",
+    "Format": "cobertura",
+    "UseSourceLink": false,
+    "IncludeTestAssembly": false,
+    "SkipAutoProps": false,
+    "DisableManagedInstrumentationRestore": false
+  }
+}

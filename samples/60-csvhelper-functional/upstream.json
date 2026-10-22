@@ -1,0 +1,15 @@
+{
+  "schema": "csvhelper-source-pin/0.1",
+  "repository": "https://github.com/JoshClose/CsvHelper",
+  "commit": "33970e5183383bdac1fbce3b3fbcdf46b318ca52",
+  "package": {
+    "id": "CsvHelper",
+    "version": "33.1.0",
+    "relationship": "Separately pinned published integration oracle; not claimed identical to source commit."
+  },
+  "derivedFiles": {
+    "src/CsvHelper/TypeConversion/Int32Converter.cs": "d456c65222c38a6d26db29fbd52b9fa3aea4a3680f47f900e48673f77297372e",
+    "src/CsvHelper/TypeConversion/DecimalConverter.cs": "3663b822d51d6fcb751e2bc0e793f044f821ec5abfbc8c2e6f711880d0fadb41",
+    "src/CsvHelper/TypeConversion/BooleanConverter.cs": "6a77553189c35fc852fdf5ae9a2afd3c3ee10e6e55b8860129d05bfd38be3806"
+  }
+}

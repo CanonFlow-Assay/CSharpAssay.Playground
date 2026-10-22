@@ -1,0 +1,53 @@
+{
+  "schema": "assay-mutations/0.1",
+  "cases": [
+    {
+      "id": "accept-zero",
+      "path": "samples/80-inventory-reservation/src/Inventory.Domain/Reservations.cs",
+      "before": "if (request.Quantity <= 0)",
+      "after": "if (request.Quantity < 0)",
+      "expectedState": "Killed",
+      "requirementId": "http"
+    },
+    {
+      "id": "reject-exact-stock",
+      "path": "samples/80-inventory-reservation/src/Inventory.Domain/Reservations.cs",
+      "before": "if (request.Quantity > stock.Available)",
+      "after": "if (request.Quantity >= stock.Available)",
+      "expectedState": "Killed",
+      "requirementId": "stock"
+    },
+    {
+      "id": "wrong-stock-decrement",
+      "path": "samples/80-inventory-reservation/src/Inventory.Domain/Reservations.cs",
+      "before": "stock.Available - request.Quantity",
+      "after": "stock.Available + request.Quantity",
+      "expectedState": "Killed",
+      "requirementId": "stock"
+    },
+    {
+      "id": "ignore-idempotency-quantity",
+      "path": "samples/80-inventory-reservation/src/Inventory.Domain/Reservations.cs",
+      "before": "existing.Sku == request.Sku && existing.Quantity == request.Quantity",
+      "after": "existing.Sku == request.Sku",
+      "expectedState": "Killed",
+      "requirementId": "idempotency"
+    },
+    {
+      "id": "lose-version",
+      "path": "samples/80-inventory-reservation/src/Inventory.Domain/Reservations.cs",
+      "before": "checked(stock.Version + 1)",
+      "after": "checked(stock.Version + 2)",
+      "expectedState": "Killed",
+      "requirementId": "atomicity"
+    },
+    {
+      "id": "equivalent-positive-check",
+      "path": "samples/80-inventory-reservation/src/Inventory.Domain/Reservations.cs",
+      "before": "if (request.Quantity <= 0)",
+      "after": "if (request.Quantity < 1)",
+      "expectedState": "Survived",
+      "requirementId": "http"
+    }
+  ]
+}

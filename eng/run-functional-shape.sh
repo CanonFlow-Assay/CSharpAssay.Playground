@@ -62,7 +62,7 @@ run_verify "$repeat_root"
 cmp "$generated_root/verify.json" "$repeat_root/verify.json"
 cmp "$generated_root/verify.sarif" "$repeat_root/verify.sarif"
 
-python3 eng/assert-functional-shape.py
+./eng/tooling assert-functional-shape
 sha256sum \
   "$generated_root/verify.json" \
   "$generated_root/verify.sarif"

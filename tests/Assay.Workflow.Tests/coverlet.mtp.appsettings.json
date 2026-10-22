@@ -1,0 +1,12 @@
+{
+  "Coverlet": {
+    "Include": "[Assay.Workflow.Domain]*,[DecisionAssist.Domain]*,[PollyAssay.Domain]*,[PollyAssay.Adapter]*",
+    "Exclude": "",
+    "ExcludeByAttribute": "",
+    "Format": "cobertura",
+    "UseSourceLink": false,
+    "IncludeTestAssembly": false,
+    "SkipAutoProps": false,
+    "DisableManagedInstrumentationRestore": false
+  }
+}

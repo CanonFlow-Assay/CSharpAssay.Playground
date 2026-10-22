@@ -1,0 +1,113 @@
+{
+  "contractBaseline": "samples/80-inventory-reservation/contract.json",
+  "coverageModules": [
+    "Inventory.Domain",
+    "Inventory.Adapter",
+    "Inventory.Api"
+  ],
+  "coverageProvider": "coverlet-mtp",
+  "id": "InventoryReservation",
+  "inputs": [
+    "samples/80-inventory-reservation",
+    "Inventory.slnx",
+    ".csassay.inventory.json",
+    "global.json",
+    "Directory.Build.props",
+    "Directory.Build.targets",
+    "Directory.Packages.props",
+    "NuGet.config",
+    ".editorconfig",
+    "tests/Directory.Build.props"
+  ],
+  "maximumMutations": 8,
+  "minimumTests": 27,
+  "mutations": "samples/80-inventory-reservation/mutations.json",
+  "policy": ".csassay.inventory.json",
+  "probes": [
+    {
+      "id": "stock-behavior",
+      "kind": "tests",
+      "module": "Behavior",
+      "requirementId": "stock"
+    },
+    {
+      "id": "idempotency-behavior",
+      "kind": "tests",
+      "module": "Behavior",
+      "requirementId": "idempotency"
+    },
+    {
+      "id": "atomicity-behavior",
+      "kind": "tests",
+      "module": "Behavior",
+      "requirementId": "atomicity"
+    },
+    {
+      "id": "cancellation-behavior",
+      "kind": "tests",
+      "module": "Behavior",
+      "requirementId": "cancellation"
+    },
+    {
+      "id": "persistence-behavior",
+      "kind": "tests",
+      "module": "Behavior",
+      "requirementId": "persistence"
+    },
+    {
+      "id": "http-behavior",
+      "kind": "tests",
+      "module": "Behavior",
+      "requirementId": "http"
+    },
+    {
+      "id": "inventory-contract",
+      "kind": "worker",
+      "module": "ContractAssay",
+      "requirementId": "wire"
+    },
+    {
+      "id": "maximum-behavior",
+      "kind": "tests",
+      "module": "Behavior",
+      "requirementId": "maximum-per-request"
+    }
+  ],
+  "productionRoots": [
+    "samples/80-inventory-reservation/src"
+  ],
+  "requirements": "samples/80-inventory-reservation/requirements.json",
+  "root": "../..",
+  "schema": "assay-project/0.2",
+  "solution": "Inventory.slnx",
+  "testDll": "samples/80-inventory-reservation/tests/Inventory.Tests/bin/Release/net11.0/Inventory.Tests.dll",
+  "testProject": "samples/80-inventory-reservation/tests/Inventory.Tests/Inventory.Tests.csproj",
+  "testReportProtocol": "xunit-mtp-v2",
+  "worker": {
+    "checkIds": [
+      "concurrent-stock-conservation",
+      "concurrent-key-idempotency",
+      "connection-restart-persistence"
+    ],
+    "scenarioKeys": [
+      "reserve/reservation",
+      "replay/reservation",
+      "conflict/reservation",
+      "out-of-stock/reservation",
+      "invalid/reservation",
+      "rollback/reservation",
+      "cancel-before/reservation"
+    ],
+    "schema": "assay-worker-execution/0.1",
+    "traceContract": {
+      "allowsFallback": false,
+      "atMostOneSideEffect": true,
+      "deadlineTicks": 300000000,
+      "maximumAttempts": 2
+    },
+    "traceVariants": [
+      "reservation"
+    ]
+  },
+  "workerDll": "samples/80-inventory-reservation/worker/bin/Release/net11.0/Inventory.Worker.dll"
+}

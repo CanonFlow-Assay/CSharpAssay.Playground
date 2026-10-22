@@ -1,0 +1,16 @@
+{
+  "schema": "assay-workflow-requirements/0.1",
+  "reviewStatus": "Agent-authored before implementation; independent review pending",
+  "requirements": [
+    {"id":"intake", "text":"Classify evaluated frameworks, pinned SDK and project/test inputs without silently upgrading legacy projects. Native analysis requires the pinned net11 toolchain; unsupported scope cannot pass."},
+    {"id":"evidence", "text":"Version assessment/decision/evidence protocols. Bind actual source, requirement, configuration, dependency, engine and execution identities. Missing, stale, interrupted or failed evidence never becomes a completed passing run."},
+    {"id":"decision", "text":"Return typed registered investigations, missing context, budget exhaustion or review. Failed original/invalid/incomplete evidence stays local; provider decisions cannot execute commands or grant verification."},
+    {"id":"mutation", "text":"Execute bounded exact edits in isolated workspaces with a passing original baseline. Preserve killed/survived/invalid/timeout/cancelled/tool-failure states and all survivors, including equivalent candidates."},
+    {"id":"risk", "text":"Provide reproducible ordinal prioritization from explicit coverage/change/complexity/mutation observations, with reasons and unknown observations retained. Ranking is not a defect probability or verification verdict."},
+    {"id":"contract", "text":"Compare pinned observable API/wire members and allowed outcomes with independently emitted observations. Report removals, incompatible types/requiredness and missing evidence; declare the limited comparison scope."},
+    {"id":"resilience", "text":"Use real pinned Polly pipelines with controlled transport and time to record attempts, outcomes, cancellation, timeout, breaker recovery, concurrency and fallback. Validate explicit trace requirements, not inferred global resilience."},
+    {"id":"new-app", "text":"Create a standalone pinned functional application scaffold without overwriting files; supply requirements, tests, policy, workflow manifest, registered mutations and coding-agent guidance. Prove a fresh generated application builds and verifies with the same API."},
+    {"id":"change-loop", "text":"Produce a requirement-bound work item for a coding agent, then assess a candidate with preserved baselines and explicit obligations. Test failures, contract regressions and incomplete runs remain visible; no automatic equivalence exclusion."},
+    {"id":"compatibility", "text":"Preserve existing engine reports and Decision Assist mutation CLI behavior. Revalidate previous sample gates with the latest engine; keep eShop legacy and CsvHelper historical evidence scoped separately."}
+  ]
+}

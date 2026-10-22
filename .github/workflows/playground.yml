@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
     inputs:
       assay_ref:
-        description: CSharpAssay revision containing the .NET 11 migration
+        description: Matching CSharpAssay revision containing .NET 11 and the assess API
         required: true
-        default: main
+        default: dbb678ae3c44c91c896b970cf0354051eea658b0
 
 permissions:
   contents: read
@@ -21,26 +21,47 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Checkout matching CSharpAssay source
         uses: actions/checkout@v6
         with:
           repository: CanonFlow-Assay/CSharpAssay
-          ref: ${{ inputs.assay_ref || vars.CSHARP_ASSAY_REF || 'main' }}
+          ref: ${{ inputs.assay_ref || vars.CSHARP_ASSAY_REF || 'dbb678ae3c44c91c896b970cf0354051eea658b0' }}
           path: .assay
       - name: Setup .NET 11 RC1
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
       - name: Build local .NET 11 packages
-        run: ./eng/prepare-assay.sh .assay
+        run: ./eng/prepare-assay.sh .assay --bootstrap-locks
+      - name: Enforce every sample's strict .NET 11 mandate
+        run: ./eng/run-all-samples.sh
       - name: Run playground gate
         run: ./eng/run-assay.sh .assay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
       - name: Run native GoF crosswalk
         run: ./eng/run-gof-crosswalk.sh
       - name: Run Functional Shape evidence
         run: ./eng/run-functional-shape.sh
+      - name: Test local advice gateway offline
+        run: ./eng/tooling test-local-advice
+      - name: Test mutation execution failure boundaries
+        run: ./eng/tooling test-mutation-cases
+      - name: Test order investigation evidence boundaries
+        run: ./eng/tooling test-shape-investigations
+
       - name: Run decision assistance experiment offline
-        run: python3 eng/run-decision-assistance.py
+        run: ./eng/tooling run-decision-assistance
+      - name: Evaluate decision scenarios offline
+        run: ./eng/tooling evaluate-decision-assistance
+      - name: Measure order-sample coverage and mutations offline
+        run: ./eng/tooling run-shape-investigations
+      - name: Verify CsvHelper functional consumer and offline investigations
+        run: ./eng/run-csvhelper.sh .assay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
+      - name: Qualify Polly and packaged new-application workflow offline
+        env:
+          ASSAY_RUNNER: ${{ github.workspace }}/.assay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
+        run: ./eng/run-application-workflow.sh
       - name: Upload evidence
         if: always() && hashFiles('evidence/generated/**/*') != ''
         uses: actions/upload-artifact@v4

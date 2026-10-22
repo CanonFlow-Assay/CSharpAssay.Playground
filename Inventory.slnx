@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="samples/80-inventory-reservation/src/Inventory.Domain/Inventory.Domain.csproj" />
+  <Project Path="samples/80-inventory-reservation/src/Inventory.Adapter/Inventory.Adapter.csproj" />
+  <Project Path="samples/80-inventory-reservation/src/Inventory.Api/Inventory.Api.csproj" />
+  <Project Path="samples/80-inventory-reservation/worker/Inventory.Worker.csproj" />
+  <Project Path="samples/80-inventory-reservation/tests/Inventory.Tests/Inventory.Tests.csproj" />
+</Solution>

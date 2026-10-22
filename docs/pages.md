@@ -9,7 +9,7 @@ without implying any product or runtime integration.
 Preview it locally from the repository root:
 
 ```text
-python3 -m http.server --directory docs 8080
+./eng/tooling serve-docs --port 8080
 ```
 
 After the Draft PR is human-reviewed and merged, a repository administrator can

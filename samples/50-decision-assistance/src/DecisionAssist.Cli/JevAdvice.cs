@@ -33,7 +33,8 @@ public static class JevAdvice
             model = "jev-latest",
             state = new
             {
-                task = "synthetic-zero-boundary-mutation",
+                task = evidence.Task,
+                investigationContext = evidence.InvestigationContext,
                 sourceSha256 = evidence.SourceSha256,
                 baselinePassed = true,
                 mutantCompiled = true,
@@ -50,7 +51,7 @@ public static class JevAdvice
                     instructions = "Choose the next investigation for this synthetic mutation. Missing facts require review. Do not declare equivalence or a verification verdict.",
                     criteria = new
                     {
-                        inspect_assertion = "Inspect the test assertion for the zero boundary.",
+                        inspect_assertion = "Inspect the assertion for the declared requirement.",
                         inspect_reachability = "Check whether the selected tests exercise the mutation.",
                         review_contract = "Review expected behavior or possible equivalent behavior.",
                         human_review = "Ask a human for missing context."
@@ -117,7 +118,7 @@ public static class JevAdvice
                 "inspect_assertion" => Assistance.Suggest(evidence, NextAction.InspectAssertion),
                 "inspect_reachability" => Assistance.Suggest(evidence, NextAction.InspectReachability),
                 "review_contract" => Assistance.Suggest(evidence, NextAction.ReviewContract),
-                "human_review" => Assistance.Suggest(evidence, NextAction.HumanReview),
+                "human_review" => new ReviewRequired("Advisor needs additional evidence or human context."),
                 _ => new ReviewRequired("Provider returned an unknown action.")
             };
         }

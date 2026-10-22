@@ -6,7 +6,7 @@
   },
   "projects": 6,
   "tests": {
-    "Shape.Behavior.Tests": 16,
+    "Shape.Behavior.Tests": 55,
     "Shape.Architecture.Tests": 7
   },
   "findings": [
@@ -27,6 +27,23 @@
       "path": "src/Shape.Api/OrderEndpoint.cs",
       "disposition": "advise",
       "fingerprint": "a63b90e060783e1e1b501af3dc305032b64e1b66d46a1ec622e7f835f132d259"
+    },
+    {
+      "ruleId": "CSAD0001",
+      "path": "tests/Shape.Behavior.Tests/OrderCoverageTests.cs",
+      "disposition": "advise",
+      "fingerprint": "3cb008dfe66ec509147782622ed2c877ea58f09e6c73261bdeac356dae26a583"
+    },
+    {
+      "ruleId": "CSAD0001",
+      "path": "tests/Shape.Behavior.Tests/OrderCoverageTests.cs",
+      "disposition": "advise",
+      "fingerprint": "c86dc75ad013e009cba39a99ed8d1097e9cb9dc75fa0bc36bb520f270caa6032"
     }
-  ]
+  ],
+  "advisoryReview": {
+    "status": "Agent-reviewed sample counterexample; human adjudication pending",
+    "newRule": "CSAD0001",
+    "reason": "Boundary tests deliberately accept raw integers, including zero and negative values. Constructing a validated Quantity before invoking the order workflow would prevent testing invalid inputs. Domain/Application ownership, glossary, analyzer scope, and rule severity remain unchanged."
+  }
 }

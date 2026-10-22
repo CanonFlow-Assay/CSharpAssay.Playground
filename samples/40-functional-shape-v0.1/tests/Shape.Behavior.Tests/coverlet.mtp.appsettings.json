@@ -1,0 +1,12 @@
+{
+  "Coverlet": {
+    "Include": "[Shape.Domain]*,[Shape.Application]*,[Shape.Infrastructure]*,[Shape.Api]*",
+    "Exclude": "",
+    "ExcludeByAttribute": "",
+    "Format": "cobertura",
+    "UseSourceLink": false,
+    "IncludeTestAssembly": false,
+    "SkipAutoProps": false,
+    "DisableManagedInstrumentationRestore": false
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "assay-requirements/0.1",
+  "requirements": [
+    {
+      "id": "fetch",
+      "description": "A successful dependency response preserves content; permanent failures stop without retry; transient failures have at most three total attempts.",
+      "probeIds": [
+        "fetch-behavior"
+      ]
+    },
+    {
+      "id": "deadline",
+      "description": "A total two-second budget covers all attempts. Caller cancellation remains distinct from deadline expiry and is forwarded to in-flight transport.",
+      "probeIds": [
+        "deadline-resilience"
+      ]
+    },
+    {
+      "id": "contract",
+      "description": "Public response members Status and Content and the declared status values remain compatible; degraded output is distinguishable from success.",
+      "probeIds": [
+        "contract-compatibility"
+      ]
+    },
+    {
+      "id": "state",
+      "description": "Shared breakers block unhealthy calls, allow a recovery probe, and reject concurrent recovery probes. Concurrency limits bound admitted callbacks.",
+      "probeIds": [
+        "state-resilience"
+      ]
+    }
+  ]
+}

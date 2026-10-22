@@ -2,8 +2,14 @@
   "version": 2,
   "dependencies": {
     "net11.0": {
-      "decisionassist.domain": {
+      "CanonFlow.Assay.Workflow": {
         "type": "Project"
+      },
+      "CanonFlow.DecisionAssist": {
+        "type": "Project",
+        "dependencies": {
+          "CanonFlow.Assay.Workflow": "[0.1.0-preview.1, )"
+        }
       }
     }
   }

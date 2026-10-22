@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "dependencies": {
+    "net11.0": {
+      "CanonFlow.Assay.Workflow": {
+        "type": "Direct",
+        "requested": "[0.1.0-preview.1, )",
+        "resolved": "0.1.0-preview.1",
+        "contentHash": "qkTxBzYHovc6Bej39Xca9BTZAsf+y3/mwUcKG6tsCFW/ToczPOFE2HHHrtmmT5WERTvI4JVNSUp71zzLCNOT9g=="
+      },
+      "Npgsql": {
+        "type": "Transitive",
+        "resolved": "10.0.2",
+        "contentHash": "q5RfBI+wywJSFUNDE1L4ZbHEHCFTblo8Uf6A6oe4feOUFYiUQXyAf9GBh5qEZpvJaHiEbpBPkQumjEhXCJxdrg=="
+      },
+      "inventory.adapter": {
+        "type": "Project",
+        "dependencies": {
+          "Inventory.Domain": "[1.0.0, )",
+          "Npgsql": "[10.0.2, )"
+        }
+      },
+      "inventory.domain": {
+        "type": "Project"
+      }
+    }
+  }
+}

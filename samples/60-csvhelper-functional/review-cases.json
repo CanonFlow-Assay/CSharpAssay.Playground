@@ -1,0 +1,94 @@
+{
+  "schema": "csv-functional-review/0.1",
+  "authority": "Agent review and bounded mechanical evidence; no human adjudication or rule waiver.",
+  "humanAdjudication": "pending",
+  "survivor": {
+    "id": "flag-equivalent-pattern",
+    "status": "retained",
+    "agentConclusion": "Equivalent for the complete finite short value domain, subject to the declared compiled expressions.",
+    "argument": "short is a built-in integral type. Both equality with zero and a zero constant pattern are true exactly when its value is zero.",
+    "evidenceTest": "CsvFunctional.Tests.StreamingTests.ZeroEqualityAndConstantPatternAgreeForEveryShortValue",
+    "finiteValuesChecked": 65536,
+    "exclusionFromMutationDenominator": false,
+    "limitations": "This finite-domain argument does not qualify arbitrary equivalence detection or remove the case from review."
+  },
+  "advisories": [
+    {
+      "fingerprint": "281e4c07abdb98a24e2aa145ee3cbae291251e85a399b6cbb9d455c022e8bb79",
+      "ruleId": "CSAF0002",
+      "agentDisposition": "retain-with-rationale",
+      "rationale": "Async stream collection in tests is deliberate and small; await foreach keeps cancellation and per-event observation explicit. This heuristic does not establish a defect."
+    },
+    {
+      "fingerprint": "14b4037b8978a1a79b5a56bffc45cbf85e63825ee2c9caa9f262ab9ebfd08515",
+      "ruleId": "CSAF0002",
+      "agentDisposition": "retain-with-rationale",
+      "rationale": "Async stream collection in tests is deliberate and small; await foreach keeps cancellation and per-event observation explicit. This heuristic does not establish a defect."
+    },
+    {
+      "fingerprint": "df0eae4eb99593215a06bbd09215d4d974890ad8881a2f0e30d3d0bffb35d132",
+      "ruleId": "CSAF0002",
+      "agentDisposition": "retain-with-rationale",
+      "rationale": "Async stream collection in tests is deliberate and small; await foreach keeps cancellation and per-event observation explicit. This heuristic does not establish a defect."
+    },
+    {
+      "fingerprint": "493d4951d461adcceed497d64ea02780a68e9c178526d1311a8e265c87e47672",
+      "ruleId": "CSAF0002",
+      "agentDisposition": "retain-with-rationale",
+      "rationale": "Async stream collection in tests is deliberate and small; await foreach keeps cancellation and per-event observation explicit. This heuristic does not establish a defect."
+    },
+    {
+      "fingerprint": "31ebde0e07a419db8baea2ce947e924b9383c87f40a1ff7f16445f30e29dc554",
+      "ruleId": "CSAF0002",
+      "agentDisposition": "retain-with-rationale",
+      "rationale": "Async stream collection in tests is deliberate and small; await foreach keeps cancellation and per-event observation explicit. This heuristic does not establish a defect."
+    },
+    {
+      "fingerprint": "63d319eacadd1070fb91a889b0d0b71145246b067b0981d65fa119485463fc3e",
+      "ruleId": "CSAN0003",
+      "agentDisposition": "retain-with-rationale",
+      "rationale": "Nullable optional styles/aliases belong to the published CsvHelper comparison helper in the test shell. Functional Domain outcomes and inputs remain explicit non-null cases."
+    },
+    {
+      "fingerprint": "d2446df83d6a500742fa25f0f6eab3541d486cb60996d5c0be9dcefc6c013a2e",
+      "ruleId": "CSAN0003",
+      "agentDisposition": "retain-with-rationale",
+      "rationale": "Nullable optional styles/aliases belong to the published CsvHelper comparison helper in the test shell. Functional Domain outcomes and inputs remain explicit non-null cases."
+    },
+    {
+      "fingerprint": "79faa44406736f4f1d64a6f8111d8423995493bfed825408b53c13d0543ee2fe",
+      "ruleId": "CSAF0002",
+      "agentDisposition": "retain-with-rationale",
+      "rationale": "Sequential awaited fixture generation intentionally preserves IO ordering and bounds concurrent resource use; this heuristic is not a reason to parallelize file generation."
+    },
+    {
+      "fingerprint": "58ce46359aa102efd24aa8a854baf936f1a32de40388d164614bfbee707b572e",
+      "ruleId": "CSAF0002",
+      "agentDisposition": "retain-with-rationale",
+      "rationale": "Small test event collection deliberately observes each typed export outcome."
+    },
+    {
+      "fingerprint": "ed8dc931e0c880e8a479a70ff89673ee2975a4294742ff76e6d4fb8abbd1a38e",
+      "ruleId": "CSAF0002",
+      "agentDisposition": "retain-with-rationale",
+      "rationale": "Sequential awaited fixture generation keeps physical IO ordered and bounded; no parallelization is required by this heuristic."
+    }
+  ],
+  "frameworkDecision": {
+    "status": "local-sample-direction",
+    "decision": "Retain the existing native .NET 11 authoritative gate; assess upstream compatibility separately.",
+    "reason": "Native DU qualification depends on the pinned compiler/runtime. Retargeting CsvHelper would change its supported public matrix; the adapter cannot qualify older frameworks.",
+    "engineChanged": false,
+    "olderFrameworkSupport": "not implemented or qualified",
+    "upstreamBaseline": "Recorded failed Linux net9 selection; original Windows/multi-target matrix remains unqualified."
+  },
+  "providerEvaluation": {
+    "maxRequests": 6,
+    "cases": 3,
+    "providers": [
+      "openai",
+      "jev"
+    ],
+    "authority": "Agent-label agreement only; no human-usefulness qualification."
+  }
+}

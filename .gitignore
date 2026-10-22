@@ -31,8 +31,6 @@ evidence/generated/
 .assay/
 .upstream-cache/
 .candidate-cache/
-__pycache__/
-*.py[cod]
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt

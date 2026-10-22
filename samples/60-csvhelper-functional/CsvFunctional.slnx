@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="src/CsvFunctional.Domain/CsvFunctional.Domain.csproj" />
+  <Project Path="src/CsvFunctional.Adapter/CsvFunctional.Adapter.csproj" />
+  <Project Path="tests/CsvFunctional.Tests/CsvFunctional.Tests.csproj" />
+  <Project Path="src/CsvFunctional.Cli/CsvFunctional.Cli.csproj" />
+  <Project Path="workloads/CsvFunctional.Workloads/CsvFunctional.Workloads.csproj" />
+</Solution>

@@ -1,0 +1,344 @@
+{
+  "schema": "csv-functional-mutations/0.1",
+  "synthetic": true,
+  "reviewStatus": "agent-reviewed; human adjudication pending",
+  "beforeSelection": "Two authored SmokeTests, not the upstream test suite.",
+  "cases": [
+    {
+      "id": "whole-value-corruption",
+      "path": "src/CsvFunctional.Domain/FieldConversions.cs",
+      "before": "new Converted<int>(value)",
+      "after": "new Converted<int>(value + 1)",
+      "requirement": "Whole-number conversion must preserve the parsed value.",
+      "line": 29,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Whole-number conversion must preserve the parsed value."
+      }
+    },
+    {
+      "id": "whole-min-boundary",
+      "path": "src/CsvFunctional.Domain/FieldConversions.cs",
+      "before": "int.TryParse(field.Text, styles, culture, out var value)",
+      "after": "int.TryParse(field.Text, styles, culture, out var value) && value != int.MinValue",
+      "requirement": "Int32.MinValue must remain a valid whole-number value.",
+      "line": 28,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Int32.MinValue must remain a valid whole-number value."
+      }
+    },
+    {
+      "id": "whole-thousands",
+      "path": "src/CsvFunctional.Domain/FieldConversions.cs",
+      "before": "int.TryParse(field.Text, styles, culture, out var value)",
+      "after": "int.TryParse(field.Text, styles | NumberStyles.AllowThousands, culture, out var value)",
+      "requirement": "Default Integer styles must reject grouped input such as 1,000.",
+      "line": 28,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Default Integer styles must reject grouped input such as 1,000."
+      }
+    },
+    {
+      "id": "amount-styles",
+      "path": "src/CsvFunctional.Domain/FieldConversions.cs",
+      "before": "NumberStyles styles = NumberStyles.Number",
+      "after": "NumberStyles styles = NumberStyles.Float",
+      "requirement": "Default amount conversion must support culture-specific thousands separators.",
+      "line": 32,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Default amount conversion must support culture-specific thousands separators."
+      }
+    },
+    {
+      "id": "flag-zero",
+      "path": "src/CsvFunctional.Domain/FieldConversions.cs",
+      "before": "if (numeric == 0) { return new Converted<bool>(false); }",
+      "after": "if (numeric == 0) { return new Converted<bool>(true); }",
+      "requirement": "Numeric 0 must be false.",
+      "line": 53,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Numeric 0 must be false."
+      }
+    },
+    {
+      "id": "flag-one",
+      "path": "src/CsvFunctional.Domain/FieldConversions.cs",
+      "before": "if (numeric == 1)",
+      "after": "if (numeric == 2)",
+      "requirement": "Numeric 1 must be true and 2 must remain invalid.",
+      "line": 54,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Numeric 1 must be true and 2 must remain invalid."
+      }
+    },
+    {
+      "id": "alias-trim",
+      "path": "src/CsvFunctional.Domain/FieldConversions.cs",
+      "before": "var trimmed = text.Trim();",
+      "after": "var trimmed = text;",
+      "requirement": "Configured Boolean aliases must trim surrounding whitespace.",
+      "line": 56,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Configured Boolean aliases must trim surrounding whitespace."
+      }
+    },
+    {
+      "id": "alias-case",
+      "path": "src/CsvFunctional.Domain/FieldConversions.cs",
+      "before": "literals.TrueValues.Any(value => culture.CompareInfo.Compare(value, trimmed, CompareOptions.IgnoreCase) == 0)",
+      "after": "literals.TrueValues.Any(value => culture.CompareInfo.Compare(value, trimmed, CompareOptions.None) == 0)",
+      "requirement": "Configured Boolean aliases must compare case-insensitively under the supplied culture.",
+      "line": 57,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Configured Boolean aliases must compare case-insensitively under the supplied culture."
+      }
+    },
+    {
+      "id": "row-width",
+      "path": "src/CsvFunctional.Domain/RowDecisions.cs",
+      "before": "fields.Length != 4",
+      "after": "fields.Length < 4",
+      "requirement": "Reject both missing and extra fields.",
+      "line": 23,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Reject both missing and extra fields."
+      }
+    },
+    {
+      "id": "row-note",
+      "path": "src/CsvFunctional.Domain/RowDecisions.cs",
+      "before": "b.Value, fields[3]",
+      "after": "b.Value, string.Empty",
+      "requirement": "Preserve the note exactly after CSV unescaping.",
+      "line": 32,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Preserve the note exactly after CSV unescaping."
+      }
+    },
+    {
+      "id": "row-number",
+      "path": "src/CsvFunctional.Domain/RowDecisions.cs",
+      "before": "new AcceptedRow(recordNumber,",
+      "after": "new AcceptedRow(recordNumber + 1,",
+      "requirement": "Use one-based logical data record numbers.",
+      "line": 32,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Use one-based logical data record numbers."
+      }
+    },
+    {
+      "id": "amount-issue",
+      "path": "src/CsvFunctional.Domain/RowDecisions.cs",
+      "before": "new(recordNumber, \"Amount\", CsvIssueKind.InvalidDecimal)",
+      "after": "new(recordNumber, \"Amount\", CsvIssueKind.InvalidInteger)",
+      "requirement": "Accumulated errors must retain each column and its correct error kind.",
+      "line": 36,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Accumulated errors must retain each column and its correct error kind."
+      }
+    },
+    {
+      "id": "delimiter",
+      "path": "src/CsvFunctional.Adapter/CsvImporter.cs",
+      "before": "Delimiter = \",\"",
+      "after": "Delimiter = \";\"",
+      "requirement": "CSV transport uses an explicit comma delimiter independent of numeric culture.",
+      "line": 30,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "CSV transport uses an explicit comma delimiter independent of numeric culture."
+      }
+    },
+    {
+      "id": "blank-record",
+      "path": "src/CsvFunctional.Adapter/CsvImporter.cs",
+      "before": "IgnoreBlankLines = false",
+      "after": "IgnoreBlankLines = true",
+      "requirement": "A blank logical record is a rejected row, not silently omitted.",
+      "line": 32,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "A blank logical record is a rejected row, not silently omitted."
+      }
+    },
+    {
+      "id": "row-limit",
+      "path": "src/CsvFunctional.Adapter/CsvImporter.cs",
+      "before": "recordNumber > maximumRows",
+      "after": "recordNumber >= maximumRows",
+      "requirement": "Accept exactly maximumRows data records; the next record stops the stream.",
+      "line": 56,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Accept exactly maximumRows data records; the next record stops the stream."
+      }
+    },
+    {
+      "id": "field-limit",
+      "path": "src/CsvFunctional.Adapter/CsvImporter.cs",
+      "before": "field.Length > 4096",
+      "after": "field.Length >= 4096",
+      "requirement": "Accept exactly 4096 field characters and reject 4097, including at EOF.",
+      "line": 80,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Accept exactly 4096 field characters and reject 4097, including at EOF."
+      }
+    },
+    {
+      "id": "cancellation-forwarding",
+      "path": "src/CsvFunctional.Adapter/CsvImporter.cs",
+      "before": "inner.ReadAsync(buffer.AsMemory(index, count), cancellationToken)",
+      "after": "inner.ReadAsync(buffer.AsMemory(index, count), new CancellationToken(cancellationToken.IsCancellationRequested))",
+      "requirement": "Forward cancellation identity to an in-flight asynchronous TextReader operation.",
+      "line": 98,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Forward cancellation identity to an in-flight asynchronous TextReader operation."
+      }
+    },
+    {
+      "id": "io-error-kind",
+      "path": "src/CsvFunctional.Adapter/CsvImporter.cs",
+      "before": "catch (IOException) { return new ReadFailure(ImportFailureKind.InputOutput); }",
+      "after": "catch (IOException) { return new ReadFailure(ImportFailureKind.MalformedCsv); }",
+      "requirement": "IO failure must remain distinguishable from malformed CSV without exposing exception text.",
+      "line": 86,
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "IO failure must remain distinguishable from malformed CSV without exposing exception text."
+      }
+    },
+    {
+      "id": "flag-equivalent-pattern",
+      "path": "src/CsvFunctional.Domain/FieldConversions.cs",
+      "before": "if (numeric == 0)",
+      "after": "if (numeric is 0)",
+      "requirement": "For a short value, equality with zero and a zero constant pattern appear equivalent; keep the survivor for contract review.",
+      "line": 53,
+      "expectedAfter": "survived",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "For a short value, equality with zero and a zero constant pattern appear equivalent; keep the survivor for contract review."
+      }
+    },
+    {
+      "id": "export-note-boundary",
+      "path": "src/CsvFunctional.Domain/ExportDecisions.cs",
+      "before": "value.Note.Length > 1024",
+      "after": "value.Note.Length >= 1024",
+      "requirement": "Export accepts 1024 note characters and terminates at 1025.",
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Export accepts 1024 note characters and terminates at 1025."
+      },
+      "line": 17
+    },
+    {
+      "id": "export-boolean",
+      "path": "src/CsvFunctional.Domain/ExportDecisions.cs",
+      "before": "value.Active ? \"True\" : \"False\"",
+      "after": "value.Active ? \"False\" : \"True\"",
+      "requirement": "Export preserves Boolean values through the registered round-trip schema.",
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Export preserves Boolean values through the registered round-trip schema."
+      },
+      "line": 19
+    },
+    {
+      "id": "export-row-limit",
+      "path": "src/CsvFunctional.Adapter/CsvExporter.cs",
+      "before": "count > maximumRows",
+      "after": "count >= maximumRows",
+      "requirement": "Export emits exactly maximumRows data records before a RowLimit terminal outcome.",
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Export emits exactly maximumRows data records before a RowLimit terminal outcome."
+      },
+      "line": 48
+    },
+    {
+      "id": "export-delimiter",
+      "path": "src/CsvFunctional.Adapter/CsvExporter.cs",
+      "before": "Delimiter = \",\"",
+      "after": "Delimiter = \";\"",
+      "requirement": "Export uses comma-delimited transport independently of numeric culture.",
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Export uses comma-delimited transport independently of numeric culture."
+      },
+      "line": 31
+    },
+    {
+      "id": "export-cancellation",
+      "path": "src/CsvFunctional.Adapter/CsvExporter.cs",
+      "before": "inner.WriteAsync(buffer.AsMemory(index, count), token)",
+      "after": "inner.WriteAsync(buffer.AsMemory(index, count), new CancellationToken(token.IsCancellationRequested))",
+      "requirement": "Export forwards cancellation identity into an in-flight TextWriter operation.",
+      "expectedAfter": "killed",
+      "review": {
+        "author": "agent",
+        "status": "pending-human-adjudication",
+        "basis": "Export forwards cancellation identity into an in-flight TextWriter operation."
+      },
+      "line": 103
+    }
+  ]
+}

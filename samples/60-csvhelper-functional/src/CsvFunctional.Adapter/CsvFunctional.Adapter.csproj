@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../CsvFunctional.Domain/CsvFunctional.Domain.csproj" />
+    <PackageReference Include="CsvHelper" VersionOverride="33.1.0" />
+    <PackageReference Include="CsAssay.Analyzers" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

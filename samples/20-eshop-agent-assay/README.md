@@ -1,5 +1,16 @@
 # eShop Ordering.Domain agent assay
 
+This directory is archived external evidence, with no C# project in the current
+Playground. Its original .NET 10 policy is preserved byte-for-byte as
+`historical/net10-policy.json`. The original execution scripts are preserved as
+text under `historical/`; the old entry points stop explicitly instead of running
+an external legacy project through the current toolchain.
+It is not an active exception to the current .NET 11 mandate and is not claimed
+as a migrated eShop application. All 25 runnable sample projects are covered by
+`./eng/run-all-samples.sh`. The external pinned eShop source remains unchanged.
+
+The following results describe the historical toolchain and commits only.
+
 This case study assays one bounded domain project from Microsoft's eShop
 reference application. It does not call eShop impure, vendor its source, or
 claim that functional taste overrides EF Core and DDD persistence constraints.
@@ -36,7 +47,8 @@ reflection metadata. Database round-trip behavior, migration/snapshot
 compatibility, alternate DbContexts/model builders, serialization consumers,
 and upstream suitability remain outside this proof.
 
-Run `eng/run-eshop-agent-assay.ps1 -EShopRoot C:\path\to\eShop` from the
-Playground repository. Read `HANDOFF.md` before authorizing source mutation.
+Historical reproduction used the original execution scripts with their pinned
+old toolchain; those script sources are archived here for reference. Read
+`HANDOFF.md` before proposing any upstream source mutation.
 The candidate remains isolated behind a Draft PR in the fork and must not be
 merged into fork `main` or submitted upstream as part of this evidence change.

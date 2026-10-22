@@ -1,0 +1,10 @@
+{
+  "schema": "polly-consumer-provenance/0.1",
+  "repository": "https://github.com/App-vNext/Polly",
+  "package": "Polly.Core",
+  "version": "8.6.5",
+  "packageRepositoryCommit": "74bf31fff0e0907034994be4df22424aa71818f1",
+  "packageSha512": "t1VvpqcypoJi5hDGmuToWdjrlNfs389cmyhnQGCL3k0FNLUzpS2utcEQtxwwJtY2/YPdidkdlVyxCUBYvduCbA==",
+  "license": "BSD-3-Clause",
+  "scope": "Original package consumer, not source rewrite or upstream full-suite qualification."
+}
