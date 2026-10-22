@@ -19,6 +19,8 @@ jobs:
   evidence:
     name: .NET 11 RC1 native evidence gate
     runs-on: ubuntu-latest
+    env:
+      ASSAY_RUNNER: ${{ github.workspace }}/.assay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
     steps:
       - uses: actions/checkout@v6
         with:
