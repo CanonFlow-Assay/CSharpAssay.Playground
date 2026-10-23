@@ -82,7 +82,7 @@ public static partial class Program
                 case "compare-csvhelper-milestones": result = MilestoneComparison.Run(); break;
                 case "qualify-application-workflow": result = await ApplicationQualification.Run(options.Get("--output", Path.Combine(Root, "evidence/generated/application-workflow"))); break;
                 case "qualify-inventory-maturity": result = await InventoryQualification.Run(options.Get("--output", Path.Combine(Root, "evidence/generated/maturity/inventory"))); break;
-                case "qualify-csharp-migration": result = await MigrationQualification.Run(options.Get("--output", Path.Combine(Root, "evidence/generated/csharp-migration/qualified"))); break;
+                case "qualify-csharp-migration": result = await MigrationQualification.Run(options.Get("--output", Path.Combine(Root, "evidence/generated/csharp-migration/qualified")), options.Get("--engine-root")); break;
                 default: throw new ArgumentException("Unknown tooling command: " + command);
             }
             Console.WriteLine(result.ToJsonString(Json.Options)); return result.S("executionStatus") is "failed" or "stopped_after_failure" ? 2 : 0;
@@ -104,7 +104,7 @@ public static partial class Program
             "test-csvhelper-evidence" or "test-csvhelper-streaming" or "test-csvhelper-hefty" or "test-csvhelper-review" or "test-csvhelper-roundtrip" => "CsvBoundaryTests",
             _ => throw new ArgumentException("Unknown boundary-test group.")
         };
-        var output = Path.Combine(Root, "evidence/generated/csharp-migration/boundaries", group.Length > 0 ? group : "all"); var manifest = Json.Create(("testDll", "tests/Assay.Tooling.Tests/bin/Release/net11.0/Assay.Tooling.Tests.dll"), ("minimumTests", group.Length == 0 ? 115 : group == "AdjudicationBoundaryTests" ? 6 : group == "ApplicationBoundaryTests" ? 22 : group == "WorkerBoundaryTests" ? 19 : group == "CsvBoundaryTests" ? 36 : group == "SampleEvidenceTests" ? 10 : 8), ("testReportProtocol", "xunit-mtp-v2"));
+        var output = Path.Combine(Root, "evidence/generated/csharp-migration/boundaries", group.Length > 0 ? group : "all"); var manifest = Json.Create(("testDll", "tests/Assay.Tooling.Tests/bin/Release/net11.0/Assay.Tooling.Tests.dll"), ("minimumTests", group.Length == 0 ? 123 : group == "AdjudicationBoundaryTests" ? 6 : group == "ApplicationBoundaryTests" ? 22 : group == "WorkerBoundaryTests" ? 19 : group == "CsvBoundaryTests" ? 36 : group == "SampleEvidenceTests" ? 10 : 8), ("testReportProtocol", "xunit-mtp-v2"));
         var result = await ApplicationRunner.Tests(Root, manifest, output, selectedClass: group.Length > 0 ? "Assay.Tooling.Tests." + group : null); Json.Write(Path.Combine(output, "summary.json"), result); Console.WriteLine(result.ToJsonString(Json.Options)); return result.S("state") == "Passed" ? 0 : 2;
     }
     private static async Task<JsonObject> SelfAudit()

@@ -5,6 +5,10 @@ through the typed SDK and JSON CLI, and integrated into the application workflow
 They remain bounded previews. They do not expand the engine's seven admitted
 rules or turn an advisory score into release authority.
 
+The [C# depth undertaking](csharp-preview-depth.md) adds explicit Passed/Failed/
+Invalid results, input validation and trace completeness checks. The coordinator
+preserves Invalid as incomplete evidence instead of inferring a business failure.
+
 | Module | What runs today | Decision use | Remaining scope |
 | --- | --- | --- | --- |
 | CodeRiskAssay | Deterministic ranking from changed source, snapshot-bound line coverage, lexical branch count and surviving mutants; reasons accompany every ordinal | Helps prioritize review; advisory only | Calibrated predictive quality, semantic complexity and unmeasured source. Relative paths bind through explicit roots; ambiguous/foreign paths stay unknown. |

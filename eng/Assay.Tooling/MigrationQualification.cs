@@ -3,11 +3,13 @@ namespace Assay.Tooling;
 public static class MigrationQualification
 {
     private static readonly string[] Remaining = ["Independent case/advisory adjudication", "Explicit held-out/live-provider evaluation", "Windows host and production operational qualification"];
-    public static async Task<JsonObject> Run(string output)
+    public static async Task<JsonObject> Run(string output, string? engineCheckout = null)
     {
         output = Path.GetFullPath(output); Json.Check(output.StartsWith(Path.Combine(Root, "evidence/generated/").Replace('/', Path.DirectorySeparatorChar), StringComparison.Ordinal), "Keep migration evidence under ignored evidence/generated/.");
         var path = Path.Combine(output, "qualification.json"); Json.Check(!File.Exists(path), "Choose a fresh qualification directory; prior attempts are retained.");
-        var engineRoot = Path.GetFullPath(Path.Combine(Root, "../CSharpAssay")); var source = await Processes.Git(Root, "rev-parse", "HEAD"); var engineSource = await Processes.Git(engineRoot, "rev-parse", "HEAD");
+        var engineRoot = Path.GetFullPath(engineCheckout ?? Path.Combine(Root, "../CSharpAssay"));
+        Json.Check(Engine == Path.Combine(engineRoot, "src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll"), "Selected ASSAY_RUNNER must belong to the declared engine checkout.");
+        var source = await Processes.Git(Root, "rev-parse", "HEAD"); var engineSource = await Processes.Git(engineRoot, "rev-parse", "HEAD");
         Json.Check((await Processes.Git(Root, "status", "--porcelain")).Length == 0 && (await Processes.Git(engineRoot, "status", "--porcelain")).Length == 0, "Qualification requires exact clean source commits.");
         var enginePath = Path.Combine(engineRoot, "artifacts/csharp-tooling-qualified/qualification.json"); var engine = Json.Read(enginePath);
         Json.Check(engine.S("sourceCommit") == engineSource && engine.S("executionStatus") == "completed" && engine.B("releaseQualified") && engine.B("sourceUnchanged") && engine.A("gates").Count == 7 && engine.A("gates").All(g => g.S("state") == "Passed"), "Exact paired engine release qualification is required.");

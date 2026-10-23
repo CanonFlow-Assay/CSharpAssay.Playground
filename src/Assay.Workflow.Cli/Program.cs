@@ -37,12 +37,19 @@ try
     else
     {
         var packet = JsonSerializer.Deserialize<ModulePacket>(text, options) ?? throw new JsonException();
+        var contract = ContractAssay.Evaluate(packet.BaselineContract, packet.CandidateContract);
+        var risk = CodeRiskAssay.Evaluate(packet.Risk);
+        var resilience = ResilienceAssay.Evaluate(packet.Trace, packet.TraceContract);
         Console.WriteLine(JsonSerializer.Serialize(new
         {
             schema = "assay-preview-module-results/0.1",
-            contractDifferences = ContractAssay.Compare(packet.BaselineContract, packet.CandidateContract),
-            riskPriorities = CodeRiskAssay.Rank(packet.Risk),
-            resilienceIssues = ResilienceAssay.Check(packet.Trace, packet.TraceContract),
+            contractState = contract.State,
+            contractDifferences = contract.Issues,
+            riskState = risk.State,
+            riskIssues = risk.Issues,
+            riskPriorities = risk.Priorities,
+            resilienceState = resilience.State,
+            resilienceIssues = resilience.Issues,
             authority = "Bounded preview observations; not admitted analyzer rules or automatic release approval."
         }, options));
     }

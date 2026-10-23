@@ -156,9 +156,9 @@ public static partial class ApplicationWorkflow
                     Json.Write(Path.Combine(output, "module-input.json"), Json.Create(("baselineContract", pinned), ("candidateContract", worker["observedContract"]), ("risk", CoverageObservations(root, files, Path.Combine(output, "behavior/coverage.cobertura.xml"), rows, previousFiles)), ("trace", observations["trace"]), ("traceContract", protocol.Worker["traceContract"])));
                     execution = await Processes.Run(["dotnet", Decision, "modules", Path.Combine(output, "module-input.json")], Root, Path.Combine(output, "modules.log"), 30); execution.Require("Preview modules");
                     var values = Json.Parse(execution.Output); Json.Write(Path.Combine(output, "modules.json"), values);
-                    Add("ContractAssay", values.A("contractDifferences").Count > 0 ? "Failed" : "Passed", true, false, [Path.Combine(output, "modules.json"), Path.Combine(output, "pinned-contract.json")], "Selected public members and outcome comparison; not universal serialization compatibility.");
-                    Add("ResilienceAssay", values.A("resilienceIssues").Count > 0 ? "Failed" : "Passed", true, false, [Path.Combine(output, "consumer.json"), Path.Combine(output, "modules.json")], "Declared scenario/check identities and bounded trace contract.");
-                    Add("CodeRiskAssay", "Passed", false, false, [Path.Combine(output, "modules.json")], "Ordinal heuristic, lexical branches, unknown coverage retained.");
+                    Add("ContractAssay", ModuleState(values, "contract"), true, false, [Path.Combine(output, "modules.json"), Path.Combine(output, "pinned-contract.json")], "Selected public members and outcome comparison; not universal serialization compatibility.");
+                    Add("ResilienceAssay", ModuleState(values, "resilience"), true, false, [Path.Combine(output, "consumer.json"), Path.Combine(output, "modules.json")], "Declared scenario/check identities and bounded trace contract.");
+                    Add("CodeRiskAssay", ModuleState(values, "risk"), false, false, [Path.Combine(output, "modules.json")], "Ordinal heuristic, lexical branches, unknown coverage retained.");
                 }
             }
             var assessment = Json.Create(("schema", "assay-application-assessment/0.1"), ("snapshotSha256", source), ("requirementsSha256", requirementId), ("support", intake.S("support")), ("baseline", baselineState), ("requirements", requirements.A("requirements").Select(r => Json.Create(("id", r.S("id")), ("description", r.S("description")), ("probeIds", r!["probeIds"])))), ("modules", modules));
@@ -222,7 +222,8 @@ public static partial class ApplicationWorkflow
             Json.Write(Path.Combine(output, "probe-input.json"), Json.Create(("baselineContract", Json.Read(Path.Combine(parent, "pinned-contract.json"))), ("candidateContract", observed["observedContract"]), ("risk", new JsonArray()), ("trace", observed["trace"]), ("traceContract", protocol.Worker["traceContract"])));
             execution = await Processes.Run(["dotnet", Decision, "modules", Path.Combine(output, "probe-input.json")], Root, Path.Combine(output, "probe-modules.log"), 30); execution.Require("Registered module comparison");
             var computed = Json.Parse(execution.Output); var issues = computed.A(selected.S("module") == "ContractAssay" ? "contractDifferences" : "resilienceIssues");
-            result = Json.Create(("state", issues.Count > 0 || observed.S("state") == "Failed" ? "Failed" : "Passed"), ("module", selected.S("module")), ("issues", issues), ("observations", observed));
+            var state = ModuleState(computed, selected.S("module") == "ContractAssay" ? "contract" : "resilience");
+            result = Json.Create(("state", state == "Invalid" ? state : observed.S("state") == "Failed" ? "Failed" : state), ("module", selected.S("module")), ("issues", issues), ("observations", observed));
         }
         Json.Check(Json.Digest(Json.Read(manifestPath)) == previous.S("manifestSha256") && Json.Digest(ApplicationRunner.Snapshot(spec.Root, spec.Manifest)) == identity && JsonNode.DeepEquals(ApplicationRunner.ToolkitIdentity(), tools) && JsonNode.DeepEquals(ApplicationRunner.ApplicationArtifacts(spec.Root, spec.Manifest), previous["applicationArtifactsSha256"]), "Inputs changed during investigation.");
         result["probeId"] = probeId; result["snapshotSha256"] = identity; result["executionStatus"] = "completed";
@@ -231,4 +232,11 @@ public static partial class ApplicationWorkflow
 
     [GeneratedRegex("\\b(if|case|catch|while|for|foreach)\\b")]
     private static partial Regex MyRegex { get; }
+
+    public static string ModuleState(JsonNode results, string module)
+    {
+        var state = results.S(module + "State");
+        Json.Check(state is "Passed" or "Failed" or "Invalid", "Missing or unsupported preview module evidence state.");
+        return state;
+    }
 }

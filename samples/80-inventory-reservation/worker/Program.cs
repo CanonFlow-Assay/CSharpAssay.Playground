@@ -70,7 +70,7 @@ foreach (var id in new[] { "reserve", "replay", "conflict", "out-of-stock", "inv
     }
     var state = await store.InspectAsync(token);
     if (state.Outbox == 1) { trace.Add(new(id, trace.Count + 1, 1, clock.Elapsed.Ticks, TraceKind.SideEffect)); }
-    trace.Add(new(id, trace.Count + 1, 1, clock.Elapsed.Ticks, terminal));
+    trace.Add(new(id, trace.Count + 1, id is "replay" or "conflict" ? 2 : 1, clock.Elapsed.Ticks, terminal));
     observations.Add(new(id, "reservation", passed, trace.ToImmutable()));
 }
 var checks = ImmutableArray.CreateBuilder<WorkerCheck>();
