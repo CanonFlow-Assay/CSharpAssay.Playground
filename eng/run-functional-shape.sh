@@ -10,6 +10,12 @@ trap 'rm -rf "$scratch"' EXIT
 
 cd "$repo_root"
 
+# Packaged apphosts need the user-local runtime location even when dotnet is on PATH.
+if [[ -z "${DOTNET_ROOT:-}" ]]; then
+  dotnet_host="$(command -v dotnet)"
+  export DOTNET_ROOT="$(dirname "$(readlink -f "$dotnet_host")")"
+fi
+
 # CSharpAssay inventories compiler inputs. Remove only this sample's generated
 # build trees so stale Debug/Release inputs cannot change artifact bytes.
 find "$sample_root" -type d \( -name bin -o -name obj \) \
