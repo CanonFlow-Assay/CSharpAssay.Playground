@@ -50,4 +50,4 @@ dotnet "$assay_dll" verify Playground.Refined.slnx \
   --json evidence/generated/refined/verify.json \
   --sarif evidence/generated/refined/verify.sarif
 
-python3 eng/assert-evidence.py
+./eng/tooling assert-evidence

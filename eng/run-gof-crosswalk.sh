@@ -8,7 +8,14 @@ repeat_root="evidence/generated/gof-repeat"
 
 cd "$repo_root"
 
-dotnet tool restore
+gof_scratch="$(mktemp -d "${TMPDIR:-/tmp}/csassay-gof.XXXXXX")"
+trap 'rm -rf "$gof_scratch"' EXIT
+export NUGET_PACKAGES="$gof_scratch/nuget-packages"
+export DOTNET_CLI_HOME="$gof_scratch/dotnet-home"
+mkdir -p "$NUGET_PACKAGES" "$DOTNET_CLI_HOME" "$gof_scratch/tools"
+dotnet tool install CsAssay.Tool --version 0.2.0-rc.1 \
+  --tool-path "$gof_scratch/tools" --configfile NuGet.config --no-cache
+gof_tool="$gof_scratch/tools/cs-assay"
 dotnet restore "$sample_root/Gof.Crosswalk.slnx" --locked-mode
 dotnet build "$sample_root/Gof.Crosswalk.slnx" \
   --no-restore --configuration Release
@@ -25,14 +32,14 @@ mkdir -p \
 run_reports() {
   local output_root="$1"
 
-  dotnet tool run cs-assay -- check \
+  "$gof_tool" check \
     "$sample_root/classic/Gof.Classic.csproj" \
     --policy "$sample_root/classic.policy.json" \
     --profile native \
     --json "$output_root/classic/check.json" \
     --sarif "$output_root/classic/check.sarif"
 
-  dotnet tool run cs-assay -- verify \
+  "$gof_tool" verify \
     "$sample_root/refined/Gof.Refined.csproj" \
     --policy "$sample_root/refined.policy.json" \
     --profile native \
@@ -48,5 +55,5 @@ cmp "$generated_root/classic/check.sarif" "$repeat_root/classic/check.sarif"
 cmp "$generated_root/refined/verify.json" "$repeat_root/refined/verify.json"
 cmp "$generated_root/refined/verify.sarif" "$repeat_root/refined/verify.sarif"
 
-python3 eng/assert-gof-crosswalk.py
+./eng/tooling assert-gof-crosswalk
 echo "GoF JSON and SARIF are byte-for-byte deterministic across two runs."

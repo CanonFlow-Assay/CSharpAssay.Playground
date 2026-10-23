@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>CanonFlow.Assay.Workflow</PackageId>
+    <Version>0.1.0-preview.1</Version>
+    <Description>Immutable application-assessment contracts and bounded preview observations.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CsAssay.Analyzers" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

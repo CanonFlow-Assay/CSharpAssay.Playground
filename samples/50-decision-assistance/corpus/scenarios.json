@@ -1,0 +1,148 @@
+{
+  "schema": "playground-advice-scenarios/0.1",
+  "labelReviewStatus": "Draft; proposed policy expectations, not human-adjudicated benchmark labels.",
+  "synthetic": true,
+  "hypotheticalStates": true,
+  "cases": [
+    {
+      "id": "covered-gap",
+      "observations": {
+        "baselinePassed": true,
+        "mutantCompiled": true,
+        "testsCompleted": true,
+        "survived": true,
+        "covered": true,
+        "hasBoundaryAssertion": false
+      },
+      "expectedAction": "InspectAssertion",
+      "expectedStatus": "suggested",
+      "reason": "Missing boundary assertion with coverage present."
+    },
+    {
+      "id": "uncovered",
+      "observations": {
+        "baselinePassed": true,
+        "mutantCompiled": true,
+        "testsCompleted": true,
+        "survived": true,
+        "covered": false,
+        "hasBoundaryAssertion": null
+      },
+      "expectedAction": "InspectReachability",
+      "expectedStatus": "suggested",
+      "reason": "Observed lack of coverage takes priority."
+    },
+    {
+      "id": "contract-review",
+      "observations": {
+        "baselinePassed": true,
+        "mutantCompiled": true,
+        "testsCompleted": true,
+        "survived": true,
+        "covered": true,
+        "hasBoundaryAssertion": true
+      },
+      "expectedAction": "ReviewContract",
+      "expectedStatus": "suggested",
+      "reason": "Both observations exist; inspect the expected behavior."
+    },
+    {
+      "id": "declared-gap-unknown-coverage",
+      "observations": {
+        "baselinePassed": true,
+        "mutantCompiled": true,
+        "testsCompleted": true,
+        "survived": true,
+        "covered": null,
+        "hasBoundaryAssertion": false
+      },
+      "expectedAction": "InspectAssertion",
+      "expectedStatus": "suggested",
+      "reason": "A declared assertion gap supports investigation despite unknown coverage."
+    },
+    {
+      "id": "unknown-context",
+      "observations": {
+        "baselinePassed": true,
+        "mutantCompiled": true,
+        "testsCompleted": true,
+        "survived": true,
+        "covered": null,
+        "hasBoundaryAssertion": null
+      },
+      "expectedAction": "HumanReview",
+      "expectedStatus": "review",
+      "reason": "Missing context stops model inference."
+    },
+    {
+      "id": "unknown-assertions",
+      "observations": {
+        "baselinePassed": true,
+        "mutantCompiled": true,
+        "testsCompleted": true,
+        "survived": true,
+        "covered": true,
+        "hasBoundaryAssertion": null
+      },
+      "expectedAction": "HumanReview",
+      "expectedStatus": "review",
+      "reason": "Coverage alone does not establish assertion quality."
+    },
+    {
+      "id": "baseline-failed",
+      "observations": {
+        "baselinePassed": false,
+        "mutantCompiled": true,
+        "testsCompleted": true,
+        "survived": true,
+        "covered": true,
+        "hasBoundaryAssertion": false
+      },
+      "expectedAction": "HumanReview",
+      "expectedStatus": "review",
+      "reason": "Fix or explain the original baseline before survivor triage."
+    },
+    {
+      "id": "invalid-mutation",
+      "observations": {
+        "baselinePassed": true,
+        "mutantCompiled": false,
+        "testsCompleted": true,
+        "survived": true,
+        "covered": true,
+        "hasBoundaryAssertion": false
+      },
+      "expectedAction": "HumanReview",
+      "expectedStatus": "review",
+      "reason": "A noncompiling mutation is not a valid survivor."
+    },
+    {
+      "id": "incomplete-run",
+      "observations": {
+        "baselinePassed": true,
+        "mutantCompiled": true,
+        "testsCompleted": false,
+        "survived": true,
+        "covered": true,
+        "hasBoundaryAssertion": false
+      },
+      "expectedAction": "HumanReview",
+      "expectedStatus": "review",
+      "reason": "Incomplete execution must remain visible."
+    },
+    {
+      "id": "killed-mutation",
+      "observations": {
+        "baselinePassed": true,
+        "mutantCompiled": true,
+        "testsCompleted": true,
+        "survived": false,
+        "covered": true,
+        "hasBoundaryAssertion": false
+      },
+      "expectedAction": "HumanReview",
+      "expectedStatus": "review",
+      "reason": "No survivor needs optional triage."
+    }
+  ]
+}

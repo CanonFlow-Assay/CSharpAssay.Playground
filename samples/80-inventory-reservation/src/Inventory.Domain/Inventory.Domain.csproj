@@ -1,0 +1,1 @@
+<Project Sdk="Microsoft.NET.Sdk"><ItemGroup><PackageReference Include="CsAssay.Analyzers" PrivateAssets="all"/></ItemGroup></Project>

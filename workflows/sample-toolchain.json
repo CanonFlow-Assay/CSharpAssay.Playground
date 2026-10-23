@@ -1,0 +1,14 @@
+{
+  "schema": "assay-sample-toolchain/0.1",
+  "targetFramework": "net11.0",
+  "languageVersion": "preview",
+  "negativeControls": [
+    {"project": "samples/00-rule-matrix/impure/RuleMatrix.Impure.csproj", "reason": "Intentional nullable and suppression violations; the negative evidence gate must continue reporting them."},
+    {"project": "samples/10-gilded-rose/harness/GildedRose.Upstream.csproj", "reason": "Unmodified pinned upstream Item has an uninitialized property. Preserve source identity and its expected finding."},
+    {"project": "samples/10-gilded-rose/characterization/GildedRose.Characterization.csproj", "reason": "Characterization harness for the pinned upstream negative control; not an authored refined core."}
+  ],
+  "historicalEntries": [
+    {"directory": "samples/20-eshop-agent-assay", "kind": "external-evidence-only", "reason": "Contains no C# project in this checkout. Original external net10 evidence is archived, not claimed as a current net11 application port."}
+  ],
+  "authority": "Toolchain/build-property mandate. Expected negative controls remain violations; existing authoritative policy receipts and admitted rules keep their authority."
+}

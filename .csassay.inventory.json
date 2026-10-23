@@ -1,0 +1,56 @@
+{
+  "boundaries": {
+    "coreNamespaces": [
+      "Inventory.Domain"
+    ],
+    "coreProjects": [
+      "samples/80-inventory-reservation/src/Inventory.Domain/Inventory.Domain.csproj"
+    ],
+    "shellNamespaces": [
+      "Inventory.Adapter",
+      "Inventory.Api",
+      "Inventory.Tests"
+    ],
+    "shellProjects": [
+      "samples/80-inventory-reservation/src/Inventory.Adapter/Inventory.Adapter.csproj",
+      "samples/80-inventory-reservation/src/Inventory.Api/Inventory.Api.csproj",
+      "samples/80-inventory-reservation/worker/Inventory.Worker.csproj",
+      "samples/80-inventory-reservation/tests/Inventory.Tests/Inventory.Tests.csproj"
+    ]
+  },
+  "domainPrimitives": {},
+  "profile": "native",
+  "release": {
+    "allowPreviewToolchain": true,
+    "requiredRules": [
+      "CSAI0001",
+      "CSAI0002",
+      "CSAN0001",
+      "CSAN0002",
+      "CSAN0003",
+      "CSAN0004",
+      "CSAP0001"
+    ],
+    "requiredTargetFrameworks": [
+      "net11.0"
+    ],
+    "tests": [
+      {
+        "configuration": "Release",
+        "input": "samples/80-inventory-reservation/tests/Inventory.Tests/Inventory.Tests.csproj",
+        "minimumExpectedTests": 27,
+        "noBuild": true
+      }
+    ]
+  },
+  "representations": {
+    "closedTypes": [
+      "Inventory.Domain.ReservationDecision",
+      "Inventory.Domain.PriorReservation",
+      "Inventory.Domain.RequestValidation"
+    ],
+    "optionTypes": [],
+    "resultTypes": []
+  },
+  "suppressions": []
+}

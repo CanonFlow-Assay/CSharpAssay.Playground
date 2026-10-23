@@ -2,7 +2,9 @@
   "profile": "native",
   "release": {
     "allowPreviewToolchain": true,
-    "requiredTargetFrameworks": ["net11.0"],
+    "requiredTargetFrameworks": [
+      "net11.0"
+    ],
     "requiredRules": [
       "CSAI0001",
       "CSAI0002",
@@ -17,7 +19,7 @@
         "input": "tests/Playground.Tests/Playground.Tests.csproj",
         "configuration": "Release",
         "noBuild": false,
-        "minimumExpectedTests": 40
+        "minimumExpectedTests": 72
       }
     ]
   },
@@ -25,7 +27,8 @@
     "coreProjects": [
       "samples/00-rule-matrix/refined/RuleMatrix.Refined.csproj",
       "samples/10-gilded-rose/refined/GildedRose.Refined.csproj",
-      "samples/50-decision-assistance/src/DecisionAssist.Domain/DecisionAssist.Domain.csproj"
+      "samples/50-decision-assistance/src/DecisionAssist.Domain/DecisionAssist.Domain.csproj",
+      "src/Assay.Workflow.Domain/Assay.Workflow.Domain.csproj"
     ],
     "shellProjects": [
       "tests/Playground.Tests/Playground.Tests.csproj",
@@ -34,7 +37,8 @@
     "coreNamespaces": [
       "Playground.RuleMatrix.Refined.Core",
       "Playground.GildedRose.Refined",
-      "Playground.DecisionAssist.Domain"
+      "Playground.DecisionAssist.Domain",
+      "Assay.Workflow.Domain"
     ],
     "shellNamespaces": [
       "Playground.Tests",

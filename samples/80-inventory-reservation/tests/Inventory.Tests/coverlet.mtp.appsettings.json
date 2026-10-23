@@ -1,0 +1,12 @@
+{
+  "Coverlet": {
+    "Include": "[Inventory.Domain]*,[Inventory.Adapter]*,[Inventory.Api]*",
+    "Exclude": "",
+    "ExcludeByAttribute": "",
+    "Format": "cobertura",
+    "UseSourceLink": false,
+    "IncludeTestAssembly": false,
+    "SkipAutoProps": false,
+    "DisableManagedInstrumentationRestore": false
+  }
+}

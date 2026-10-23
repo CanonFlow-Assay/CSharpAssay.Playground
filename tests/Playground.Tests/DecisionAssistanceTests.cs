@@ -19,6 +19,22 @@ public sealed class DecisionAssistanceTests
     }
 
     [Fact]
+    public void Provider_state_preserves_order_context_without_verification_authority()
+    {
+        var evidence = Survivor() with
+        {
+            Task = "functional-shape-order-investigation",
+            InvestigationContext = "Invalid quantity must reject the order before storage."
+        };
+        using var document = System.Text.Json.JsonSerializer.SerializeToDocument(ProviderAdvice.State(evidence));
+        Assert.Equal(evidence.Task, document.RootElement.GetProperty("task").GetString());
+        Assert.Equal(evidence.InvestigationContext, document.RootElement.GetProperty("investigationContext").GetString());
+        Assert.False(document.RootElement.TryGetProperty("verificationVerdict", out _));
+        Assert.Equal(VerificationVerdict.Fail, evidence.VerificationVerdict);
+        Assert.DoesNotContain("zero-boundary", Assistance.Explain(Assistance.Baseline(evidence), FeedbackTone.Coaching), StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void No_coverage_takes_priority_over_a_suspected_assertion_gap()
     {
         var result = Assistance.Baseline(Survivor() with { Covered = Observation.Absent });
@@ -26,10 +42,10 @@ public sealed class DecisionAssistanceTests
     }
 
     [Fact]
-    public void Unknown_context_requests_contract_review_instead_of_declaring_equivalence()
+    public void Unknown_context_requests_human_review_before_model_advice()
     {
         var result = Assistance.Baseline(Survivor() with { HasBoundaryAssertion = Observation.Unknown });
-        Assert.Equal(NextAction.ReviewContract, Assert.IsType<Recommendation>(result.Value).Action);
+        Assert.IsType<ReviewRequired>(result.Value);
     }
 
     [Theory]
@@ -66,12 +82,18 @@ public sealed class DecisionAssistanceTests
     [InlineData("inspect_assertion", NextAction.InspectAssertion)]
     [InlineData("inspect_reachability", NextAction.InspectReachability)]
     [InlineData("review_contract", NextAction.ReviewContract)]
-    [InlineData("human_review", NextAction.HumanReview)]
     public void Adapter_accepts_only_registered_investigations(string choice, NextAction expected)
     {
         var json = "{\"answers\":{\"next\":{\"type\":\"choice\",\"choice\":\"" + choice + "\"}}}";
         var result = JevAdvice.Parse(Survivor(), Encoding.UTF8.GetBytes(json));
         Assert.Equal(expected, Assert.IsType<Recommendation>(result.Value).Action);
+    }
+
+    [Fact]
+    public void Jev_human_review_maps_to_review_status_like_other_providers()
+    {
+        var json = Encoding.UTF8.GetBytes("{\"answers\":{\"next\":{\"type\":\"choice\",\"choice\":\"human_review\"}}}");
+        Assert.IsType<ReviewRequired>(JevAdvice.Parse(Survivor(), json).Value);
     }
 
     [Theory]

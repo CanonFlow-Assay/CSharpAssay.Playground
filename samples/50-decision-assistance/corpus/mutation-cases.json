@@ -1,0 +1,107 @@
+{
+  "schema": "playground-executed-mutation-cases/0.1",
+  "synthetic": true,
+  "reviewStatus": "Agent-reviewed against explicit fixture requirements; pending human adjudication. Not gold benchmark labels.",
+  "requirements": [
+    "For every Int32 amount, Validate returns ValidAmount exactly when amount is greater than zero; otherwise InvalidAmount.",
+    "The probe submission gate rejects disabled submissions without invoking AmountPolicy.Validate.",
+    "A test claiming that zero is valid violates the amount requirement and must fail on the original."
+  ],
+  "suites": {
+    "weak": {
+      "tests": 2,
+      "policyCalls": 2,
+      "hasBoundaryAssertion": false
+    },
+    "strong": {
+      "tests": 3,
+      "policyCalls": 3,
+      "hasBoundaryAssertion": true
+    },
+    "unreached": {
+      "tests": 2,
+      "policyCalls": 0,
+      "hasBoundaryAssertion": false
+    },
+    "broken": {
+      "tests": 1,
+      "policyCalls": 1,
+      "hasBoundaryAssertion": true
+    }
+  },
+  "cases": [
+    {
+      "id": "zero-boundary-gap",
+      "replacement": "amount >= 0",
+      "selectedSuite": "weak",
+      "expectedOutcome": "survived",
+      "expectedAction": "InspectAssertion",
+      "expectedStatus": "suggested",
+      "probeSuite": "strong",
+      "expectedProbeFailures": 1,
+      "review": "Positive and negative assertions miss zero. The added zero assertion passes the original and fails the mutant. Repair demonstrated only for this declared requirement.",
+      "expectedBaselineFailures": 0,
+      "expectedSelectedFailures": 0
+    },
+    {
+      "id": "unreached-policy",
+      "replacement": "amount >= 0",
+      "selectedSuite": "unreached",
+      "expectedOutcome": "survived",
+      "expectedAction": "InspectReachability",
+      "expectedStatus": "suggested",
+      "probeSuite": "strong",
+      "expectedProbeFailures": 1,
+      "review": "Disabled submissions exercise the probe gate but never call the amount policy. Inspect reachability first; the enabled zero probe then exposes the difference. Call counts observe only this fixture's direct dispatch, not general code coverage.",
+      "expectedBaselineFailures": 0,
+      "expectedSelectedFailures": 0
+    },
+    {
+      "id": "integer-equivalent-candidate",
+      "replacement": "amount >= 1",
+      "selectedSuite": "strong",
+      "expectedOutcome": "survived",
+      "expectedAction": "ReviewContract",
+      "expectedStatus": "suggested",
+      "probeSuite": "strong",
+      "expectedProbeFailures": 0,
+      "review": "For Int32, greater than zero and at least one describe the same set, without arithmetic overflow. This is an equivalence argument for human contract review, not equivalence established by three passing tests. Keep the survivor unresolved.",
+      "expectedBaselineFailures": 0,
+      "expectedSelectedFailures": 0
+    },
+    {
+      "id": "killed-reversed-comparison",
+      "replacement": "amount < 0",
+      "selectedSuite": "weak",
+      "expectedOutcome": "killed",
+      "expectedAction": "HumanReview",
+      "expectedStatus": "review",
+      "review": "Both selected assertions detect the reversed acceptance rule. No surviving mutation remains for model triage.",
+      "expectedBaselineFailures": 0,
+      "expectedSelectedFailures": 2
+    },
+    {
+      "id": "invalid-expression",
+      "replacement": "amount >",
+      "selectedSuite": "weak",
+      "expectedOutcome": "invalid",
+      "expectedDiagnostic": "CS1525",
+      "expectedAction": "HumanReview",
+      "expectedStatus": "review",
+      "review": "The mutant must fail compilation with the declared syntax diagnostic after a passing baseline. No mutant tests run. A restore failure or unrelated compiler failure is a harness failure, not this expected result.",
+      "expectedBaselineFailures": 0,
+      "expectedSelectedFailures": null
+    },
+    {
+      "id": "failing-original-baseline",
+      "replacement": "amount >= 0",
+      "selectedSuite": "broken",
+      "expectedOutcome": "baseline_failed",
+      "expectedAction": "HumanReview",
+      "expectedStatus": "review",
+      "review": "The selected probe incorrectly accepts zero, so the original fails. Stop before building the mutant even though this mutation could satisfy the incorrect assertion. Fix the baseline first.",
+      "expectedBaselineFailures": 1,
+      "expectedSelectedFailures": null
+    }
+  ]
+}

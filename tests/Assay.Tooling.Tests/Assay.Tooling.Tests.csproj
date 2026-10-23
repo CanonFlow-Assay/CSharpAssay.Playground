@@ -1,0 +1,3 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup><ProjectReference Include="../../eng/Assay.Tooling/Assay.Tooling.csproj" /></ItemGroup>
+</Project>

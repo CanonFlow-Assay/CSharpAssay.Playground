@@ -1,0 +1,192 @@
+{
+  "schema": "csv-functional-expected-evidence/0.1",
+  "projects": 5,
+  "tests": 118,
+  "findings": [
+    {
+      "ruleId": "CSAF0002",
+      "message": "Simple accumulation loops may be clearer as pipelines: simple foreach accumulation may be expressible as Select/Where",
+      "severity": "info",
+      "certainty": "heuristic",
+      "disposition": "advise",
+      "suppressed": false,
+      "project": "CsvFunctional.Tests",
+      "targetFramework": "net11.0",
+      "location": {
+        "path": "tests/CsvFunctional.Tests/ExportTests.cs",
+        "startLine": 170,
+        "startColumn": 15,
+        "endLine": 170,
+        "endColumn": 22
+      },
+      "fingerprint": "58ce46359aa102efd24aa8a854baf936f1a32de40388d164614bfbee707b572e"
+    },
+    {
+      "ruleId": "CSAF0002",
+      "message": "Simple accumulation loops may be clearer as pipelines: simple foreach accumulation may be expressible as Select/Where",
+      "severity": "info",
+      "certainty": "heuristic",
+      "disposition": "advise",
+      "suppressed": false,
+      "project": "CsvFunctional.Tests",
+      "targetFramework": "net11.0",
+      "location": {
+        "path": "tests/CsvFunctional.Tests/ImportTests.cs",
+        "startLine": 73,
+        "startColumn": 15,
+        "endLine": 73,
+        "endColumn": 22
+      },
+      "fingerprint": "281e4c07abdb98a24e2aa145ee3cbae291251e85a399b6cbb9d455c022e8bb79"
+    },
+    {
+      "ruleId": "CSAF0002",
+      "message": "Simple accumulation loops may be clearer as pipelines: simple foreach accumulation may be expressible as Select/Where",
+      "severity": "info",
+      "certainty": "heuristic",
+      "disposition": "advise",
+      "suppressed": false,
+      "project": "CsvFunctional.Tests",
+      "targetFramework": "net11.0",
+      "location": {
+        "path": "tests/CsvFunctional.Tests/ImportTests.cs",
+        "startLine": 82,
+        "startColumn": 15,
+        "endLine": 82,
+        "endColumn": 22
+      },
+      "fingerprint": "14b4037b8978a1a79b5a56bffc45cbf85e63825ee2c9caa9f262ab9ebfd08515"
+    },
+    {
+      "ruleId": "CSAF0002",
+      "message": "Simple accumulation loops may be clearer as pipelines: simple foreach accumulation may be expressible as Select/Where",
+      "severity": "info",
+      "certainty": "heuristic",
+      "disposition": "advise",
+      "suppressed": false,
+      "project": "CsvFunctional.Tests",
+      "targetFramework": "net11.0",
+      "location": {
+        "path": "tests/CsvFunctional.Tests/ImportTests.cs",
+        "startLine": 123,
+        "startColumn": 15,
+        "endLine": 123,
+        "endColumn": 22
+      },
+      "fingerprint": "df0eae4eb99593215a06bbd09215d4d974890ad8881a2f0e30d3d0bffb35d132"
+    },
+    {
+      "ruleId": "CSAF0002",
+      "message": "Simple accumulation loops may be clearer as pipelines: simple foreach accumulation may be expressible as Select/Where",
+      "severity": "info",
+      "certainty": "heuristic",
+      "disposition": "advise",
+      "suppressed": false,
+      "project": "CsvFunctional.Tests",
+      "targetFramework": "net11.0",
+      "location": {
+        "path": "tests/CsvFunctional.Tests/ImportTests.cs",
+        "startLine": 183,
+        "startColumn": 15,
+        "endLine": 183,
+        "endColumn": 22
+      },
+      "fingerprint": "493d4951d461adcceed497d64ea02780a68e9c178526d1311a8e265c87e47672"
+    },
+    {
+      "ruleId": "CSAF0002",
+      "message": "Simple accumulation loops may be clearer as pipelines: simple foreach accumulation may be expressible as Select/Where",
+      "severity": "info",
+      "certainty": "heuristic",
+      "disposition": "advise",
+      "suppressed": false,
+      "project": "CsvFunctional.Tests",
+      "targetFramework": "net11.0",
+      "location": {
+        "path": "tests/CsvFunctional.Tests/SmokeTests.cs",
+        "startLine": 20,
+        "startColumn": 15,
+        "endLine": 20,
+        "endColumn": 22
+      },
+      "fingerprint": "31ebde0e07a419db8baea2ce947e924b9383c87f40a1ff7f16445f30e29dc554"
+    },
+    {
+      "ruleId": "CSAF0002",
+      "message": "Simple accumulation loops may be clearer as pipelines: simple foreach accumulation may be expressible as Select/Where",
+      "severity": "info",
+      "certainty": "heuristic",
+      "disposition": "advise",
+      "suppressed": false,
+      "project": "CsvFunctional.Workloads",
+      "targetFramework": "net11.0",
+      "location": {
+        "path": "workloads/CsvFunctional.Workloads/HeftyCommand.cs",
+        "startLine": 24,
+        "startColumn": 13,
+        "endLine": 24,
+        "endColumn": 20
+      },
+      "fingerprint": "79faa44406736f4f1d64a6f8111d8423995493bfed825408b53c13d0543ee2fe"
+    },
+    {
+      "ruleId": "CSAF0002",
+      "message": "Simple accumulation loops may be clearer as pipelines: simple foreach accumulation may be expressible as Select/Where",
+      "severity": "info",
+      "certainty": "heuristic",
+      "disposition": "advise",
+      "suppressed": false,
+      "project": "CsvFunctional.Workloads",
+      "targetFramework": "net11.0",
+      "location": {
+        "path": "workloads/CsvFunctional.Workloads/RoundTripCommand.cs",
+        "startLine": 19,
+        "startColumn": 9,
+        "endLine": 19,
+        "endColumn": 16
+      },
+      "fingerprint": "ed8dc931e0c880e8a479a70ff89673ee2975a4294742ff76e6d4fb8abbd1a38e"
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "severity": "warning",
+      "certainty": "deterministic",
+      "disposition": "advise",
+      "suppressed": false,
+      "project": "CsvFunctional.Tests",
+      "targetFramework": "net11.0",
+      "location": {
+        "path": "tests/CsvFunctional.Tests/ConversionTests.cs",
+        "startLine": 143,
+        "startColumn": 32,
+        "endLine": 143,
+        "endColumn": 36
+      },
+      "fingerprint": "63d319eacadd1070fb91a889b0d0b71145246b067b0981d65fa119485463fc3e"
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "severity": "warning",
+      "certainty": "deterministic",
+      "disposition": "advise",
+      "suppressed": false,
+      "project": "CsvFunctional.Tests",
+      "targetFramework": "net11.0",
+      "location": {
+        "path": "tests/CsvFunctional.Tests/ConversionTests.cs",
+        "startLine": 143,
+        "startColumn": 66,
+        "endLine": 143,
+        "endColumn": 70
+      },
+      "fingerprint": "d2446df83d6a500742fa25f0f6eab3541d486cb60996d5c0be9dcefc6c013a2e"
+    }
+  ],
+  "reviewStatus": "Agent review; human adjudication pending.",
+  "advisoryReview": {
+    "CSAF0002": "Async stream collection in tests is deliberate and small; await foreach keeps cancellation and per-event observation explicit. This heuristic does not establish a defect. The hefty fixture-generation loop deliberately awaits sequential file creation to keep IO order and resource use bounded. Export test collection observes typed events; round-trip fixture generation deliberately awaits sequential IO.",
+    "CSAN0003": "Nullable optional styles/aliases belong to the published CsvHelper comparison helper in the test shell. Functional Domain outcomes and inputs remain explicit non-null cases."
+  }
+}

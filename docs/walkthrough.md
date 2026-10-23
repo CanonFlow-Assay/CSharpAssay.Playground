@@ -13,7 +13,7 @@ refinement.
 ## Prerequisites
 
 - .NET SDK `10.0.301` (pinned by `global.json`)
-- Python 3 for the dependency-free evidence assertion
+- The pinned .NET SDK for the C# evidence assertions
 - a built CSharpAssay runner DLL
 
 Run the entire gate from the repository root:
@@ -85,7 +85,7 @@ Pass (authoritative)
 Projects: 3  Findings: 0  Tests: 9  Missing: 0  Failures: 0
 ```
 
-`eng/assert-evidence.py` also confirms every required rule completed, no tool
+`eng/tooling assert-evidence` also confirms every required rule completed, no tool
 failure or missing evidence was recorded, and provenance hashes still match.
 Generated JSON and SARIF live under `evidence/generated/` and are uploaded by
 CI rather than committed.

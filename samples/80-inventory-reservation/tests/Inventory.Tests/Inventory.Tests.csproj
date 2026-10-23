@@ -1,0 +1,1 @@
+<Project Sdk="Microsoft.NET.Sdk"><ItemGroup><ProjectReference Include="../../src/Inventory.Api/Inventory.Api.csproj"/><PackageReference Include="coverlet.MTP"/><FrameworkReference Include="Microsoft.AspNetCore.App"/></ItemGroup></Project>

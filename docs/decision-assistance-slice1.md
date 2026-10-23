@@ -34,7 +34,7 @@ export DOTNET_ROOT="$(dirname "$(readlink -f "$(command -v dotnet)")")"
 ./eng/run-assay.sh ../CSharpAssay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
 ./eng/run-gof-crosswalk.sh
 ./eng/run-functional-shape.sh
-python3 eng/run-decision-assistance.py
+./eng/tooling run-decision-assistance
 ```
 
 When reproducing on this worktree, supply the actual sibling CSharpAssay path. Generated receipts remain in ignored `evidence/generated/` and CI uploads them as artifacts. The preparation entrypoint is now executable, matching its documented and CI invocation. Local prerelease analyzer content hashes were regenerated through the existing preparation script; package versions were not changed.

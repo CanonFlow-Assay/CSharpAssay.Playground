@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../PollyAssay.Domain/PollyAssay.Domain.csproj" />
+    <ProjectReference Include="../../../../src/Assay.Workflow.Domain/Assay.Workflow.Domain.csproj" />
+    <PackageReference Include="Polly.Core" VersionOverride="8.6.5" />
+    <PackageReference Include="Polly.RateLimiting" VersionOverride="8.6.5" />
+    <PackageReference Include="CsAssay.Analyzers" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

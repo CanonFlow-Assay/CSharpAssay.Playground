@@ -1,5 +1,10 @@
 <Project>
   <PropertyGroup>
+    <_AssaySdkProducer Condition="'$(MSBuildProjectFullPath)' == '$(MSBuildThisFileDirectory)src/Assay.Workflow.Domain/Assay.Workflow.Domain.csproj' or '$(MSBuildProjectFullPath)' == '$(MSBuildThisFileDirectory)src/Assay.Workflow.Cli/Assay.Workflow.Cli.csproj' or '$(MSBuildProjectFullPath)' == '$(MSBuildThisFileDirectory)samples/50-decision-assistance/src/DecisionAssist.Domain/DecisionAssist.Domain.csproj'">true</_AssaySdkProducer>
+  </PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory).packages/sdk-source.props"
+          Condition="'$(_AssaySdkProducer)' == 'true' and Exists('$(MSBuildThisFileDirectory).packages/sdk-source.props')" />
+  <PropertyGroup>
     <TargetFramework Condition="'$(TargetFramework)' == ''">net11.0</TargetFramework>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>

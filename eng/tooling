@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+tooling_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+tooling_dll="$tooling_root/eng/Assay.Tooling/bin/Release/net11.0/Assay.Tooling.dll"
+if [[ ! -f "$tooling_dll" ]]; then
+  dotnet build "$tooling_root/eng/Assay.Tooling/Assay.Tooling.csproj" -c Release -m:2 -nodeReuse:false >&2
+fi
+exec dotnet "$tooling_dll" "$@"

@@ -1,0 +1,109 @@
+{
+  "schema": "assay-project/0.1",
+  "testReportProtocol": "xunit-mtp-v2",
+  "id": "PollyConsumer",
+  "root": "../..",
+  "solution": "Assay.Workflow.slnx",
+  "policy": ".csassay.workflow.json",
+  "requirements": "samples/70-polly-resilience/requirements.json",
+  "testProject": "tests/Assay.Workflow.Tests/Assay.Workflow.Tests.csproj",
+  "testDll": "tests/Assay.Workflow.Tests/bin/Release/net11.0/Assay.Workflow.Tests.dll",
+  "workerDll": "samples/70-polly-resilience/worker/bin/Release/net11.0/PollyAssay.Worker.dll",
+  "contractBaseline": "samples/70-polly-resilience/contract.json",
+  "mutations": "samples/70-polly-resilience/mutations.json",
+  "minimumTests": 39,
+  "maximumMutations": 8,
+  "inputs": [
+    "src/Assay.Workflow.Domain",
+    "src/Assay.Workflow.Cli",
+    "samples/50-decision-assistance/src/DecisionAssist.Domain",
+    "samples/70-polly-resilience",
+    "tests/Assay.Workflow.Tests",
+    "workflows",
+    "eng/Assay.Tooling",
+    "Assay.Workflow.slnx",
+    ".csassay.workflow.json",
+    "global.json",
+    "Directory.Build.props",
+    "Directory.Build.targets",
+    "Directory.Packages.props",
+    "NuGet.config",
+    ".editorconfig",
+    "tests/Assay.Tooling.Tests"
+  ],
+  "worker": {
+    "schema": "assay-worker-execution/0.1",
+    "scenarioKeys": [
+      "success/original",
+      "success/functional",
+      "retry-recovery/original",
+      "retry-recovery/functional",
+      "permanent/original",
+      "permanent/functional",
+      "exhausted/original",
+      "exhausted/functional",
+      "deadline/original",
+      "deadline/functional",
+      "total-deadline/original",
+      "total-deadline/functional",
+      "cancel-before/original",
+      "cancel-before/functional",
+      "cancel-during/original",
+      "cancel-during/functional"
+    ],
+    "checkIds": [
+      "breaker-open-rejects",
+      "breaker-recovered",
+      "concurrent-recovery-rejected",
+      "concurrency-limit-rejects",
+      "concurrency-permit-released",
+      "fallback-marked-degraded"
+    ],
+    "traceVariants": [
+      "functional"
+    ],
+    "traceContract": {
+      "maximumAttempts": 3,
+      "deadlineTicks": 20000000,
+      "allowsFallback": false,
+      "atMostOneSideEffect": true
+    }
+  },
+  "productionRoots": [
+    "src",
+    "samples/70-polly-resilience/src"
+  ],
+  "probes": [
+    {
+      "id": "fetch-behavior",
+      "requirementId": "fetch",
+      "module": "Behavior",
+      "kind": "tests"
+    },
+    {
+      "id": "deadline-resilience",
+      "requirementId": "deadline",
+      "module": "ResilienceAssay",
+      "kind": "worker"
+    },
+    {
+      "id": "contract-compatibility",
+      "requirementId": "contract",
+      "module": "ContractAssay",
+      "kind": "worker"
+    },
+    {
+      "id": "state-resilience",
+      "requirementId": "state",
+      "module": "ResilienceAssay",
+      "kind": "worker"
+    }
+  ],
+  "coverageProvider": "coverlet-mtp",
+  "coverageModules": [
+    "Assay.Workflow.Domain",
+    "DecisionAssist.Domain",
+    "PollyAssay.Domain",
+    "PollyAssay.Adapter"
+  ]
+}

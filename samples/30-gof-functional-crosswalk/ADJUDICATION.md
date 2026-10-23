@@ -46,7 +46,7 @@ integration, or all exceptional inputs.
 ## Determinism and failure posture
 
 `eng/run-gof-crosswalk.sh` produces each JSON and SARIF report twice and compares
-the bytes. `eng/assert-gof-crosswalk.py` then checks the package baseline, report
+the bytes. `eng/tooling assert-gof-crosswalk` then checks the package baseline, report
 authority, project and test totals, complete required-rule outcomes, exact
 finding subjects, JSON/SARIF agreement, and absence of failures or missing
 required evidence. A difference fails CI.

@@ -1,0 +1,17 @@
+{
+  "schema": "csv-hefty-plan/0.1",
+  "description": "Deterministic physical UTF-8 mock files; generation excluded from timing; warm page-cache file reads, parsing, conversion, checksum and disposal included.",
+  "cases": [
+    {"id":"plain-million","rows":1000000,"noteCharacters":16,"unicode":false,"culture":"","invalidEvery":0},
+    {"id":"wide-unicode","rows":100000,"noteCharacters":1024,"unicode":true,"culture":"","invalidEvery":0},
+    {"id":"german-ledger","rows":250000,"noteCharacters":64,"unicode":true,"culture":"de-DE","invalidEvery":0},
+    {"id":"dirty-ledger","rows":100000,"noteCharacters":128,"unicode":true,"culture":"","invalidEvery":100}
+  ],
+  "runtimeModes": ["tiered-pgo", "non-tiered"],
+  "warmupsPerChild": 2,
+  "measuredRunsPerChild": 3,
+  "maximumTotalFileBytes": 1073741824,
+  "maximumChildSeconds": 300,
+  "comparison": "Valid files: original GetRecordsAsync versus assayed adapter. Dirty file: original fail-fast characterization plus original TryGetField continuation versus assayed continuation. Speed ratios require identical complete output SHA-256 and totals.",
+  "authority": "Agent-authored synthetic benchmark; local host evidence, no production or cross-host qualification."
+}

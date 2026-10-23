@@ -1,0 +1,14 @@
+{
+  "schema": "assay-change-request/0.1",
+  "description": "Limit new reservations to at most three units while preserving historical idempotent replay.",
+  "acceptanceCriteria": [
+    "A new four-unit request is invalid and causes no writes.",
+    "Quantities one through three keep their existing stock rules.",
+    "An existing four-unit receipt remains replayable without new side effects.",
+    "Response wire names and allowed outcomes remain unchanged."
+  ],
+  "requirementId": "maximum-per-request",
+  "probeId": "maximum-behavior",
+  "before": "        if (request.Quantity > stock.Available)",
+  "insertion": "        if (request.Quantity > 3)\n        {\n            return new InvalidReservation(\"Quantity cannot exceed three units.\");\n        }\n"
+}

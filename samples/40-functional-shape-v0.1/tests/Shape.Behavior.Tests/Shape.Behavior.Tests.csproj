@@ -8,6 +8,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="xunit.v3" />
+    <PackageReference Include="coverlet.MTP" />
+    <None Update="coverlet.mtp.appsettings.json" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../../src/Shape.Domain/Shape.Domain.csproj" />
