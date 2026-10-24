@@ -6,7 +6,7 @@
         "type": "Direct",
         "requested": "[0.2.0-rc.1, )",
         "resolved": "0.2.0-rc.1",
-        "contentHash": "CZM5OiXYxKNw04npeB6KZCwciWhFqL4X8PkMTUB1zlximXgd8AxPzRgnPwsTN8djVKIqp8trPVbbAGi9MYm0Lw=="
+        "contentHash": "T7IzAAEtDOTSYPuTDK80I4StXBcJ//FAAwhpaR4AJ1gpGUA3J6MPFNp9NLBW8WPTu7ccBnmYd1/TMd62It41rQ=="
       },
       "CanonFlow.Assay.Workflow": {
         "type": "Project"

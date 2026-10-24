@@ -12,7 +12,7 @@ check for shared changes.
 
 ## Prepare and qualify
 
-The toolchain is pinned by `global.json`: .NET 11 RC1 and C# preview, including
+The toolchain is pinned by `global.json`: .NET 11 RC2 and C# preview, including
 native unions. Orchestration is implemented in C#; process-tree cancellation and
 exclusive probe-budget locking use .NET APIs. Executed host qualification remains
 Linux; Windows execution is not claimed.

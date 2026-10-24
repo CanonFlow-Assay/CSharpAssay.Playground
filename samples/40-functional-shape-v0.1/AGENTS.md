@@ -33,7 +33,7 @@ dotnet test Shape.slnx --no-build --no-restore --configuration Release
 ../../../eng/run-functional-shape.sh
 ```
 
-The evidence script uses locally built 0.2.0-rc.1 tool and analyzer packages for .NET 11 RC1 and
+The evidence script uses locally built 0.2.0-rc.1 tool and analyzer packages for the separately qualified .NET 11 RC2 SDK and
 runs real `check` and `verify` commands with `--json`, `--sarif`, and `--html`.
 
 Do not claim success for skipped or zero tests, unloaded projects, compiler or

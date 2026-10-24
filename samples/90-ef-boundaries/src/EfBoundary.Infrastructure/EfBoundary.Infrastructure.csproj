@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk"><ItemGroup>
+  <ProjectReference Include="../EfBoundary.Domain/EfBoundary.Domain.csproj" />
+  <PackageReference Include="CsAssay.Analyzers" PrivateAssets="all" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" VersionOverride="11.0.0-rc.2.26504.105" />
+</ItemGroup></Project>

@@ -14,7 +14,7 @@ Decision Assist can suggest the next investigation through Jev, OpenAI or a conf
 
 The models also make mistakes. That's part of the demonstration, and why we're keeping a deterministic baseline and comparing providers on identical inputs.
 
-This is an early .NET 11 RC1 preview. I'm interested in feedback from functional C# developers and teams reviewing agent-generated changes: does this workflow make the next investigation clearer?
+This is an early .NET 11 preview using the separately qualified RC2 SDK. Native unions still require preview C#. I'm interested in feedback from functional C# developers and teams reviewing agent-generated changes: does this workflow make the next investigation clearer?
 
 ## Substack or Medium draft
 
@@ -24,7 +24,7 @@ An instruction such as “keep the business core functional” is useful only wh
 
 CSharpAssay explores a chosen functional C# policy through Roslyn checks and recorded verification evidence. The choice matters: this is a discipline a team adopts for an appropriate boundary. It is not a claim that every object-oriented design is defective or that immutable data proves the business logic correct.
 
-The Playground makes the idea tangible with rule examples, behavior-preserving functional alternatives, and an optional Decision Assist experiment. Its current native-union profile requires the exact pinned .NET 11 RC1 SDK.
+The Playground makes the idea tangible with rule examples, behavior-preserving functional alternatives, and an optional Decision Assist experiment. Its current native-union profile requires the exact pinned .NET 11 RC2 SDK and preview C#.
 
 ### A small test gap with an observable consequence
 

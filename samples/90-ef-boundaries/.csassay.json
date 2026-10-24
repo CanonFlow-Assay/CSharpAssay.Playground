@@ -1,0 +1,15 @@
+{
+  "profile": "native",
+  "release": {
+    "allowPreviewToolchain": true,
+    "requiredTargetFrameworks": ["net11.0"],
+    "requiredRules": ["CSAP0001", "CSAN0001", "CSAN0002", "CSAN0003", "CSAN0004", "CSAI0001", "CSAI0002"],
+    "tests": [{"input": "tests/EfBoundary.Tests/EfBoundary.Tests.csproj", "configuration": "Release", "noBuild": false, "minimumExpectedTests": 8}]
+  },
+  "boundaries": {
+    "coreProjects": ["src/EfBoundary.Domain/EfBoundary.Domain.csproj"],
+    "shellProjects": ["src/EfBoundary.Infrastructure/EfBoundary.Infrastructure.csproj", "tests/EfBoundary.Tests/EfBoundary.Tests.csproj"],
+    "coreNamespaces": ["EfBoundary.Domain"],
+    "shellNamespaces": ["EfBoundary.Infrastructure", "EfBoundary.Tests"]
+  }
+}

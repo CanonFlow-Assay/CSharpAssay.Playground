@@ -2,7 +2,7 @@
 
 CSharpAssay helps developers and coding agents follow a chosen functional C# policy. Its Playground adds optional advice about the next investigation after a surviving mutation. Deterministic evidence and verification remain independent of that advice.
 
-The current audience is developers evaluating native C# unions on the exact .NET 11 RC1 toolchain. This is a development preview with a bounded demonstration, not an automatic application migration or a general mutation engine.
+The current audience is developers evaluating native C# unions on the exact repository-pinned .NET 11 RC2 toolchain. The SDK prerequisite is separately qualified; native unions still require preview C#. This is a development preview with a bounded demonstration, not an automatic application migration or a general mutation engine.
 
 ## Run the demonstration
 

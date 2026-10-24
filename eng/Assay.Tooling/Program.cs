@@ -82,6 +82,7 @@ public static partial class Program
                 case "compare-csvhelper-milestones": result = MilestoneComparison.Run(); break;
                 case "qualify-application-workflow": result = await ApplicationQualification.Run(options.Get("--output", Path.Combine(Root, "evidence/generated/application-workflow"))); break;
                 case "qualify-inventory-maturity": result = await InventoryQualification.Run(options.Get("--output", Path.Combine(Root, "evidence/generated/maturity/inventory"))); break;
+                case "qualify-ef-boundary": result = await EfBoundaryQualification.Run(options.Get("--output", Path.Combine(Root, "evidence/generated/ef-boundary/qualified"))); break;
                 case "qualify-csharp-migration": result = await MigrationQualification.Run(options.Get("--output", Path.Combine(Root, "evidence/generated/csharp-migration/qualified")), options.Get("--engine-root")); break;
                 default: throw new ArgumentException("Unknown tooling command: " + command);
             }

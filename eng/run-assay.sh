@@ -30,14 +30,26 @@ dotnet run \
   --project samples/10-gilded-rose/characterization/GildedRose.Characterization.csproj \
   --no-build --no-restore --configuration Release
 
-dotnet "$assay_dll" check \
+# These preserved negative fixtures deliberately disable nullable analysis.
+# Require their exact policy failure exit, then assert detailed receipt gaps;
+# an execution failure must never count as the expected negative result.
+negative_analysis() {
+  local observed_exit
+  if dotnet "$assay_dll" check "$@"; then observed_exit=0; else observed_exit=$?; fi
+  if [[ "$observed_exit" -ne 1 ]]; then
+    echo "Expected negative analysis exit 1, observed $observed_exit." >&2
+    return 1
+  fi
+}
+
+negative_analysis \
   samples/00-rule-matrix/impure/RuleMatrix.Impure.csproj \
   --policy .csassay.impure.json \
   --profile native \
   --json evidence/generated/impure/check.json \
   --sarif evidence/generated/impure/check.sarif
 
-dotnet "$assay_dll" check \
+negative_analysis \
   samples/10-gilded-rose/harness/GildedRose.Upstream.csproj \
   --policy .csassay.gildedrose-upstream.json \
   --profile native \

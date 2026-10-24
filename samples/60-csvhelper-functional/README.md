@@ -54,7 +54,7 @@ input or exception messages.
 
 ## Run locally
 
-Use the repository's exact .NET 11 RC1 SDK, `net11.0`, and preview language for
+Use the repository's exact .NET 11 RC2 SDK, `net11.0`, and preview language for
 native unions. From the repository root, with matching local Assay packages:
 
 ```sh

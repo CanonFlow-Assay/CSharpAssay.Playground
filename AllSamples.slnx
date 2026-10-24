@@ -35,4 +35,7 @@
   <Project Path="samples/80-inventory-reservation/tests/Inventory.Tests/Inventory.Tests.csproj" />
   <Project Path="eng/Assay.Tooling/Assay.Tooling.csproj" />
   <Project Path="tests/Assay.Tooling.Tests/Assay.Tooling.Tests.csproj" />
+  <Project Path="samples/90-ef-boundaries/src/EfBoundary.Domain/EfBoundary.Domain.csproj" />
+  <Project Path="samples/90-ef-boundaries/src/EfBoundary.Infrastructure/EfBoundary.Infrastructure.csproj" />
+  <Project Path="samples/90-ef-boundaries/tests/EfBoundary.Tests/EfBoundary.Tests.csproj" />
 </Solution>

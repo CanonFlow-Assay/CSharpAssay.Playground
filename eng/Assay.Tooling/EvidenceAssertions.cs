@@ -20,6 +20,19 @@ public static class EvidenceAssertions
         Json.Check(report.S("verdict") == verdict && report.I("exitCode") == 0 && evidence.B("authoritative") == authoritative && evidence.A("projects").Count == projectCount && evidence.A("failures").Count == 0 && evidence.A("missingEvidence").Count == 0, "Receipt verdict/authority/completeness changed: " + path);
         return report;
     }
+    public static void AssertPrimaryReceipt(JsonNode report, JsonNode expected)
+    {
+        var evidence = report["evidence"]!; Native(evidence);
+        Json.Check(report.S("verdict") == expected.S("verdict") && report.I("exitCode") == expected.I("exitCode") && evidence["authoritative"]?.GetValue<bool>() == expected.B("authoritative") && evidence.S("verificationMode") == expected.S("verificationMode") && evidence.A("projects").Count == expected.I("projects"), "Receipt verdict/authority/mode changed.");
+        Json.Check(evidence["failures"] is JsonArray failures && failures.Count == 0, "Execution failures cannot satisfy a primary fixture.");
+        var missing = evidence["missingEvidence"] as JsonArray ?? throw new InvalidDataException("Missing compiler-evidence inventory.");
+        var counts = new JsonObject(); foreach (var group in missing.GroupBy(item => item.S("code"), StringComparer.Ordinal)) { counts[group.Key] = group.Count(); }
+        Json.Check(JsonNode.DeepEquals(counts, expected["missingEvidenceCounts"] ?? new JsonObject()), "Unexpected compiler-evidence gap inventory.");
+        if (missing.Count > 0)
+        {
+            Json.Check(report.S("verdict") == "fail" && report.I("exitCode") == 1 && !evidence.B("authoritative") && evidence.S("verificationMode") == "analysis" && evidence.A("findings").Any(finding => finding.S("ruleId") == "CSAP0001" && finding.S("disposition") == "block" && finding?["suppressed"]?.GetValue<bool>() == false), "A declared nullable negative must retain active integrity failure and no release authority.");
+        }
+    }
     private static JsonObject Counts(IEnumerable<JsonNode?> findings)
     {
         var result = new JsonObject(); foreach (var group in findings.GroupBy(f => f.S("ruleId"), StringComparer.Ordinal))
@@ -32,9 +45,14 @@ public static class EvidenceAssertions
     public static void Primary()
     {
         var expectations = Json.Read(Path.Combine(Root, "evidence/expectations/reports.json"));
-        foreach (var expected in expectations.A("reports"))
+        foreach (var expectedEntry in expectations.A("reports"))
         {
-            var report = ValidReport(Path.Combine(Root, expected.S("path")), expected.S("verdict"), expected.B("authoritative"), expected.I("projects")); var evidence = report["evidence"]!;
+            var expected = expectedEntry ?? throw new InvalidDataException("Missing primary report expectation.");
+            var report = Json.Read(Path.Combine(Root, expected.S("path"))); AssertPrimaryReceipt(report, expected); var evidence = report["evidence"]!;
+            var sarif = Json.Read(Path.ChangeExtension(Path.Combine(Root, expected.S("path")), ".sarif"));
+            Json.Check(sarif.S("version") == "2.1.0" && sarif.A("runs").Count == 1 && sarif.A("runs")[0].A("invocations").Count == 1, "Primary SARIF invocation metadata missing.");
+            var invocation = sarif.A("runs")[0].A("invocations")[0];
+            Json.Check(invocation.I("exitCode") == expected.I("exitCode") && invocation?["executionSuccessful"]?.GetValue<bool>() == (evidence.A("missingEvidence").Count == 0), "Primary SARIF execution/completeness mapping changed.");
             var counts = expected!["ruleCounts"]!.DeepClone().AsObject(); foreach (var (key, value) in expected["advisoryRuleCounts"]?.AsObject() ?? [])
             {
                 counts[key] = value?.DeepClone();
@@ -138,10 +156,28 @@ public static class EvidenceAssertions
         var actual = Json.Array(evidence.A("findings").Select(f => Identity(f!)).OrderBy(f => f.S("fingerprint"), StringComparer.Ordinal)); var wanted = Json.Array(expected.A("findings").OrderBy(f => f.S("fingerprint"), StringComparer.Ordinal)); Json.Check(JsonNode.DeepEquals(actual, wanted), "Shape finding identity changed.");
         var sarif = Json.Read(Path.Combine(output, "verify.sarif")); var sarifFindings = Json.Array(sarif.A("runs").SelectMany(r => r.A("results")).Select(f => Json.Create(("ruleId", f.S("ruleId")), ("path", f!.A("locations")[0]!["physicalLocation"]!["artifactLocation"].S("uri")), ("disposition", f!["properties"].S("disposition").ToLowerInvariant()), ("fingerprint", f!["partialFingerprints"].S("csAssay/v1")))).OrderBy(f => f.S("fingerprint"), StringComparer.Ordinal)); Json.Check(JsonNode.DeepEquals(sarifFindings, wanted), "Shape SARIF identity changed.");
     }
+    public static void AssertCsvAdvisories(JsonNode evidence, JsonArray expected)
+    {
+        Json.Check(evidence["suppressions"] is JsonArray suppressions && suppressions.Count == 0, "CSV suppressions changed.");
+        var findings = evidence["findings"] as JsonArray ?? throw new InvalidDataException("Missing CSV finding inventory.");
+        var reviewed = new JsonArray();
+        string[] legacyFields = ["ruleId", "message", "severity", "certainty", "disposition", "suppressed", "project", "targetFramework", "location", "fingerprint"];
+        foreach (var entry in findings)
+        {
+            var finding = entry ?? throw new InvalidDataException("Missing CSV finding.");
+            Json.Check(finding.S("disposition") == "advise" && finding["suppressed"]?.GetValue<bool>() == false && finding.S("scope") == "shell" && finding.S("identityPath").Length > 0 && finding.S("identityPath") == finding["location"].S("path"), "CSV advisory scope, identity or authorization changed.");
+            var original = new JsonObject(); foreach (var field in legacyFields)
+            {
+                original[field] = (finding[field] ?? throw new InvalidDataException("Missing reviewed CSV finding field: " + field)).DeepClone();
+            }
+            reviewed.Add(original);
+        }
+        Json.Check(JsonNode.DeepEquals(reviewed, expected), "CSV reviewed fields or finding count changed.");
+    }
     public static JsonObject Csv()
     {
         var sample = Path.Combine(Root, SampleInvestigations.Csv.RelativePath); var output = Path.Combine(Root, "evidence/generated/csvhelper"); var expected = Json.Read(Path.Combine(sample, "expected-evidence.json")); var receipt = ValidReport(Path.Combine(output, "verify.json"), "pass", true, expected.I("projects")); var value = receipt["evidence"]!;
-        Json.Check(value.A("suppressions").Count == 0 && JsonNode.DeepEquals(value["findings"], expected["findings"]) && value.A("findings").All(f => f.S("disposition") == "advise" && !f.B("suppressed")), "CSV advisories changed, suppressed or promoted.");
+        AssertCsvAdvisories(value, expected.A("findings"));
         Json.Check(value.A("tests").Count == 1, "CSV test selection changed."); var test = value.A("tests")[0]; Json.Check(test.I("total") == expected.I("tests") && test.I("passed") == expected.I("tests") && test.I("failed") == 0 && test.I("skipped") == 0 && test.I("notRun") == 0, "CSV tests did not complete cleanly.");
         var reportPath = Path.Combine(output, "functional/investigations.json"); var investigations = Json.Read(reportPath); Json.Check(investigations.S("executionStatus") == "completed" && investigations["summary"]!["after"].I("killed") == 23 && investigations["summary"]!["after"].I("survived") == 1, "CSV mutation outcomes changed."); SampleInvestigations.AssertBindings(investigations["inputSha256"]!); Json.Check(JsonNode.DeepEquals(investigations["inputSha256"], SampleInvestigations.Bindings(SampleInvestigations.Csv)), "CSV input inventory changed.");
         var streaming = Json.Read(Path.Combine(output, "streaming/benchmark.json")); Json.Check(streaming.S("executionStatus") == "completed", "Streaming benchmark incomplete."); SampleInvestigations.AssertBindings(streaming["inputSha256"]!);

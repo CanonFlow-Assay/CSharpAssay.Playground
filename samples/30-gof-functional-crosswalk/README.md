@@ -26,7 +26,7 @@ business cases and compare classic and refined outputs directly.
 
 ## Reproduce
 
-Use the repository-pinned .NET 11 RC1 SDK:
+Use the repository-pinned, separately qualified .NET 11 RC2 SDK:
 
 ```text
 ./eng/prepare-assay.sh ../CSharpAssay

@@ -4,8 +4,12 @@
     {
       "name": "controlled impure matrix",
       "path": "evidence/generated/impure/check.json",
-      "verdict": "pass",
+      "verdict": "fail",
+      "exitCode": 1,
       "authoritative": false,
+      "verificationMode": "analysis",
+      "missingEvidenceCounts": {"CSASSAY-NULLABLE-FLOW-INCOMPLETE": 2},
+      "integrityReview": "Preserved Nullable=disable and source directive are explicit compiler-evidence gaps. Active CSAP findings retain disabled-flow integrity and unauthorized source suppression. This negative analysis cannot authorize release.",
       "projects": 1,
       "testsPassed": 0,
       "ruleCounts": {
@@ -21,8 +25,12 @@
     {
       "name": "pinned Gilded Rose upstream",
       "path": "evidence/generated/upstream/check.json",
-      "verdict": "pass",
+      "verdict": "fail",
+      "exitCode": 1,
       "authoritative": false,
+      "verificationMode": "analysis",
+      "missingEvidenceCounts": {"CSASSAY-NULLABLE-FLOW-INCOMPLETE": 1},
+      "integrityReview": "Original upstream source and deliberately Nullable=disable harness remain unchanged. Disabled compiler flow adds one active CSAP integrity finding; it is not waived by provisional analysis.",
       "projects": 1,
       "testsPassed": 0,
       "ruleCounts": {
@@ -32,14 +40,17 @@
         "CSAN0002": 0,
         "CSAN0003": 0,
         "CSAN0004": 0,
-        "CSAP0001": 0
+        "CSAP0001": 1
       }
     },
     {
       "name": "authoritative refined gate",
       "path": "evidence/generated/refined/verify.json",
       "verdict": "pass",
+      "exitCode": 0,
       "authoritative": true,
+      "verificationMode": "verification",
+      "missingEvidenceCounts": {},
       "projects": 6,
       "testsPassed": 72,
       "ruleCounts": {

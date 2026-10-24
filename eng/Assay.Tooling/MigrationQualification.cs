@@ -31,7 +31,8 @@ public static class MigrationQualification
                 ("inventory-requirement-and-contract-loop", ["dotnet", Tool, "with-inventory-database", "--", "dotnet", Tool, "qualify-inventory-maturity", "--output", inventory]),
                 ("hefty-physical-workloads", ["dotnet", Tool, "run-csvhelper-hefty", "--reuse-fixtures"]),
                 ("physical-roundtrip", ["dotnet", Tool, "run-csvhelper-roundtrip"]),
-                ("frozen-milestone-comparison", ["dotnet", Tool, "compare-csvhelper-milestones"])];
+                ("frozen-milestone-comparison", ["dotnet", Tool, "compare-csvhelper-milestones"]),
+                ("ef-boundary-contract", ["dotnet", Tool, "qualify-ef-boundary", "--output", Path.Combine(output, "ef-boundary")])];
             foreach (var (name, command) in gates)
             {
                 Console.WriteLine("C# migration gate: " + name); var log = Path.Combine(output, name + ".log"); var watch = Stopwatch.StartNew(); var execution = await Processes.Run(command, Root, log, 7200);

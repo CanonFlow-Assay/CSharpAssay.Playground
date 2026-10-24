@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/EfBoundary.Domain/EfBoundary.Domain.csproj" />
+  <Project Path="src/EfBoundary.Infrastructure/EfBoundary.Infrastructure.csproj" />
+  <Project Path="tests/EfBoundary.Tests/EfBoundary.Tests.csproj" />
+</Solution>

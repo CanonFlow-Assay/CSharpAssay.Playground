@@ -1,5 +1,12 @@
 # .NET 11 RC1 migration
 
+This is the historical 26 September 2026 RC1 migration record. Its validation
+counts and SDK identities below are preserved as history. The current checkout
+uses separately qualified SDK `11.0.100-rc.2.26504.105`, `net11.0` and preview C#;
+use `global.json` and the current paired qualification, not this historical pin.
+The engine's `docs/agent-overhaul/toolchain-prerequisite.md` describes that separate
+prerequisite. RC2 runtime support does not make native union syntax stable.
+
 Required: SDK `11.0.100-rc.1.26425.128`, `net11.0`, C# preview, and matching local `CsAssay.Tool` / `CsAssay.Analyzers` `0.2.0-rc.1` packages.
 
 Run `eng/prepare-assay.sh ../CSharpAssay` before restoring. It packs the paired source revision, refreshes only the checkout-local Assay package cache, and regenerates locks for those local package bytes. Later restores use locked mode. CI accepts `assay_ref` or `CSHARP_ASSAY_REF` for the paired source revision. The complete implementation report is in the sibling repository at `CSharpAssay/docs/net11-migration.md`.

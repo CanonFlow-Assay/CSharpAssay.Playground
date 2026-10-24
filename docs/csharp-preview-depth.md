@@ -4,6 +4,10 @@ Scope: CSharpAssay, Playground and DAA only. Other language assays are deferred.
 This undertaking begins at published Playground main `401886c`; new work stops
 at local Forgejo draft review. CsvHelper feature enhancements remain paused.
 
+This records the earlier depth undertaking. The current boundary/output overhaul
+uses a separately qualified .NET 11 RC2 SDK; original RC1 executions remain
+historical and are not relabeled. Follow `global.json` for the current exact pin.
+
 ## Registered obligations
 
 1. Preserve the exact .NET 11 RC1 toolchain, seven admitted rules, test minima,

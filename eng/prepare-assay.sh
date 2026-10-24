@@ -4,23 +4,27 @@ repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 assay_root="${1:-$repo_root/../CSharpAssay}"
 assay_root="$(cd "$assay_root" && pwd)"
 preparation_mode="${2:-}"
-if [[ $# -gt 2 || ( -n "$preparation_mode" && "$preparation_mode" != '--qualified' && "$preparation_mode" != '--bootstrap-locks' ) ]]; then
-  echo 'Usage: prepare-assay.sh [engine-checkout] [--qualified|--bootstrap-locks]' >&2
+bootstrap_locks=false
+use_qualified=false
+[[ "$preparation_mode" == '--bootstrap-locks' || "$preparation_mode" == '--qualified-bootstrap-locks' ]] && bootstrap_locks=true
+[[ "$preparation_mode" == '--qualified' || "$preparation_mode" == '--qualified-bootstrap-locks' ]] && use_qualified=true
+if [[ $# -gt 2 || ( -n "$preparation_mode" && "$preparation_mode" != '--qualified' && "$preparation_mode" != '--bootstrap-locks' && "$preparation_mode" != '--qualified-bootstrap-locks' ) ]]; then
+  echo 'Usage: prepare-assay.sh [engine-checkout] [--qualified|--bootstrap-locks|--qualified-bootstrap-locks]' >&2
   exit 64
 fi
-if [[ "$preparation_mode" == '--bootstrap-locks' && -n "$(git -C "$repo_root" status --porcelain --untracked-files=all)" ]]; then
+if [[ "$bootstrap_locks" == true && -n "$(git -C "$repo_root" status --porcelain --untracked-files=all)" ]]; then
   echo 'Bootstrap requires a clean disposable checkout; existing work is not committed.' >&2
   exit 65
 fi
 commit_bootstrap_locks() {
   local lock_message="$1"
   shift
-  if [[ "$preparation_mode" == '--bootstrap-locks' ]] && ! git diff --quiet -- "$@"; then
+  if [[ "$bootstrap_locks" == true ]] && ! git diff --quiet -- "$@"; then
     git -c user.name='Assay bootstrap' -c user.email='assay-bootstrap@localhost.invalid' \
       -c commit.gpgsign=false commit --only -m "$lock_message" -- "$@"
   fi
 }
-if [[ "$preparation_mode" == '--qualified' ]]; then
+if [[ "$use_qualified" == true ]]; then
   (cd "$assay_root" && dotnet eng/CsAssay.Qualification/bin/Release/net11.0/CsAssay.Qualification.dll copy-qualified --destination "$repo_root/.packages")
 else
   cd "$assay_root"
@@ -54,8 +58,11 @@ commit_bootstrap_locks 'Record rebuilt engine packages in disposable SDK produce
 dotnet restore AllSamples.slnx --force-evaluate --configfile NuGet.config
 commit_bootstrap_locks 'Record rebuilt preview SDK packages in disposable consumer locks' \
   ':(glob)**/packages.lock.json'
-if [[ "$preparation_mode" == '--bootstrap-locks' && -n "$(git status --porcelain --untracked-files=all)" ]]; then
+if [[ "$bootstrap_locks" == true && -n "$(git status --porcelain --untracked-files=all)" ]]; then
   echo 'Bootstrap left unexpected changes; inspect this disposable checkout.' >&2
   exit 65
 fi
+# Lock bootstrap may have advanced HEAD after the producer build. Bind the
+# tooling's informational version to that final source before qualification.
+dotnet build eng/Assay.Tooling/Assay.Tooling.csproj --no-restore --configuration Release
 echo "Prepared CsAssay 0.2.0-rc.1 packages for .NET 11."

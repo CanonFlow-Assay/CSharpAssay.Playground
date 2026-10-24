@@ -1,6 +1,6 @@
 # CSharpAssay Playground
 
-CSharpAssay helps developers and coding agents follow a chosen functional C# policy with verifiable rules and optional decision assistance. This Playground provides runnable examples and evidence, now **strictly .NET 11 RC1**. Both repositories pin SDK `11.0.100-rc.1.26425.128`, target `net11.0`, and enable C# preview for native unions. Older targets are rejected.
+CSharpAssay helps developers and coding agents follow a chosen functional C# policy with verifiable rules and optional decision assistance. This Playground provides runnable examples and evidence, now **strictly .NET 11 RC2**. Both repositories pin SDK `11.0.100-rc.2.26504.105`, target `net11.0`, and enable C# preview for native unions. Older targets are rejected. SDK go-live support and preview-language capability are qualified separately from the boundary/output overhaul.
 
 The playground consumes locally packed `CsAssay.Tool` and `CsAssay.Analyzers` `0.2.0-rc.1`, preserving package-consumer testing without publication or source project references to CSharpAssay.
 
@@ -66,6 +66,16 @@ The preparation script populates ignored `.packages/`, uses a checkout-local pac
 - `20-eshop-agent-assay`: historical external .NET 10 case study, excluded from the current gate. The separate eShop repository is outside this migration.
 
 Impure samples must produce their expected findings. Only complete `verify` evidence on refined projects is release authority. Historical evidence retains its original SDK and package identity.
+
+The preserved impure matrix and upstream Gilded Rose harness deliberately disable
+nullable analysis. Their provisional checks now retain active CSAP integrity
+findings, explicit compiler-evidence gaps and exit 1. `eng/run-assay.sh` requires
+those exact negative outcomes and rejects unrelated execution failures. A shell
+declaration or grant cannot turn those fixtures into complete verification.
+
+Reviewed CSV observations retain exact comparison of the original finding fields.
+The consumer validates additive scope/identity context separately, so new metadata
+does not require refreshing the reviewed findings or discarding their identities.
 
 CI defaults to the paired engine assessment commit `238b56a99b1d7be92e9523262bd55cb9f4b26202`. Repository variable `CSHARP_ASSAY_REF` or workflow input `assay_ref` can select another reviewed revision containing .NET 11 and the `assess` API.
 

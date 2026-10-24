@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   evidence:
-    name: .NET 11 RC1 native evidence gate
+    name: .NET 11 RC2 native evidence gate
     runs-on: ubuntu-latest
     env:
       ASSAY_RUNNER: ${{ github.workspace }}/.assay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
@@ -31,7 +31,7 @@ jobs:
           repository: CanonFlow-Assay/CSharpAssay
           ref: ${{ inputs.assay_ref || vars.CSHARP_ASSAY_REF || 'dbb678ae3c44c91c896b970cf0354051eea658b0' }}
           path: .assay
-      - name: Setup .NET 11 RC1
+      - name: Setup .NET 11 RC2
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
