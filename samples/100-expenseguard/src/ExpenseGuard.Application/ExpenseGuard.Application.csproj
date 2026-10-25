@@ -1,0 +1,1 @@
+<Project Sdk="Microsoft.NET.Sdk"><ItemGroup><ProjectReference Include="../ExpenseGuard.Domain/ExpenseGuard.Domain.csproj" /></ItemGroup></Project>

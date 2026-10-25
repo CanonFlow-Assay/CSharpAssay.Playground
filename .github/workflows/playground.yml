@@ -64,6 +64,10 @@ jobs:
         env:
           ASSAY_RUNNER: ${{ github.workspace }}/.assay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
         run: ./eng/run-application-workflow.sh
+      - name: Qualify ExpenseGuard with real PostgreSQL and offline advice
+        run: |
+          echo '::add-matcher::.github/expenseguard-problem-matcher.json'
+          ./eng/run-expenseguard.sh --output "$PWD/evidence/generated/expenseguard/ci"
       - name: Upload evidence
         if: always() && hashFiles('evidence/generated/**/*') != ''
         uses: actions/upload-artifact@v4

@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net11.0": {
+      "Npgsql": {
+        "type": "Transitive",
+        "resolved": "10.0.2",
+        "contentHash": "q5RfBI+wywJSFUNDE1L4ZbHEHCFTblo8Uf6A6oe4feOUFYiUQXyAf9GBh5qEZpvJaHiEbpBPkQumjEhXCJxdrg=="
+      },
+      "expenseguard.application": {
+        "type": "Project",
+        "dependencies": {
+          "ExpenseGuard.Domain": "[1.0.0, )"
+        }
+      },
+      "expenseguard.domain": {
+        "type": "Project"
+      },
+      "expenseguard.infrastructure": {
+        "type": "Project",
+        "dependencies": {
+          "ExpenseGuard.Application": "[1.0.0, )",
+          "Npgsql": "[10.0.2, )"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "profile": "native",
+  "release": {
+    "allowPreviewToolchain": true,
+    "requiredTargetFrameworks": ["net11.0"],
+    "requiredRules": ["CSAI0001", "CSAI0002", "CSAN0001", "CSAN0002", "CSAN0003", "CSAN0004", "CSAP0001"],
+    "tests": [{"input": "tests/ExpenseGuard.Tests/ExpenseGuard.Tests.csproj", "configuration": "Release", "noBuild": false, "minimumExpectedTests": 159}]
+  },
+  "boundaries": {
+    "coreProjects": ["src/ExpenseGuard.Domain/ExpenseGuard.Domain.csproj"],
+    "shellProjects": ["src/ExpenseGuard.Application/ExpenseGuard.Application.csproj", "src/ExpenseGuard.Infrastructure/ExpenseGuard.Infrastructure.csproj", "src/ExpenseGuard.Api/ExpenseGuard.Api.csproj", "src/ExpenseGuard.Worker/ExpenseGuard.Worker.csproj", "tests/ExpenseGuard.Tests/ExpenseGuard.Tests.csproj"],
+    "coreNamespaces": ["ExpenseGuard.Domain"],
+    "shellNamespaces": ["ExpenseGuard.Application", "ExpenseGuard.Infrastructure", "ExpenseGuard.Api", "ExpenseGuard.Worker", "ExpenseGuard.Tests"]
+  },
+  "representations": {"resultTypes": [], "optionTypes": [], "closedTypes": []},
+  "domainPrimitives": {},
+  "suppressions": []
+}

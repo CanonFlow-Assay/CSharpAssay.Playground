@@ -27,8 +27,8 @@ This prepares local packages and runs the offline demonstration and synthetic ro
 
 ## Local gate
 
-`./eng/run-all-samples.sh` evaluates and builds the complete 34-project inventory,
-including all 30 runnable sample projects, then executes every test project.
+`./eng/run-all-samples.sh` evaluates and builds the complete authored-project inventory,
+then executes every test project, including ExpenseGuard.
 Docker is required for the inventory tests; the gate starts an isolated, pinned
 PostgreSQL container and removes it afterward.
 The build rejects older or mixed framework targets, another SDK, non-preview C#,
@@ -63,6 +63,7 @@ The preparation script populates ignored `.packages/`, uses a checkout-local pac
 - [`60-csvhelper-functional`](samples/60-csvhelper-functional/README.md): three source-derived typed converter rewrites and real CsvHelper import/export adapters; 118 tests, 24 mutations, independent streaming requirements, hefty physical-file mocks and allocation/throughput comparisons, offline advice and authoritative sample verification. Original upstream failures/unsupported targets remain separate.
 - [`70-polly-resilience`](samples/70-polly-resilience/README.md): pinned original Polly packages, native domain outcomes, 16 controlled executions and six state/concurrency/fallback checks, six mutations and the new-app requirement loop. Bounded consumer qualification, with preview modules and survivors kept visible.
 - [`80-inventory-reservation`](samples/80-inventory-reservation/README.md): immutable native decisions, HTTP hosting, transactional PostgreSQL stock/reservation/outbox writes, concurrency and idempotency tests, a registered requirement change and an actual wire-contract regression investigation.
+- [`100-expenseguard`](samples/100-expenseguard/README.md): native-union expense decisions, receipt/category/FX/duplicate rules, manager/finance approvals, PostgreSQL audit receipts/outbox, authenticated HTTP, offline advisory and simulated payment adapters, an evidence viewer, CSAssay and typed DAA evidence coordination, and controlled business/structural counterexamples. Run `eng/run-expenseguard.sh` for its source-bound qualification.
 - `20-eshop-agent-assay`: historical external .NET 10 case study, excluded from the current gate. The separate eShop repository is outside this migration.
 
 Impure samples must produce their expected findings. Only complete `verify` evidence on refined projects is release authority. Historical evidence retains its original SDK and package identity.

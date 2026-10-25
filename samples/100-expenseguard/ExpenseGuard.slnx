@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="src/ExpenseGuard.Domain/ExpenseGuard.Domain.csproj" />
+  <Project Path="src/ExpenseGuard.Application/ExpenseGuard.Application.csproj" />
+  <Project Path="src/ExpenseGuard.Infrastructure/ExpenseGuard.Infrastructure.csproj" />
+  <Project Path="src/ExpenseGuard.Api/ExpenseGuard.Api.csproj" />
+  <Project Path="src/ExpenseGuard.Worker/ExpenseGuard.Worker.csproj" />
+  <Project Path="tests/ExpenseGuard.Tests/ExpenseGuard.Tests.csproj" />
+</Solution>

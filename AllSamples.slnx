@@ -38,4 +38,10 @@
   <Project Path="samples/90-ef-boundaries/src/EfBoundary.Domain/EfBoundary.Domain.csproj" />
   <Project Path="samples/90-ef-boundaries/src/EfBoundary.Infrastructure/EfBoundary.Infrastructure.csproj" />
   <Project Path="samples/90-ef-boundaries/tests/EfBoundary.Tests/EfBoundary.Tests.csproj" />
+  <Project Path="samples/100-expenseguard/src/ExpenseGuard.Domain/ExpenseGuard.Domain.csproj" />
+  <Project Path="samples/100-expenseguard/src/ExpenseGuard.Application/ExpenseGuard.Application.csproj" />
+  <Project Path="samples/100-expenseguard/src/ExpenseGuard.Infrastructure/ExpenseGuard.Infrastructure.csproj" />
+  <Project Path="samples/100-expenseguard/src/ExpenseGuard.Api/ExpenseGuard.Api.csproj" />
+  <Project Path="samples/100-expenseguard/src/ExpenseGuard.Worker/ExpenseGuard.Worker.csproj" />
+  <Project Path="samples/100-expenseguard/tests/ExpenseGuard.Tests/ExpenseGuard.Tests.csproj" />
 </Solution>
