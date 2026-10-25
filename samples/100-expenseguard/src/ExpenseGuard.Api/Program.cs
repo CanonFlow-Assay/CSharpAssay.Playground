@@ -121,16 +121,8 @@ api.MapPost("/claims/{id:guid}/receipt-file", async (Guid id, int expectedVersio
     if (context.Request.ContentLength > ReceiptBlobStore.MaximumBytes) return Results.StatusCode(413);
     if (context.Features.Get<Microsoft.AspNetCore.Http.Features.IHttpMaxRequestBodySizeFeature>() is { IsReadOnly: false } limit)
         limit.MaxRequestBodySize = ReceiptBlobStore.MaximumBytes + 8192;
-    StoredReceipt saved;
-    try { saved = await blobs.SaveAsync(id, context.Request.Body, ct); }
+    try { return Response(await ReceiptAttachment.UploadAsync(blobs, service, new(id), expectedVersion, itemized, actor, context.Request.Body, ct)); }
     catch (InvalidDataException) { return Results.BadRequest(new { error = "InvalidReceiptFile", detail = "Upload a PDF, PNG or JPEG of at most 3 MiB." }); }
-    try
-    {
-        var result = await service.ExecuteAsync(new(id), expectedVersion, new Attach(new(saved.Reference, saved.Sha256, itemized)), actor, ct);
-        if (result.Error.Length > 0) blobs.Remove(saved.Reference);
-        return Response(result);
-    }
-    catch { blobs.Remove(saved.Reference); throw; }
 });
 api.MapGet("/claims/{id:guid}/receipt-file", async (Guid id, int? sequence, HttpContext context, IExpenseStore store, ReceiptBlobStore blobs, CancellationToken ct) =>
 {
@@ -188,7 +180,7 @@ api.MapGet("/claims/{id:guid}/advice", async (Guid id, HttpContext context, IExp
     var b = await store.ReadAsync(new(id), ct);
     return b is null || !Access.CanRead(b.Claim, GetActor(context)) ? Results.NotFound() : Results.Ok(await advisor.SuggestAsync(b.Claim, ct));
 });
-api.MapGet("/claims/{id:guid}/evidence", async (Guid id, HttpContext context, IExpenseStore store, IExpenseAdvisor advisor, ReceiptBlobStore blobs, CancellationToken ct) =>
+api.MapGet("/claims/{id:guid}/evidence", async (Guid id, HttpContext context, IExpenseStore store, PostgresExpenseStore payments, IExpenseAdvisor advisor, ReceiptBlobStore blobs, CancellationToken ct) =>
 {
     var b = await store.ReadAsync(new(id), ct);
     return b is null || !Access.CanRead(b.Claim, GetActor(context)) ? Results.NotFound() : Results.Ok(new
@@ -196,6 +188,7 @@ api.MapGet("/claims/{id:guid}/evidence", async (Guid id, HttpContext context, IE
         claim = ClaimDocument.From(b.Claim), version = b.Version, decisionAuthority = "Deterministic Domain Policy Engine",
         audit = new { b.HashChainValid, receipts = b.Receipts },
         receiptStorage = await ObserveReceipt(b.Claim, blobs, ct),
+        paymentWork = await payments.ReadPaymentWorkAsync(new(id), ct),
         csassay = BuildEvidence.Read(builder.Configuration["ExpenseGuard:EvidenceRoot"]),
         aiAdvice = await advisor.SuggestAsync(b.Claim, ct), paymentMode = "SIMULATED — no money moved"
     });

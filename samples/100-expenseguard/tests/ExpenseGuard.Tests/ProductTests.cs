@@ -11,6 +11,24 @@ namespace ExpenseGuard.Tests;
 
 public sealed class ProductHttpTests(HttpServer server) : IClassFixture<HttpServer>
 {
+    [Fact] public async Task External_assertion_requires_stored_bytes_before_automatic_approval()
+    {
+        var created = await server.CreateAsync(50); var id = created.GetProperty("claim").GetProperty("id").GetString()!;
+        using var attach = await server.SendAsync(HttpMethod.Post, $"/api/claims/{id}/receipt", new { expectedVersion = 1,
+            reference = "https://example.invalid/assertion", sha256 = new string('a', 64), itemized = true }, server.EmployeeKey);
+        Assert.Equal(HttpStatusCode.OK, attach.StatusCode);
+        using var submit = await server.SendAsync(HttpMethod.Post, $"/api/claims/{id}/commands", new { expectedVersion = 2, action = "submit" }, server.EmployeeKey);
+        Assert.Equal(HttpStatusCode.OK, submit.StatusCode);
+        using var assess = await server.SendAsync(HttpMethod.Post, $"/api/claims/{id}/assess", new { expectedVersion = 3 }, server.EmployeeKey);
+        var result = await assess.Content.ReadFromJsonAsync<JsonElement>(TestContext.Current.CancellationToken);
+        Assert.Equal("NeedsMoreInfo", result.GetProperty("claim").GetProperty("state").GetString());
+        Assert.Equal("VerifiedReceiptRequired", result.GetProperty("claim").GetProperty("stateDetail").GetString());
+        using var upload = await server.UploadAsync(id, 5, ReceiptBytes()); Assert.Equal(HttpStatusCode.OK, upload.StatusCode);
+        using var resubmit = await server.SendAsync(HttpMethod.Post, $"/api/claims/{id}/commands", new { expectedVersion = 6, action = "submit" }, server.EmployeeKey);
+        Assert.Equal(HttpStatusCode.OK, resubmit.StatusCode);
+        using var reassess = await server.SendAsync(HttpMethod.Post, $"/api/claims/{id}/assess", new { expectedVersion = 7 }, server.EmployeeKey);
+        Assert.Equal("Approved", (await reassess.Content.ReadFromJsonAsync<JsonElement>(TestContext.Current.CancellationToken)).GetProperty("claim").GetProperty("state").GetString());
+    }
     private static byte[] ReceiptBytes() => Encoding.ASCII.GetBytes("%PDF-1.7\nfixture-" + Guid.NewGuid().ToString("N"));
     [Theory] [InlineData("category")] [InlineData("amount")] [InlineData("spentOn")] [InlineData("numeric-category")]
     public async Task Required_claim_fields_cannot_acquire_implicit_defaults(string field)

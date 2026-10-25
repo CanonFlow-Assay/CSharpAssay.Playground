@@ -1,4 +1,4 @@
-# Policy v1
+# Policy v2
 
 The immutable `Policies.Demo` value is the policy authority for this exercise.
 USD is the company base currency. All monetary thresholds apply **after** dated
@@ -12,6 +12,13 @@ holds it. Missing FX, receipt or meal itemization asks for information. Finance
 threshold requires manager then distinct finance; remaining amount/category
 excess requires manager. Otherwise the policy engine approves. Precedence is
 intentional: duplicate suspicion wins over a missing receipt.
+
+External receipt references and claimant hashes are retained as assertions, but
+cannot authorize automatic approval. An attached assertion requires verified
+stored bytes and a new assessment, even below the receipt threshold. The shell
+captures the byte-verification fact; the pure engine consumes that fact. A
+stored hash/type check establishes byte integrity, not authenticity/itemization.
+Default/null-backed union values are invalid evidence and cause a hold/denial.
 
 Daily meals reserve previously assessed, non-rejected claims for that employee
 and expense date, including claims awaiting information/review or held. Rejected

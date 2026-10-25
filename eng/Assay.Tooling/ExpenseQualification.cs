@@ -10,6 +10,11 @@ public static class ExpenseQualification
     private static readonly string[] Shared = ["global.json", "Directory.Build.props", "Directory.Build.targets", "Directory.Packages.props", "NuGet.config", "AllSamples.slnx", ".editorconfig"];
     private static readonly string[] Remaining = ["Independent human business/policy review", "Real identity provider and tenant isolation", "Receipt authenticity/malware scanning and storage operations", "Live model/extraction quality and privacy qualification", "Real payment provider and reconciliation", "Operational/security/load/platform/browser acceptance"];
     private static readonly JsonSerializerOptions ProtocolOptions = new(Json.Options) { Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter(allowIntegerValues: false) } };
+    private static readonly string[] ApplicationFiles = [.. new[] { "Domain", "Application", "Infrastructure", "Api", "Worker" }
+        .Select(p => $"src/ExpenseGuard.{p}/bin/Release/net11.0/ExpenseGuard.{p}.dll")];
+    private static readonly string[] ConfigurationFiles = [".csassay.json", "global.json", "Directory.Build.props", "Directory.Packages.props",
+        .. new[] { "Domain", "Application", "Infrastructure", "Api", "Worker" }.Select(p => $"src/ExpenseGuard.{p}/packages.lock.json"),
+        "tests/ExpenseGuard.Tests/packages.lock.json", "src/ExpenseGuard.Api/wwwroot/app.js", "src/ExpenseGuard.Api/wwwroot/app.css", "src/ExpenseGuard.Api/wwwroot/index.html"];
 
     public static async Task<JsonObject> Run(string output)
     {
@@ -19,6 +24,19 @@ public static class ExpenseQualification
         Json.Check(!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ASSAY_INVENTORY_DATABASE")), "Real PostgreSQL execution required.");
         var sample = Path.Combine(Root, Sample);
         var source = await Processes.Git(Root, "rev-parse", "HEAD");
+        var publicSource = Environment.GetEnvironmentVariable("GITHUB_SHA") ?? source;
+        Json.Check(Regex.IsMatch(publicSource, "^[0-9a-f]{40}$"), "Invalid public source identity.");
+        Json.Check(await Processes.Git(Root, "merge-base", publicSource, source) == publicSource, "Public source is not an ancestor of the qualified checkout.");
+        var lockChanges = (await Processes.Git(Root, "diff", "--name-only", publicSource, source)).Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        Json.Check(lockChanges.All(p => p.EndsWith("/packages.lock.json", StringComparison.Ordinal)), "CI bootstrap changed something other than declared consumer locks.");
+        Directory.CreateDirectory(output);
+        var lockPatch = Path.Combine(output, "consumer-lock.patch");
+        File.WriteAllText(lockPatch, await Processes.Git(Root, "diff", "--binary", publicSource, source) + "\n");
+        var provenance = Json.Create(("publicSourceCommit", publicSource), ("publicSourceTree", await Processes.Git(Root, "rev-parse", publicSource + "^{tree}")),
+            ("qualificationCommit", source), ("qualificationTree", await Processes.Git(Root, "rev-parse", source + "^{tree}")),
+            ("bootstrapCommits", (await Processes.Git(Root, "rev-list", "--reverse", publicSource + ".." + source)).Split('\n', StringSplitOptions.RemoveEmptyEntries)),
+            ("changedLocks", lockChanges), ("lockPatchSha256", Json.Sha(lockPatch)), ("scope", "CI-only consumer lock metadata; public source remains separately identified."));
+        Json.Write(Path.Combine(output, "source-provenance.json"), provenance);
         var declared = (await Processes.Git(Root, "ls-files", "-z", "--", Sample)).Split('\0', StringSplitOptions.RemoveEmptyEntries);
         Json.Check(declared.Length > 0 && declared.All(p => !p.Split('/').Any(s => s is ".local" or ".tools" or ".secrets" or ".env" or "login.json")),
             "Private runtime data cannot become declared source evidence.");
@@ -31,11 +49,11 @@ public static class ExpenseQualification
         var reportPath = Path.Combine(output, "qualification.json");
         var report = Json.Create(("schema", "expenseguard-qualification/0.1"), ("executionStatus", "running"),
             ("sourceCommit", source), ("snapshotSha256", snapshot), ("inputSha256", bindings), ("engineSha256", engine),
-            ("qualifierSha256", tool), ("providerRequests", 0), ("realPayments", 0), ("mutationResults", new JsonArray()),
+            ("qualifierSha256", tool), ("sourceProvenance", provenance), ("providerRequests", 0), ("realPayments", 0), ("mutationResults", new JsonArray()),
             ("structuralControls", new JsonArray()), ("authority", "Bounded Linux/PostgreSQL/HTTP application exercise. Selected CSAssay rules and executed tests; not universal security, correctness or deployment approval."));
         Json.Write(reportPath, report);
         var manifest = Json.Create(("testDll", "tests/ExpenseGuard.Tests/bin/Release/net11.0/ExpenseGuard.Tests.dll"),
-            ("minimumTests", 159), ("testReportProtocol", "xunit-mtp-v1"));
+            ("minimumTests", 182), ("testReportProtocol", "xunit-mtp-v1"));
         async Task Build(string directory, string name)
         {
             (await Processes.Run(["dotnet", "restore", Path.Combine(directory, Solution), "--locked-mode", "--configfile", Path.Combine(Root, "NuGet.config")], directory, Path.Combine(output, name + "-restore.log"), 180)).Require(name + " locked restore");
@@ -43,8 +61,20 @@ public static class ExpenseQualification
         }
         try
         {
+            var corpus = Json.Read(Path.Combine(sample, "mutations.json"));
+            Json.Check(corpus.A("cases").Count is >= 1 and <= 12 && corpus.A("cases").Select(c => c.S("id")).Distinct(StringComparer.Ordinal).Count() == corpus.A("cases").Count,
+                "Mutation corpus exceeds its finite budget or contains duplicate identities.");
+            foreach (var mutation in corpus.A("cases"))
+            {
+                Json.Check(Regex.IsMatch(mutation.S("id"), "^[a-z0-9-]{1,64}$") && mutation.S("before").Length > 0 &&
+                    File.ReadAllText(Inside(sample, mutation.S("path"))).Split(mutation.S("before"), StringSplitOptions.None).Length == 2,
+                    "Mutation anchor is not unique: " + mutation.S("id"));
+            }
+            report["mutationPreflight"] = Json.Create(("cases", corpus.A("cases").Count), ("anchors", "Unique")); Json.Write(reportPath, report);
             Console.WriteLine("ExpenseGuard: building frozen baseline and executing real HTTP/PostgreSQL tests.");
             await Build(sample, "baseline");
+            JsonObject HashApplication(string[] files) => JsonSerializer.SerializeToNode(files.ToDictionary(p => p, p => Json.Sha(Path.Combine(sample, p)), StringComparer.Ordinal))!.AsObject();
+            var applicationBinding = HashApplication(ApplicationFiles); var configurationBinding = HashApplication(ConfigurationFiles);
             var tests = await ApplicationRunner.Tests(sample, manifest, Path.Combine(output, "baseline"));
             Json.Write(Path.Combine(output, "baseline.json"), tests);
             Json.Check(tests.S("state") == "Passed", "ExpenseGuard baseline failed; keep the test report and logs.");
@@ -69,10 +99,9 @@ public static class ExpenseQualification
             assess.Require("ExpenseGuard assessment API");
             var assessmentReceipt = Json.Read(Path.Combine(output, "assessment.json"));
             Json.Check(assessmentReceipt["receipt"].S("verdict") == "pass" && assessmentReceipt["receipt"]!["evidence"].B("authoritative"), "Assessment API lost verification authority.");
+            Json.Check(JsonNode.DeepEquals(applicationBinding, HashApplication(ApplicationFiles)) && JsonNode.DeepEquals(configurationBinding, HashApplication(ConfigurationFiles)),
+                "Tested application assemblies/configuration changed during verify/assess.");
 
-            var corpus = Json.Read(Path.Combine(sample, "mutations.json"));
-            Json.Check(corpus.A("cases").Count is >= 1 and <= 12 && corpus.A("cases").Select(c => c.S("id")).Distinct(StringComparer.Ordinal).Count() == corpus.A("cases").Count,
-                "Mutation corpus exceeds its finite budget or contains duplicate identities.");
             foreach (var mutation in corpus.A("cases"))
             {
                 var id = mutation.S("id"); Json.Check(Regex.IsMatch(id, "^[a-z0-9-]{1,64}$"), "Invalid mutation ID.");
@@ -145,8 +174,11 @@ public static class ExpenseQualification
             Json.Check(report.A("mutationResults").All(r => r.S("state") == r.S("expected")), "Unexpected mutation outcomes remain open.");
             Json.Check((await Processes.Git(Root, "rev-parse", "HEAD")) == source && (await Processes.Git(Root, "status", "--porcelain")).Length == 0 &&
                 JsonNode.DeepEquals(bindings, Bindings(sourceFiles)) && Json.Sha(Engine) == engine && Json.Sha(Tool) == tool, "Source or tooling changed during qualification.");
-            Json.Write(Path.Combine(output, "build-evidence.json"), Json.Create(("domainAssemblySha256", Json.Sha(Path.Combine(sample, "src/ExpenseGuard.Domain/bin/Release/net11.0/ExpenseGuard.Domain.dll"))),
-                ("reportSha256", Json.Sha(Path.Combine(output, "verify.json"))), ("sourceCommit", source), ("snapshotSha256", snapshot)));
+            Json.Check(JsonNode.DeepEquals(applicationBinding, HashApplication(ApplicationFiles)) && JsonNode.DeepEquals(configurationBinding, HashApplication(ConfigurationFiles)), "Tested application build changed.");
+            Json.Write(Path.Combine(output, "build-evidence.json"), Json.Create(("schema", "expenseguard-build-binding/0.2"),
+                ("domainAssemblySha256", Json.Sha(Path.Combine(sample, "src/ExpenseGuard.Domain/bin/Release/net11.0/ExpenseGuard.Domain.dll"))),
+                ("applicationAssemblySha256", applicationBinding), ("configurationSha256", configurationBinding),
+                ("reportSha256", Json.Sha(Path.Combine(output, "verify.json"))), ("sourceCommit", source), ("publicSourceCommit", publicSource), ("snapshotSha256", snapshot)));
             report["sourceUnchanged"] = true; report["executionStatus"] = "completed";
             report["remaining"] = Json.Array(Remaining);
             Json.Write(reportPath, report);

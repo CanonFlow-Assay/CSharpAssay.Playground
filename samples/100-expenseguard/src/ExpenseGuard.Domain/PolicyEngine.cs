@@ -10,6 +10,8 @@ public static class PolicyEngine
         var rate = 0m;
         if (!ValidPolicy(policy))
             return Result(Decision.Hold, 0m, "none", "POLICY", "InvalidPolicy", "Policy configuration is invalid.");
+        if (claim.Receipt.Value is null || claim.State.Value is null || claim.Policy.Value is null || facts.Rate.Value is null)
+            return Result(Decision.Hold, 0m, "none", "VALIDATION", "InvalidEvidence", "Default/null-backed evidence unions are invalid.");
         if (claim.Amount.Value is <= 0m or > 1000000m || decimal.Round(claim.Amount.Value, 2) != claim.Amount.Value ||
             claim.Amount.Currency is not ("USD" or "EUR" or "GBP") || !Enum.IsDefined(claim.Category) ||
             claim.Units is < 1 or > 366 || string.IsNullOrWhiteSpace(claim.Merchant))
@@ -36,6 +38,10 @@ public static class PolicyEngine
         evidence = evidence.Add(new("FX", "Normalized", "Amount normalized using the declared dated rate; midpoint rounded away from zero."));
         if (amount > policy.ReceiptThreshold && claim.Receipt is MissingReceipt)
             return Result(Decision.MoreInfo, amount, source, "RECEIPT", "ReceiptRequired", "Receipt required above the base-currency threshold.");
+        if (claim.Receipt is Receipt && !facts.ReceiptBytesVerified)
+            return Result(Decision.MoreInfo, amount, source, "RECEIPT_STORAGE", "VerifiedReceiptRequired", "An external receipt assertion needs server-verified stored bytes and reassessment.");
+        if (claim.Receipt is Receipt)
+            evidence = evidence.Add(new("RECEIPT", "StoredBytesVerified", "The shell must verify stored bytes before committing this assessment."));
         if (claim.Category == Category.Meal && amount + facts.PriorMealsBase > policy.MealDailyLimit &&
             claim.Receipt is not Receipt { Itemized: true })
             return Result(Decision.MoreInfo, amount, source, "MEAL", "ItemizedRequired", "Daily meals above the limit require an itemized receipt.");

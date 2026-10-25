@@ -38,13 +38,14 @@ public sealed record ExpenseClaim(ExpenseId Id, EmployeeId Employee, Money Amoun
 public sealed record RateMissing;
 public sealed record ExchangeRate(string From, string To, decimal Rate, DateOnly On, string Source);
 public readonly union RateEvidence(RateMissing, ExchangeRate);
-public sealed record PolicyFacts(DateOnly Today, RateEvidence Rate, bool Duplicate, decimal PriorMealsBase);
+public sealed record PolicyFacts(DateOnly Today, RateEvidence Rate, bool Duplicate, decimal PriorMealsBase,
+    bool ReceiptBytesVerified = false);
 public sealed record ExpensePolicy(string Version, string BaseCurrency, string FxSource,
     decimal ReceiptThreshold, decimal MealDailyLimit, decimal TransportLimit, decimal HotelNightLimit,
     decimal SoftwareMonthLimit, decimal ManagerThreshold, decimal FinanceThreshold, int MaximumAgeDays);
 public static class Policies
 {
-    public static ExpensePolicy Demo { get; } = new("expense-v1", "USD", "treasury-demo-v1",
+    public static ExpensePolicy Demo { get; } = new("expense-v2", "USD", "treasury-demo-v1",
         25m, 50m, 100m, 200m, 100m, 200m, 1000m, 90);
 }
 public sealed record Accepted(ExpenseClaim Claim, string Event);
@@ -64,7 +65,7 @@ public readonly union Command(Submit, Revise, Attach, Check, Apply, Approve, Rej
 public static class StateNames
 {
     // Deliberately exhaustive: adding a union member must update this switch.
-    public static string Of(ExpenseState state) => state switch
+    public static string Of(ExpenseState state) => state.Value is null ? "Invalid" : state switch
     {
         Draft => "Draft", Submitted => "Submitted", PolicyChecked => "PolicyChecked",
         NeedsMoreInfo => "NeedsMoreInfo", ManagerApprovalRequired => "ManagerApprovalRequired",

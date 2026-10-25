@@ -93,6 +93,7 @@ async function inspect(id) {
   el('verdict').textContent = data.csassay.verdict; el('scope').textContent = data.csassay.scope; el('proofDetail').textContent = data.csassay.detail;
   el('audit').textContent = data.audit.hashChainValid ? 'Chain verified' : 'INTEGRITY FAILURE';
   el('version').textContent = data.audit.receipts.length + ' accepted changes · version ' + data.version;
+  if (data.paymentWork) el('version').textContent += ' · Payment: ' + data.paymentWork.status + ' · attempts ' + data.paymentWork.attempts;
   el('policy').textContent = JSON.stringify(c.policy ?? { status: 'Not assessed' }, null, 2);
   el('policySummary').replaceChildren(...(c.policy?.evidence ?? []).map(r => node('p', r.code + ': ' + r.detail)));
   if (!c.policy) el('policySummary').textContent = 'Submit this draft and run assessment to capture policy evidence.';
@@ -124,6 +125,7 @@ async function inspect(id) {
   if (data.audit.hashChainValid && me.role === 'Auditor' && !['Draft', 'Reimbursed', 'AuditHeld'].includes(c.state)) action('Place audit hold', () => command('hold'), 'secondary danger');
   const hints = { Draft: 'Attach a receipt if required, then submit. Revising clears prior receipt and assessment.', Submitted: 'The claimant can now run policy assessment.', NeedsMoreInfo: 'Missing evidence: ' + c.stateDetail + '. Attach/confirm evidence and resubmit.', ManagerApprovalRequired: c.route === 'ManagerThenFinance' ? 'Manager review first, then a distinct finance reviewer. Self-approval is blocked.' : 'A manager other than the claimant must review.', FinanceApprovalRequired: 'A finance reviewer distinct from the claimant and approving manager must decide.', Approved: 'Finance can queue a simulated reimbursement. The worker checks approval again before recording payment.', Reimbursed: 'Simulated payment recorded. No real money moved.', Rejected: 'Rejected: ' + c.stateDetail + '. This terminal claim cannot be silently reopened.', AuditHeld: 'Audit hold: ' + c.stateDetail + '. Release and investigation are outside this version.' };
   el('nextStep').textContent = !data.audit.hashChainValid ? 'Audit integrity failed. State changes and payment processing are blocked.' :
+    data.paymentWork?.status === 'ManualReview' ? 'Payment requires manual review: ' + data.paymentWork.lastErrorCode + '. No payment success is being claimed. Ask finance/operations to investigate before requeueing.' :
     ['Missing', 'Invalid'].includes(data.receiptStorage) ? 'Stored receipt content is unavailable or changed. Approval/payment is blocked. Replace it while editable, or ask an auditor to hold the claim.' : hints[c.state] ?? '';
   status(data.paymentMode); history.replaceState(null, '', '/claims/' + id + '/evidence');
 }
@@ -135,7 +137,7 @@ el('uploadForm').addEventListener('submit', event => { event.preventDefault(); w
 }); });
 el('referenceForm').addEventListener('submit', event => { event.preventDefault(); work(async () => {
   const id = current.claim.id; await request('/claims/' + id + '/receipt', 'POST', { expectedVersion: current.version, reference: el('reference').value.trim(), sha256: el('receiptHash').value.trim(), itemized: el('itemized').checked });
-  await refresh(); await inspect(id); status('External assertion attached. Its bytes were not fetched or verified.');
+  await refresh(); await inspect(id); status('External assertion attached. Automatic approval requires a stored upload and reassessment; external bytes were not fetched or verified.');
 }); });
 el('extractionForm').addEventListener('submit', event => { event.preventDefault(); work(async () => {
   const id = current.claim.id;

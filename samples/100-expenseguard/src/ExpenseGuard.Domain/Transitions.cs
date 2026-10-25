@@ -2,8 +2,12 @@ namespace ExpenseGuard.Domain;
 
 public static class Transitions
 {
-    public static Transition Decide(ExpenseClaim c, Command command, Actor actor) => command switch
+    public static Transition Decide(ExpenseClaim c, Command command, Actor actor)
     {
+        if (c.Receipt.Value is null || c.State.Value is null || c.Policy.Value is null || command.Value is null)
+            return new Denied("InvalidEvidence");
+        return command switch
+        {
         Submit => SubmitClaim(c, actor),
         Revise revision => actor.Id == c.Employee && actor.Role == Role.Employee && c.State is Draft or NeedsMoreInfo &&
             !string.IsNullOrWhiteSpace(revision.Merchant) && revision.Merchant.Length <= 200 &&
@@ -24,7 +28,8 @@ public static class Transitions
         Reimburse pay => actor.Role == Role.PaymentWorker && c.State is Approved && c.Policy is Assessment &&
             !string.IsNullOrWhiteSpace(pay.PaymentReference)
             ? new Accepted(c with { State = new Reimbursed(pay.PaymentReference) }, "Reimbursed") : new Denied("ReimburseRequiresApproval")
-    };
+        };
+    }
 
     private static Transition SubmitClaim(ExpenseClaim c, Actor actor) => actor.Id == c.Employee && actor.Role == Role.Employee &&
         c.State is Draft or NeedsMoreInfo

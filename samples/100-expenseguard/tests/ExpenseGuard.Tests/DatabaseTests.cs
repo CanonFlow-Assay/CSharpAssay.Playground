@@ -14,13 +14,16 @@ public sealed class DatabaseScope : IAsyncDisposable
     public NpgsqlDataSource Data { get; }
     public PostgresExpenseStore Store { get; }
     public ExpenseService Service { get; }
+    public FixedClock Clock { get; } = new();
+    public string ReceiptDirectory { get; } = Path.Combine(Path.GetTempPath(), "eg-db-receipts-" + Guid.NewGuid().ToString("N"));
+    public ReceiptBlobStore Blobs { get; }
     private DatabaseScope(string connection, string source, string name)
     {
         Connection = connection; original = source; schema = name;
         Data = NpgsqlDataSource.Create(connection);
-        var clock = new FixedClock();
-        Store = new(Data, clock);
-        Service = new(Store, new PinnedRateSource([]), clock);
+        Blobs = new(ReceiptDirectory);
+        Store = new(Data, Clock, Blobs);
+        Service = new(Store, new PinnedRateSource([]), Clock);
     }
     public static async Task<DatabaseScope> CreateAsync()
     {
@@ -40,18 +43,27 @@ public sealed class DatabaseScope : IAsyncDisposable
         await using var admin = NpgsqlDataSource.Create(original);
         await using var command = admin.CreateCommand("DROP SCHEMA " + schema + " CASCADE");
         await command.ExecuteNonQueryAsync(TestContext.Current.CancellationToken);
+        if (Directory.Exists(ReceiptDirectory)) Directory.Delete(ReceiptDirectory, true);
     }
     public async Task<StoreResult> AssessedAsync(decimal amount = 20m, bool receipt = false, string? merchant = null)
     {
         var c = Fixtures.Claim(amount) with { State = new Draft(), Merchant = merchant ?? Guid.NewGuid().ToString("N") };
         var r = await Service.CreateAsync(c, Fixtures.Employee, TestContext.Current.CancellationToken);
         Assert.Empty(r.Error);
-        if (receipt) r = await Service.ExecuteAsync(c.Id, r.Version, new Attach(Fixtures.Receipt() with { Sha256 = Guid.NewGuid().ToString("N") + Guid.NewGuid().ToString("N") }), Fixtures.Employee, TestContext.Current.CancellationToken);
+        if (receipt) r = await AttachAsync(c, r.Version);
         r = await Service.ExecuteAsync(c.Id, r.Version, new Submit(), Fixtures.Employee, TestContext.Current.CancellationToken);
         return await Service.AssessAsync(c.Id, r.Version, Fixtures.Employee, TestContext.Current.CancellationToken);
     }
+    public async Task<StoreResult> AttachAsync(ExpenseClaim c, int version, string? content = null)
+    {
+        using var input = new MemoryStream(System.Text.Encoding.ASCII.GetBytes("%PDF-1.7\n" + (content ?? Guid.NewGuid().ToString("N"))));
+        return await ReceiptAttachment.UploadAsync(Blobs, Service, c.Id, version, true, Fixtures.Employee, input, TestContext.Current.CancellationToken);
+    }
     public sealed class FixedClock : TimeProvider
-    { public override DateTimeOffset GetUtcNow() => new(2026, 10, 24, 12, 0, 0, TimeSpan.Zero); }
+    {
+        public DateTimeOffset Now { get; set; } = new(2026, 10, 24, 12, 0, 0, TimeSpan.Zero);
+        public override DateTimeOffset GetUtcNow() => Now;
+    }
 }
 
 public sealed class DatabaseTests
@@ -120,7 +132,7 @@ public sealed class DatabaseTests
         {
             var c = Fixtures.Claim(amount) with { State = new Draft(), Merchant = merchant };
             var r = await db.Service.CreateAsync(c, Fixtures.Employee, TestContext.Current.CancellationToken);
-            r = await db.Service.ExecuteAsync(c.Id, r.Version, new Attach(Fixtures.Receipt()), Fixtures.Employee, TestContext.Current.CancellationToken);
+            r = await db.AttachAsync(c, r.Version, "same-receipt");
             r = await db.Service.ExecuteAsync(c.Id, r.Version, new Submit(), Fixtures.Employee, TestContext.Current.CancellationToken);
             return await db.Service.AssessAsync(c.Id, r.Version, Fixtures.Employee, TestContext.Current.CancellationToken);
         }
@@ -172,6 +184,8 @@ public sealed class DatabaseTests
         Assert.IsType<Approved>((await db.Store.ReadAsync(r.Claim.Id, TestContext.Current.CancellationToken))!.Claim.State.Value);
         var key = gateway.LastKey;
         gateway.Fail = false;
+        Assert.False(await db.Store.ProcessOneAsync(gateway, TestContext.Current.CancellationToken));
+        db.Clock.Now = db.Clock.Now.AddSeconds(30);
         Assert.True(await db.Store.ProcessOneAsync(gateway, TestContext.Current.CancellationToken));
         Assert.Equal(key, gateway.LastKey);
     }

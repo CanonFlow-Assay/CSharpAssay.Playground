@@ -44,6 +44,9 @@ public sealed class ExpenseService(IExpenseStore store, IRateSource rates, TimeP
                 .Select(x => x.Policy is Assessment a ? a.BaseAmount : 0m).Sum();
             var facts = new PolicyFacts(DateOnly.FromDateTime(time.GetUtcNow().UtcDateTime),
                 rates.Get(c.Amount.Currency, Policies.Demo.BaseCurrency, c.SpentOn), duplicate, meals);
+            // The store re-reads and hashes these claim-bound bytes before committing
+            // PolicyChecked/Approved. A failed check rolls back the assessment.
+            facts = facts with { ReceiptBytesVerified = c.Receipt is Receipt r && r.Reference.StartsWith("blob:", StringComparison.Ordinal) };
             return Transitions.Decide(c, new Check(Policies.Demo, facts), actor) switch
             {
                 Denied d => Mutation.Deny(d.Code),

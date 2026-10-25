@@ -14,7 +14,7 @@ public static class Fixtures
         new(new(Guid.NewGuid()), Employee.Id, new(amount, "USD"), category, "Test merchant", Today, 1,
             new MissingReceipt(), new Submitted(), new NoAssessment());
     public static Receipt Receipt(bool itemized = true) => new("receipt:fixture", new string('a', 64), itemized);
-    public static PolicyFacts Facts => new(Today, new RateMissing(), false, 0m);
+    public static PolicyFacts Facts => new(Today, new RateMissing(), false, 0m, ReceiptBytesVerified: true);
     public static ExpenseClaim Assess(ExpenseClaim c)
     {
         var checkedClaim = Assert.IsType<Accepted>(Transitions.Decide(c, new Check(Policies.Demo, Facts), Employee).Value);
@@ -111,7 +111,7 @@ public sealed class PolicyTests
         var a = PolicyEngine.Evaluate(c, Policies.Demo, Fixtures.Facts);
         var b = PolicyEngine.Evaluate(c, Policies.Demo, Fixtures.Facts);
         Assert.Equal(System.Text.Json.JsonSerializer.Serialize(a), System.Text.Json.JsonSerializer.Serialize(b));
-        Assert.Equal("expense-v1", a.PolicyVersion);
+        Assert.Equal("expense-v2", a.PolicyVersion);
         Assert.NotEmpty(a.Evidence);
     }
 }

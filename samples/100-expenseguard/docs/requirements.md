@@ -44,6 +44,20 @@ require more information. No live rates are fetched.
   returns only a locally validated proposal. Record the request before sending.
   Refusal, restriction, incomplete/oversized/invalid output cannot approve or
   modify a claim; no automatic retry or provider fallback is allowed.
+* EG14: Application-test evidence binds Domain, Application, Infrastructure,
+  API and Worker assemblies plus declared verification/build configuration.
+  A changed/missing component invalidates application freshness. Deployment
+  secrets/environment/provider configuration remain explicitly unqualified.
+* EG15: After handing a stored upload to a database command, retain its bytes
+  even when an exception/cancellation makes commit outcome uncertain. Orphan
+  reconciliation must inspect current AND historical references independently.
+* EG16: A failed payment item cannot starve another due item. Persist bounded
+  retry scheduling and an explicit ManualReview outbox state, preserving the
+  stable idempotency key. Receipt/audit integrity failures never send payment.
+* EG17: Default/null-backed receipt, state, command, policy and rate unions
+  cannot approve or transition; return explicit invalid-evidence outcomes.
+* EG18: External assertions alone cannot authorize automatic approval. Require
+  server-verified stored bytes and reassessment for an attached assertion.
 
 CSAssay's seven admitted checks cover selected nullability, immutable-carrier
 and suppression rules. Compiler exhaustiveness and business tests are separate

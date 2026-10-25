@@ -22,7 +22,7 @@ try
     {
         try { await store.ProcessOneAsync(gateway, lifetime.ApplicationStopping); }
         catch (Exception exception) when (exception is not OperationCanceledException)
-        { log.LogError(exception, "Payment processing failed; transaction rolled back and pending work will retry with the same key."); }
+        { log.LogError(exception, "Payment processing failed; inspect per-item retry/manual-review status. Commit outcome may be uncertain; idempotency key is unchanged."); }
         await Task.Delay(TimeSpan.FromSeconds(2), lifetime.ApplicationStopping);
     }
 }

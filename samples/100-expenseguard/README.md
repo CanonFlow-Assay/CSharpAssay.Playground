@@ -55,7 +55,11 @@ dotnet run --project src/ExpenseGuard.Api -c Release
 dotnet run --project src/ExpenseGuard.Worker -c Release
 ```
 
-The worker requires initialized tables. External deployment needs authenticated
+The worker requires initialized tables. The initializer also migrates the
+existing outbox with retry metadata and the
+ManualReview status. Run it before starting an upgraded API/worker against an
+existing database; it preserves queued keys and completed work.
+External deployment needs authenticated
 TLS ingress and enterprise identity. This key adapter demonstrates one-company
 authorization, not multi-tenant identity.
 
@@ -79,12 +83,32 @@ Draft revision clears current receipt/policy; authorized historical download
 still works. Missing/changed stored bytes block approval progression/payment.
 
 External references/hashes remain claimant assertions: remote bytes are never
-fetched or verified. File magic/hash checks do not establish authenticity,
+fetched or verified. Policy **expense-v2** returns NeedsMoreInfo/
+VerifiedReceiptRequired for an attached external assertion, including below 25.
+Upload stored bytes and reassess. The shell verifies their hash before committing
+the assessment; receipt/audit checks also guard manager/finance/payment changes.
+Legacy approved external assertions cannot be paid through this worker.
+File magic/hash checks do not establish authenticity,
 itemization, malware safety or eligibility. Itemization remains a human assertion.
 
-Database and filesystem are separate resources. Rejected uploads are cleaned
-up, but process crashes can leave orphan files. Retention, backups, orphan
-reconciliation, scanning and storage operations remain deployment work.
+Database and filesystem are separate resources. Once an upload is handed to the
+database command, its bytes are retained on rejection, cancellation or exception.
+An exception may mean the attachment committed but its acknowledgement was lost.
+Clients must reread claim/version/audit before retrying. Do not delete a file as
+error compensation. Partial `.pending` files before handoff are still cleaned.
+Independent orphan reconciliation must consider current AND historical audit
+references, in-flight operations and a retention window. No automatic garbage
+collector is enabled. Retention, backups and storage operations remain deployment
+work; a possible orphan is preferable to deleting a committed attachment.
+
+Payment work records attempts, next availability, a sanitized error code and the
+stable idempotency key. Transient failures retry after 30 then 120 seconds; the
+third failed attempt moves to **ManualReview**. Receipt/audit integrity failures
+move directly to ManualReview without sending. Later due items still progress.
+The evidence endpoint exposes `paymentWork`; ManualReview does not mark a claim
+paid or waive integrity checks. Investigation/requeue is an operator action
+outside this sample's UI. The gateway must honor the stable key even when sending
+succeeded but database commit acknowledgement is uncertain.
 
 ## Optional receipt extraction
 
@@ -131,7 +155,7 @@ export ASSAY_RUNNER=/absolute/path/to/qualified-engine/src/CsAssay.Runner/bin/Re
 The source-bound qualifier requires clean committed source and a fresh output
 directory. Missing PostgreSQL fails, never skips. It performs:
 
-1. Locked restore/build and all 159 named tests, including real HTTP/PostgreSQL,
+1. Locked restore/build and all 182 named tests (the original 159 retained), including real HTTP/PostgreSQL,
    the actual worker, file authorization/integrity, concurrency, cancellation,
    audit corruption, rollback, retry and offline provider-protocol controls.
 2. Authoritative CSAssay `verify` and `assess`, with JSON and SARIF.
@@ -146,11 +170,26 @@ directory. Missing PostgreSQL fails, never skips. It performs:
 
 Inspect `qualification.json`, `baseline.json`, `verify.json`, `verify.sarif`,
 `assessment.json`, `mutations.json`, `daa-assessment.json` and retained logs.
+`source-provenance.json` identifies both public checkout and qualification commits
+and trees. In hosted CI, bootstrap records rebuilt preview-package identities in
+temporary consumer-lock commits. Their ordered identities, changed lock paths
+and exact `consumer-lock.patch` are retained with the receipt; the public source
+is never relabeled as the temporary commit. Local runs without bootstrap bind
+both identities to the same committed source. These mappings supplement the
+original published c46e8f9 / CI-only a798402 record, not overwrite it.
 The finite mutation set is agent-authored; independent adjudication remains
 open. Test counts imply neither a coverage percentage nor provider quality.
 
-The viewer displays Pass only for a hash-bound authoritative report matching
-the running domain assembly. Missing, stale, malformed or provisional evidence
+The viewer displays Pass only for an authoritative report bound to Domain,
+Application, Infrastructure, API and Worker build assemblies plus declared
+sample verification/build configuration, lockfiles and web assets. It also
+compares the loaded Domain/Application/Infrastructure and API/Worker entry
+assembly to prevent pointing a changed process at an old build directory.
+The reader uses the sample build layout; a deployment without these five build
+files remains NotAvailable. Worker freshness describes the bound build file,
+not a different remote worker process. Deployment environment, identity tokens,
+FX/provider configuration and operational acceptance remain unqualified.
+Old domain-only bindings require fresh qualification. Missing, stale, malformed or provisional evidence
 displays NotAvailable. This local binding assumes trusted evidence storage;
 it is not a signed remote attestation.
 

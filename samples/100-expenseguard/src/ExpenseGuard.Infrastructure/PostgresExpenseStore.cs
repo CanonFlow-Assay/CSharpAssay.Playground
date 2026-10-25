@@ -22,8 +22,13 @@ public sealed class PostgresExpenseStore(NpgsqlDataSource data, TimeProvider tim
               PRIMARY KEY(claim_id, sequence));
             CREATE TABLE IF NOT EXISTS expense_outbox (
               claim_id uuid PRIMARY KEY REFERENCES expense_claims(id),
-              status text NOT NULL CHECK(status IN ('Pending','Completed','Cancelled')),
+              status text NOT NULL CHECK(status IN ('Pending','Completed','Cancelled','ManualReview')),
               idempotency_key text NOT NULL UNIQUE);
+            ALTER TABLE expense_outbox ADD COLUMN IF NOT EXISTS attempts integer NOT NULL DEFAULT 0;
+            ALTER TABLE expense_outbox ADD COLUMN IF NOT EXISTS available_at timestamptz NOT NULL DEFAULT '-infinity';
+            ALTER TABLE expense_outbox ADD COLUMN IF NOT EXISTS last_error_code text NOT NULL DEFAULT '';
+            ALTER TABLE expense_outbox DROP CONSTRAINT IF EXISTS expense_outbox_status_check;
+            ALTER TABLE expense_outbox ADD CONSTRAINT expense_outbox_status_check CHECK(status IN ('Pending','Completed','Cancelled','ManualReview'));
             """);
         await command.ExecuteNonQueryAsync(ct);
     }
@@ -121,12 +126,21 @@ public sealed class PostgresExpenseStore(NpgsqlDataSource data, TimeProvider tim
         await LockAsync(connection, transaction, ct);
         Guid id;
         string key;
-        await using (var find = new NpgsqlCommand("SELECT claim_id,idempotency_key FROM expense_outbox WHERE status='Pending' ORDER BY claim_id LIMIT 1 FOR UPDATE SKIP LOCKED", connection, transaction))
+        int attempts;
+        await using (var find = new NpgsqlCommand("SELECT claim_id,idempotency_key,attempts FROM expense_outbox WHERE status='Pending' AND available_at <= $1 ORDER BY available_at,claim_id LIMIT 1 FOR UPDATE SKIP LOCKED", connection, transaction))
+        {
+        find.Parameters.AddWithValue(time.GetUtcNow());
         await using (var reader = await find.ExecuteReaderAsync(ct))
         {
             if (!await reader.ReadAsync(ct)) return false;
-            id = reader.GetGuid(0); key = reader.GetString(1);
+            id = reader.GetGuid(0); key = reader.GetString(1); attempts = reader.GetInt32(2);
         }
+        }
+        // Retain the selected row lock while rolling back any failed payment/audit
+        // work. Retry metadata commits independently of those rolled-back changes.
+        await transaction.SaveAsync("payment_attempt", ct);
+        try
+        {
         ExpenseClaim claim;
         int version;
         await using (var read = new NpgsqlCommand("SELECT version,document FROM expense_claims WHERE id=$1 FOR UPDATE", connection, transaction))
@@ -151,12 +165,38 @@ public sealed class PostgresExpenseStore(NpgsqlDataSource data, TimeProvider tim
         await using var finish = new NpgsqlCommand("UPDATE expense_outbox SET status=$2 WHERE claim_id=$1", connection, transaction);
         finish.Parameters.AddWithValue(id); finish.Parameters.AddWithValue(status);
         await finish.ExecuteNonQueryAsync(ct);
+        }
+        catch (Exception exception) when (exception is not OperationCanceledException)
+        {
+            await transaction.RollbackAsync("payment_attempt", ct);
+            var manual = exception is InvalidDataException || attempts + 1 >= 3;
+            await using var retry = new NpgsqlCommand("UPDATE expense_outbox SET status=$2,attempts=attempts+1,available_at=$3,last_error_code=$4 WHERE claim_id=$1", connection, transaction);
+            retry.Parameters.AddWithValue(id); retry.Parameters.AddWithValue(manual ? "ManualReview" : "Pending");
+            retry.Parameters.AddWithValue(time.GetUtcNow().AddSeconds(attempts == 0 ? 30 : 120));
+            retry.Parameters.AddWithValue(exception is InvalidDataException ? "IntegrityFailure" : "ProcessingFailure");
+            await retry.ExecuteNonQueryAsync(ct);
+            await transaction.CommitAsync(ct);
+            throw;
+        }
+        // A commit exception is an uncertain outcome: never send a new key or
+        // assert rollback. A retry uses the same key if the row remains Pending.
         await transaction.CommitAsync(ct);
         return true;
     }
 
+    public async Task<PaymentWork?> ReadPaymentWorkAsync(ExpenseId id, CancellationToken ct)
+    {
+        await using var command = data.CreateCommand("SELECT status,attempts,available_at,last_error_code,idempotency_key FROM expense_outbox WHERE claim_id=$1");
+        command.Parameters.AddWithValue(id.Value);
+        await using var reader = await command.ExecuteReaderAsync(ct);
+        return await reader.ReadAsync(ct) ? new(reader.GetString(0), reader.GetInt32(1), reader.GetFieldValue<DateTimeOffset>(2), reader.GetString(3), reader.GetString(4)) : null;
+    }
+
     private async Task RequireReceiptAsync(ExpenseClaim claim, CancellationToken ct)
     {
+        if (claim.Receipt is Receipt external && !external.Reference.StartsWith("blob:", StringComparison.Ordinal) &&
+            claim.State is ManagerApprovalRequired or FinanceApprovalRequired or Approved or Reimbursed)
+            throw new InvalidDataException("External assertions cannot authorize approval or payment; verified stored bytes and reassessment required.");
         if (claim.Receipt is Receipt r && r.Reference.StartsWith("blob:", StringComparison.Ordinal) &&
             (receiptStore is null || await receiptStore.ReadAsync(claim.Id.Value, r.Reference, r.Sha256, ct) is null))
             throw new InvalidDataException("Stored receipt is unavailable; approval processing and payment are blocked.");
@@ -216,3 +256,5 @@ public sealed class PostgresExpenseStore(NpgsqlDataSource data, TimeProvider tim
         await audit.ExecuteNonQueryAsync(ct);
     }
 }
+
+public sealed record PaymentWork(string Status, int Attempts, DateTimeOffset AvailableAt, string LastErrorCode, string IdempotencyKey);
