@@ -14,7 +14,8 @@ public static class BuildEvidence
         .Select(p => $"src/ExpenseGuard.{p}/bin/Release/net11.0/ExpenseGuard.{p}.dll")];
     public static ImmutableArray<string> ConfigurationFiles { get; } = [".csassay.json", "global.json", "Directory.Build.props", "Directory.Packages.props",
         .. new[] { "Domain", "Application", "Infrastructure", "Api", "Worker" }.Select(p => $"src/ExpenseGuard.{p}/packages.lock.json"),
-        "tests/ExpenseGuard.Tests/packages.lock.json", "src/ExpenseGuard.Api/wwwroot/app.js", "src/ExpenseGuard.Api/wwwroot/app.css", "src/ExpenseGuard.Api/wwwroot/index.html"];
+        "tests/ExpenseGuard.Tests/packages.lock.json", "src/ExpenseGuard.Api/wwwroot/app.js", "src/ExpenseGuard.Api/wwwroot/app.css", "src/ExpenseGuard.Api/wwwroot/index.html",
+        "src/ExpenseGuard.Api/wwwroot/guide.js", "src/ExpenseGuard.Api/wwwroot/recorded.js", "src/ExpenseGuard.Api/wwwroot/guide-examples.json"];
     public static Dictionary<string, string> HashFiles(string root, ImmutableArray<string> files) =>
         files.ToDictionary(p => p, p => Hash(Path.Combine(root, p)), StringComparer.Ordinal);
 

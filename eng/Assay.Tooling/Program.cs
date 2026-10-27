@@ -13,9 +13,15 @@ public static partial class Program
 
             var command = args[0]; var options = new Arguments(args[1..]); JsonNode? result;
             if (command == "test-process") { await Task.Delay(options.Count("--delay", 0)); return options.Count("--exit", 0); }
-            if (command == "help") { Console.WriteLine("C# Assay tooling: daa new|intake|verify|plan|investigate; sdk-source; audit-sample-toolchain; run-decision-assistance; evaluate-decision-assistance; run-shape-investigations; run-csvhelper-functional|streaming|hefty|roundtrip; evaluate-csvhelper-advice; prepare-csvhelper-review; qualify-application-workflow; qualify-inventory-maturity; qualify-expenseguard; assert-evidence|gof-crosswalk|functional-shape|csvhelper; with-inventory-database -- command; test-all; self-audit."); return 0; }
+            if (command == "help") { Console.WriteLine("C# Assay tooling: daa new|intake|verify|plan|investigate; sdk-source; audit-sample-toolchain; run-decision-assistance; evaluate-decision-assistance; run-shape-investigations; run-csvhelper-functional|streaming|hefty|roundtrip; evaluate-csvhelper-advice; prepare-csvhelper-review; qualify-application-workflow; qualify-inventory-maturity; qualify-expenseguard; qualify-distribution; stage-distribution; distribution-pack; install-packed-assay; packed-assay -- engine-arguments; assert-evidence|gof-crosswalk|functional-shape|csvhelper; with-inventory-database -- command; test-all; self-audit."); return 0; }
             if (command == "read-sdk") { Console.WriteLine(Sdk); return 0; }
             if (command == "sdk-source") { Console.WriteLine(await PackageTools.SdkSource()); return 0; }
+            if (command == "install-packed-assay") { Console.WriteLine((await PackageTools.InstallPackedTool()).ToJsonString(Json.Options)); return 0; }
+            if (command == "packed-assay")
+            {
+                var execution = await Processes.Run(["dotnet", PackageTools.PackedTool, .. options.Positionals], Root);
+                Console.Write(execution.Output); return execution.State is ProcessState.TimedOut or ProcessState.Cancelled ? 3 : execution.ExitCode;
+            }
             if (command == "normalize-preview-package") { foreach (var path in options.Positionals) { PackageTools.Normalize(path); } return 0; }
             if (command == "copy-qualified") { Json.Check(options.Positionals.Count == 2, "Supply engine root and destination."); await PackageTools.CopyQualified(options.Positionals[0], options.Positionals[1]); Console.WriteLine("Copied exact qualified packages without rebuilding engine."); return 0; }
             if (command == "with-inventory-database")
@@ -84,6 +90,9 @@ public static partial class Program
                 case "qualify-inventory-maturity": result = await InventoryQualification.Run(options.Get("--output", Path.Combine(Root, "evidence/generated/maturity/inventory"))); break;
                 case "qualify-ef-boundary": result = await EfBoundaryQualification.Run(options.Get("--output", Path.Combine(Root, "evidence/generated/ef-boundary/qualified"))); break;
                 case "qualify-expenseguard": result = await ExpenseQualification.Run(options.Get("--output", Path.Combine(Root, "evidence/generated/expenseguard/qualified"))); break;
+                case "qualify-distribution": result = await DistributionQualification.Run(options.Required("--engine-root"), options.Required("--expense-evidence"), options.Required("--output")); break;
+                case "stage-distribution": result = await DistributionQualification.Stage(options.Required("--output")); break;
+                case "distribution-pack": result = DistributionQualification.Pack(); break;
                 case "qualify-csharp-migration": result = await MigrationQualification.Run(options.Get("--output", Path.Combine(Root, "evidence/generated/csharp-migration/qualified")), options.Get("--engine-root")); break;
                 default: throw new ArgumentException("Unknown tooling command: " + command);
             }

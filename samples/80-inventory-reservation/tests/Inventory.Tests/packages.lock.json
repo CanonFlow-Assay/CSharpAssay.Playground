@@ -23,7 +23,7 @@
       "CanonFlow.Assay.Workflow": {
         "type": "Transitive",
         "resolved": "0.1.0-preview.1",
-        "contentHash": "RibhHq4Y0wRHSIvXTQ6MAEXvyU3RIrP0EMVXshAzbmpMBFpZSwLvSYOxW4SQn9sioI4nQwqb6KNFiLhhZdZHag=="
+        "contentHash": "Ym9wK0nqFvbxC6jezoXUxhGb0BAarh+BiNkmf3UB7aAilVJHr2e0D3fJEVsvAbE3oR70ii07Ck5vNI4o8X2omw=="
       },
       "Microsoft.ApplicationInsights": {
         "type": "Transitive",

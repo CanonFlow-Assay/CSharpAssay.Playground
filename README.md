@@ -78,7 +78,7 @@ Reviewed CSV observations retain exact comparison of the original finding fields
 The consumer validates additive scope/identity context separately, so new metadata
 does not require refreshing the reviewed findings or discarding their identities.
 
-CI defaults to the paired engine assessment commit `238b56a99b1d7be92e9523262bd55cb9f4b26202`. Repository variable `CSHARP_ASSAY_REF` or workflow input `assay_ref` can select another reviewed revision containing .NET 11 and the `assess` API.
+CI's checked-in fallback is the paired engine developer-experience commit `717d5d2daff548b580c651c7bc1247964bc826c2`. Workflow input `assay_ref`, then repository variable `CSHARP_ASSAY_REF`, can override that fallback; inspect the actual hosted checkout identity rather than inferring it from this sentence.
 
 Follow the [local Forgejo review workflow](docs/local-review-workflow.md): local tests, commits and PRs precede consolidated external publication.
 
@@ -98,3 +98,7 @@ The [22 October agent self-adjudication](docs/self-adjudication-2026-10-22.md)
 records corrected evidence gaps, regression cases and the fresh qualification
 contract. Its completion receipts distinguish executed checks from review work
 that remains open.
+
+## Understand, change, verify
+
+The static [Playground explorer](docs/index.html) now distinguishes current native development from historical public packages. It displays digest-bound recorded rule variants and six ExpenseGuard scenarios; edits are Unverified, never browser-verified. A read-only guide extends the existing ExpenseGuard workbench. The local [distribution pack](docs/distribution/README.md) contains drafts, claims, controls and reproduction instructions; nothing is deployed or posted by preparing it.

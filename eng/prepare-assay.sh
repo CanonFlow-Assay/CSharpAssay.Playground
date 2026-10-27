@@ -42,7 +42,8 @@ export NUGET_PACKAGES="$repo_root/.packages/cache"
 # Invalidate only this checkout's generated Assay cache, never a user's cache.
 rm -rf "$NUGET_PACKAGES/csassay.analyzers/0.2.0-rc.1" \
        "$NUGET_PACKAGES/csassay.tool/0.2.0-rc.1"
-dotnet tool restore --configfile NuGet.config
+# Manifest restore can reuse an older same-version local-tool resolver entry.
+# The qualified package-scoped executable is installed and byte-checked below.
 # Bootstrap the producer graph before restoring package-only inventory consumers.
 dotnet restore Assay.Workflow.slnx --force-evaluate --configfile NuGet.config
 # Explicit bootstrap records changed engine-package identities before the SDK
@@ -65,4 +66,5 @@ fi
 # Lock bootstrap may have advanced HEAD after the producer build. Bind the
 # tooling's informational version to that final source before qualification.
 dotnet build eng/Assay.Tooling/Assay.Tooling.csproj --no-restore --configuration Release
+dotnet eng/Assay.Tooling/bin/Release/net11.0/Assay.Tooling.dll install-packed-assay
 echo "Prepared CsAssay 0.2.0-rc.1 packages for .NET 11."

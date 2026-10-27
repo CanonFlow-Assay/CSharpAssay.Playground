@@ -8,6 +8,8 @@ using ExpenseGuard.Infrastructure;
 using Microsoft.AspNetCore.Authentication;
 using Npgsql;
 
+if (args.FirstOrDefault() == "--guided-freshness") { Environment.ExitCode = GuidedFreshness.Run(args); return; }
+
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel(k => k.Limits.MaxRequestBodySize = ReceiptBlobStore.MaximumBytes + 8192);
 builder.Services.ConfigureHttpJsonOptions(o =>
@@ -32,7 +34,7 @@ builder.Services.AddSingleton<IExpenseStore>(s => s.GetRequiredService<PostgresE
 var rateItems = builder.Configuration.GetSection("ExpenseGuard:Rates").Get<ExchangeRate[]>() ?? [];
 if (rateItems.GroupBy(r => (r.From, r.To, r.On)).Any(g => g.Count() > 1)) throw new InvalidOperationException("Duplicate FX fixture entries.");
 builder.Services.AddSingleton<IRateSource>(new PinnedRateSource(rateItems.ToImmutableArray()));
-builder.Services.AddSingleton<IExpenseAdvisor, DemoAdvisor>();
+builder.Services.AddSingleton<IExpenseAdvisor>(new DemoAdvisor(builder.Configuration["ExpenseGuard:DemoRecommendation"] ?? "Approved"));
 builder.Services.AddSingleton<ExpenseService>();
 var receiptsDirectory = Path.GetFullPath(builder.Configuration["ExpenseGuard:ReceiptDirectory"] ?? Path.Combine(builder.Environment.ContentRootPath, ".local/receipts"));
 var publicDirectory = Path.GetFullPath(builder.Environment.WebRootPath ?? Path.Combine(builder.Environment.ContentRootPath, "wwwroot"));
@@ -73,7 +75,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseStaticFiles();
 app.MapGet("/health", () => Results.Ok(new { status = "running", mode = "bounded-preview", payments = "simulated", ai = "offline-demo" }));
-app.MapGet("/", () => Results.Redirect("/index.html"));
+app.MapGet("/", (HttpRequest request) => Results.Redirect(request.Query["demo"] == "recorded" ? "/index.html?demo=recorded" : "/index.html"));
 app.MapGet("/claims/{id:guid}/evidence", (IWebHostEnvironment env) => Results.File(Path.Combine(env.WebRootPath, "index.html"), "text/html"));
 var api = app.MapGroup("/api").RequireAuthorization();
 api.MapGet("/me", (HttpContext c, IReceiptExtractor extractor) => { var actor = GetActor(c); return Results.Ok(new { employee = actor.Id.Value, role = actor.Role.ToString(), policy = Policies.Demo,

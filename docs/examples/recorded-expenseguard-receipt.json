@@ -1,0 +1,1785 @@
+{
+  "schema": "csassay-public-derivative/0.1",
+  "redactedDerivative": true,
+  "originalSha256": "c24bbde65f4e509b3f1b5a220e6cc694d1f305c58306677b9b257e28b86c6e19",
+  "redactions": [
+    "Original private source/tool paths and complete source inventory omitted. Original machine receipt retained locally."
+  ],
+  "verdict": "pass",
+  "exitCode": 0,
+  "headline": "Verification passed",
+  "authoritative": true,
+  "verificationMode": "verification",
+  "toolVersion": "0.2.0-rc.1",
+  "toolchain": {
+    "sdkVersion": "11.0.100",
+    "runtimeVersion": "11.0.0",
+    "msbuildVersion": "11.0.100",
+    "roslynVersion": "5.9.0.0",
+    "operatingSystem": "Unix 7.0.0.38"
+  },
+  "policySha256": "97cd5b0a9b3cc618cee1a2180818a20a32b33f01e7b1585bcae58c557ff80ee4",
+  "analyzers": [
+    {
+      "identity": "CsAssay.Analyzers, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null",
+      "assemblyVersion": "0.2.0.0",
+      "sha256": "c1b7c693e91f2fa4f5960133377047689600536c17f71919beafeede900449ee"
+    }
+  ],
+  "tests": [
+    {
+      "input": "ExpenseGuard.Tests.csproj",
+      "required": true,
+      "outcome": "passed",
+      "total": 189,
+      "passed": 189,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "missingEvidenceCount": 0,
+  "executionFailureCount": 0,
+  "missingEvidence": [],
+  "findings": [
+    {
+      "ruleId": "CSAD0002",
+      "message": "Multiple state flags may hide an explicit state model: ExpenseGuard.Domain.PolicyFacts owns boolean state members: Duplicate, ReceiptBytesVerified",
+      "scope": "core",
+      "rawSeverity": "info",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "Model.cs",
+      "line": 41
+    },
+    {
+      "ruleId": "CSAE0001",
+      "message": "Exceptions must not be silently swallowed: empty catch block discards the failure",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 59
+    },
+    {
+      "ruleId": "CSAE0002",
+      "message": "Expected core failures should use an explicit outcome: ExpenseGuard.Infrastructure.PostgresExpenseStore.ExecuteAsync(ExpenseGuard.Domain.ExpenseId, ExpenseGuard.Domain.Actor, System.Func\u003CExpenseGuard.Application.Ledger, ExpenseGuard.Application.Mutation\u003E, System.Threading.CancellationToken) explicitly throws System.InvalidOperationException",
+      "scope": "shell",
+      "rawSeverity": "info",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "PostgresExpenseStore.cs",
+      "line": 71
+    },
+    {
+      "ruleId": "CSAE0002",
+      "message": "Expected core failures should use an explicit outcome: ExpenseGuard.Tests.DatabaseScope.CreateAsync() explicitly throws System.InvalidOperationException",
+      "scope": "shell",
+      "rawSeverity": "info",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 31
+    },
+    {
+      "ruleId": "CSAE0002",
+      "message": "Expected core failures should use an explicit outcome: ExpenseGuard.Tests.HttpServer.InitializeAsync() explicitly throws System.InvalidOperationException",
+      "scope": "shell",
+      "rawSeverity": "info",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 30
+    },
+    {
+      "ruleId": "CSAE0002",
+      "message": "Expected core failures should use an explicit outcome: ExpenseGuard.Tests.HttpServer.InitializeAsync() explicitly throws System.InvalidOperationException",
+      "scope": "shell",
+      "rawSeverity": "info",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 52
+    },
+    {
+      "ruleId": "CSAE0002",
+      "message": "Expected core failures should use an explicit outcome: ExpenseGuard.Tests.HttpServer.InitializeAsync() explicitly throws System.InvalidOperationException",
+      "scope": "shell",
+      "rawSeverity": "info",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 57
+    },
+    {
+      "ruleId": "CSAE0002",
+      "message": "Expected core failures should use an explicit outcome: ExpenseGuard.Tests.HttpServer.InitializeAsync() explicitly throws System.InvalidOperationException",
+      "scope": "shell",
+      "rawSeverity": "info",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 62
+    },
+    {
+      "ruleId": "CSAE0002",
+      "message": "Expected core failures should use an explicit outcome: ExpenseGuard.Tests.HttpServer.RunWorkerUntilPaidAsync(string) explicitly throws System.InvalidOperationException",
+      "scope": "shell",
+      "rawSeverity": "info",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 104
+    },
+    {
+      "ruleId": "CSAE0002",
+      "message": "Expected core failures should use an explicit outcome: ExpenseGuard.Tests.HttpServer.RunWorkerUntilPaidAsync(string) explicitly throws System.InvalidOperationException",
+      "scope": "shell",
+      "rawSeverity": "info",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 110
+    },
+    {
+      "ruleId": "CSAE0002",
+      "message": "Expected core failures should use an explicit outcome: ExpenseGuard.Tests.HttpServer.RunWorkerUntilPaidAsync(string) explicitly throws System.InvalidOperationException",
+      "scope": "shell",
+      "rawSeverity": "info",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 116
+    },
+    {
+      "ruleId": "CSAI0002",
+      "message": "Immutable carriers must not expose known mutable collections: ExpenseGuard.Infrastructure.ReceiptContent.Bytes exposes byte[]",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ReceiptBlobStore.cs",
+      "line": 6
+    },
+    {
+      "ruleId": "CSAI0003",
+      "message": "Mutable shell state should not leak through public contracts: ExpenseGuard.Infrastructure.BuildEvidence.HashFiles(string, System.Collections.Immutable.ImmutableArray\u003Cstring\u003E) returns System.Collections.Generic.Dictionary\u003Cstring, string\u003E",
+      "scope": "shell",
+      "rawSeverity": "info",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "BuildEvidence.cs",
+      "line": 19
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "GuidedFreshness.cs",
+      "line": 22
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "BuildEvidence.cs",
+      "line": 51
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "BuildEvidence.cs",
+      "line": 52
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "BuildEvidence.cs",
+      "line": 70
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 80
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 86
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 88
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 105
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 112
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 112
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 124
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 125
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 126
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 139
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 140
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 147
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 149
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 150
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 156
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 164
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 170
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 175
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 181
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 184
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 197
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 198
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 199
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 205
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 207
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 207
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 213
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ExtractionTests.cs",
+      "line": 24
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ExtractionTests.cs",
+      "line": 63
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ExtractionTests.cs",
+      "line": 116
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ExtractionTests.cs",
+      "line": 116
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ExtractionTests.cs",
+      "line": 117
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "GuidedDemoTests.cs",
+      "line": 32
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "GuidedDemoTests.cs",
+      "line": 57
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HardeningTests.cs",
+      "line": 23
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HardeningTests.cs",
+      "line": 26
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HardeningTests.cs",
+      "line": 96
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HardeningTests.cs",
+      "line": 113
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HardeningTests.cs",
+      "line": 123
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HardeningTests.cs",
+      "line": 125
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HardeningTests.cs",
+      "line": 131
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HardeningTests.cs",
+      "line": 137
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HardeningTests.cs",
+      "line": 143
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HardeningTests.cs",
+      "line": 169
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HardeningTests.cs",
+      "line": 176
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HardeningTests.cs",
+      "line": 177
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 102
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 16
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 44
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 71
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 77
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 83
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 96
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 117
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 125
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 145
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 146
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 147
+    },
+    {
+      "ruleId": "CSAN0002",
+      "message": "Null-forgiving operators must not erase compiler evidence: null-forgiving operator discards nullable-flow evidence",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 152
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "KeyAuthentication.cs",
+      "line": 21
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 134
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 175
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 203
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 220
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "BuildEvidence.cs",
+      "line": 22
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "BuildEvidence.cs",
+      "line": 72
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ClaimDocument.cs",
+      "line": 30
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ClaimDocument.cs",
+      "line": 32
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "OpenAiReceiptExtractor.cs",
+      "line": 17
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "OpenAiReceiptExtractor.cs",
+      "line": 107
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "PostgresExpenseStore.cs",
+      "line": 8
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "PostgresExpenseStore.cs",
+      "line": 43
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "PostgresExpenseStore.cs",
+      "line": 91
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "PostgresExpenseStore.cs",
+      "line": 192
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ReceiptBlobStore.cs",
+      "line": 44
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ReceiptBlobStore.cs",
+      "line": 45
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ReceiptBlobStore.cs",
+      "line": 58
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 48
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 57
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "EvidenceTests.cs",
+      "line": 10
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "GuidedDemoTests.cs",
+      "line": 20
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "GuidedDemoTests.cs",
+      "line": 73
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "GuidedDemoTests.cs",
+      "line": 73
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "GuidedDemoTests.cs",
+      "line": 89
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HardeningTests.cs",
+      "line": 132
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 92
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 111
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 130
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 130
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 131
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 137
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 148
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 61
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 75
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 78
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 89
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 90
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 107
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 110
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 111
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 129
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ProductTests.cs",
+      "line": 133
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "TransitionTests.cs",
+      "line": 16
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "TransitionTests.cs",
+      "line": 16
+    },
+    {
+      "ruleId": "CSAN0003",
+      "message": "Core code must not introduce a null value: null is introduced as a value instead of an explicit domain case",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 10
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.DraftRequest.Currency exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 215
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.DraftRequest.DraftRequest(decimal, string?, ExpenseGuard.Domain.Category, string?, System.DateOnly, int) has nullable parameter Currency",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 215
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.DraftRequest.DraftRequest(decimal, string?, ExpenseGuard.Domain.Category, string?, System.DateOnly, int) has nullable parameter Merchant",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 215
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.DraftRequest.Merchant exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 215
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.RevisionRequest.Currency exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 216
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.RevisionRequest.RevisionRequest(int, decimal, string?, ExpenseGuard.Domain.Category, string?, System.DateOnly, int) has nullable parameter Currency",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 216
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.RevisionRequest.Merchant exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 216
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.RevisionRequest.RevisionRequest(int, decimal, string?, ExpenseGuard.Domain.Category, string?, System.DateOnly, int) has nullable parameter Merchant",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 216
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.ReceiptRequest.ReceiptRequest(int, string?, string?, bool) has nullable parameter Reference",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 218
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.ReceiptRequest.Reference exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 218
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.ReceiptRequest.ReceiptRequest(int, string?, string?, bool) has nullable parameter Sha256",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 218
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.ReceiptRequest.Sha256 exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 218
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.CommandRequest.Action exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 220
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.CommandRequest.CommandRequest(int, string?, string?) has nullable parameter Action",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 220
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.CommandRequest.CommandRequest(int, string?, string?) has nullable parameter Reason",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 220
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Api.CommandRequest.Reason exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Program.cs",
+      "line": 220
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.Ledger.Claim exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 6
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.Ledger.Ledger(ExpenseGuard.Domain.ExpenseClaim?, int, System.Collections.Immutable.ImmutableArray\u003CExpenseGuard.Domain.ExpenseClaim\u003E) has nullable parameter Claim",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 6
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.StoreResult.Claim exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 12
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.StoreResult.StoreResult(ExpenseGuard.Domain.ExpenseClaim?, int, string) has nullable parameter Claim",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 12
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.IExpenseStore.ReadAsync(ExpenseGuard.Domain.ExpenseId, System.Threading.CancellationToken) has a nullable return contract",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 20
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ReceiptDraft.Merchant exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 27
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ReceiptDraft.ReceiptDraft(string?, decimal?, string?, System.DateOnly?, string?, bool?) has nullable parameter Merchant",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 27
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ReceiptDraft.Amount exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 27
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ReceiptDraft.ReceiptDraft(string?, decimal?, string?, System.DateOnly?, string?, bool?) has nullable parameter Amount",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 27
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ReceiptDraft.Currency exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 27
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ReceiptDraft.ReceiptDraft(string?, decimal?, string?, System.DateOnly?, string?, bool?) has nullable parameter Currency",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 27
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ReceiptDraft.ReceiptDraft(string?, decimal?, string?, System.DateOnly?, string?, bool?) has nullable parameter SpentOn",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 27
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ReceiptDraft.SpentOn exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 27
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ReceiptDraft.CategoryGuess exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 27
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ReceiptDraft.ReceiptDraft(string?, decimal?, string?, System.DateOnly?, string?, bool?) has nullable parameter CategoryGuess",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 27
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ReceiptDraft.Itemized exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 27
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ReceiptDraft.ReceiptDraft(string?, decimal?, string?, System.DateOnly?, string?, bool?) has nullable parameter Itemized",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 27
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ExtractionProposal.Draft exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 28
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Application.ExtractionProposal.ExtractionProposal(string, string, ExpenseGuard.Application.ReceiptDraft?, string, System.Collections.Immutable.ImmutableArray\u003Cstring\u003E, string) has nullable parameter Draft",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "Contracts.cs",
+      "line": 28
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Infrastructure.BuildEvidence.Read(string?, string?) has nullable parameter directory",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "BuildEvidence.cs",
+      "line": 22
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Infrastructure.BuildEvidence.Read(string?, string?) has nullable parameter checkoutRoot",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "BuildEvidence.cs",
+      "line": 22
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Infrastructure.ClaimDocument.ClaimDocument(System.Guid, string, decimal, string, ExpenseGuard.Domain.Category, string, System.DateOnly, int, ExpenseGuard.Domain.Receipt?, string, string, ExpenseGuard.Domain.ApprovalRoute, ExpenseGuard.Domain.Assessment?) has nullable parameter Receipt",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ClaimDocument.cs",
+      "line": 11
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Infrastructure.ClaimDocument.Receipt exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ClaimDocument.cs",
+      "line": 11
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Infrastructure.ClaimDocument.ClaimDocument(System.Guid, string, decimal, string, ExpenseGuard.Domain.Category, string, System.DateOnly, int, ExpenseGuard.Domain.Receipt?, string, string, ExpenseGuard.Domain.ApprovalRoute, ExpenseGuard.Domain.Assessment?) has nullable parameter Policy",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ClaimDocument.cs",
+      "line": 12
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Infrastructure.ClaimDocument.Policy exposes a nullable value",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ClaimDocument.cs",
+      "line": 12
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Infrastructure.PostgresExpenseStore.PostgresExpenseStore(Npgsql.NpgsqlDataSource, System.TimeProvider, ExpenseGuard.Infrastructure.ReceiptBlobStore?) has nullable parameter receiptStore",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "PostgresExpenseStore.cs",
+      "line": 8
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Infrastructure.PostgresExpenseStore.ReadPaymentWorkAsync(ExpenseGuard.Domain.ExpenseId, System.Threading.CancellationToken) has a nullable return contract",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "PostgresExpenseStore.cs",
+      "line": 187
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Infrastructure.ReceiptBlobStore.ReadAsync(System.Guid, string, string, System.Threading.CancellationToken) has a nullable return contract",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "ReceiptBlobStore.cs",
+      "line": 42
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Tests.DatabaseScope.AssessedAsync(decimal, bool, string?) has nullable parameter merchant",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 48
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Tests.DatabaseScope.AttachAsync(ExpenseGuard.Domain.ExpenseClaim, int, string?) has nullable parameter content",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "DatabaseTests.cs",
+      "line": 57
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Tests.HttpServer.SendAsync(System.Net.Http.HttpMethod, string, object?, string?) has nullable parameter body",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 78
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Tests.HttpServer.SendAsync(System.Net.Http.HttpMethod, string, object?, string?) has nullable parameter key",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 78
+    },
+    {
+      "ruleId": "CSAN0004",
+      "message": "Core public contracts must not expose nullable values: ExpenseGuard.Tests.HttpServer.UploadAsync(string, int, byte[], string?, bool) has nullable parameter key",
+      "scope": "shell",
+      "rawSeverity": "warning",
+      "effectiveLevel": "warning",
+      "suppressed": false,
+      "path": "HttpTests.cs",
+      "line": 92
+    },
+    {
+      "ruleId": "CSAU0004",
+      "message": "Native union switches should not hide new cases behind a catch-all: catch-all arm can hide a newly added native union case",
+      "scope": "core",
+      "rawSeverity": "warning",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "PolicyEngine.cs",
+      "line": 28
+    },
+    {
+      "ruleId": "CSAU0004",
+      "message": "Native union switches should not hide new cases behind a catch-all: catch-all arm can hide a newly added native union case",
+      "scope": "core",
+      "rawSeverity": "warning",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "Transitions.cs",
+      "line": 66
+    },
+    {
+      "ruleId": "CSAU0004",
+      "message": "Native union switches should not hide new cases behind a catch-all: catch-all arm can hide a newly added native union case",
+      "scope": "core",
+      "rawSeverity": "warning",
+      "effectiveLevel": "note",
+      "suppressed": false,
+      "path": "Transitions.cs",
+      "line": 78
+    }
+  ]
+}

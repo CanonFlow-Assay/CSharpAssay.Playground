@@ -14,7 +14,8 @@ public static class ExpenseQualification
         .Select(p => $"src/ExpenseGuard.{p}/bin/Release/net11.0/ExpenseGuard.{p}.dll")];
     private static readonly string[] ConfigurationFiles = [".csassay.json", "global.json", "Directory.Build.props", "Directory.Packages.props",
         .. new[] { "Domain", "Application", "Infrastructure", "Api", "Worker" }.Select(p => $"src/ExpenseGuard.{p}/packages.lock.json"),
-        "tests/ExpenseGuard.Tests/packages.lock.json", "src/ExpenseGuard.Api/wwwroot/app.js", "src/ExpenseGuard.Api/wwwroot/app.css", "src/ExpenseGuard.Api/wwwroot/index.html"];
+        "tests/ExpenseGuard.Tests/packages.lock.json", "src/ExpenseGuard.Api/wwwroot/app.js", "src/ExpenseGuard.Api/wwwroot/app.css", "src/ExpenseGuard.Api/wwwroot/index.html",
+        "src/ExpenseGuard.Api/wwwroot/guide.js", "src/ExpenseGuard.Api/wwwroot/recorded.js", "src/ExpenseGuard.Api/wwwroot/guide-examples.json"];
 
     public static async Task<JsonObject> Run(string output)
     {
@@ -53,7 +54,7 @@ public static class ExpenseQualification
             ("structuralControls", new JsonArray()), ("authority", "Bounded Linux/PostgreSQL/HTTP application exercise. Selected CSAssay rules and executed tests; not universal security, correctness or deployment approval."));
         Json.Write(reportPath, report);
         var manifest = Json.Create(("testDll", "tests/ExpenseGuard.Tests/bin/Release/net11.0/ExpenseGuard.Tests.dll"),
-            ("minimumTests", 182), ("testReportProtocol", "xunit-mtp-v1"));
+            ("minimumTests", 189), ("testReportProtocol", "xunit-mtp-v1"));
         async Task Build(string directory, string name)
         {
             (await Processes.Run(["dotnet", "restore", Path.Combine(directory, Solution), "--locked-mode", "--configfile", Path.Combine(Root, "NuGet.config")], directory, Path.Combine(output, name + "-restore.log"), 180)).Require(name + " locked restore");
@@ -82,7 +83,7 @@ public static class ExpenseQualification
             var total = tests.I("total"); var names = tests.Strings("testNames");
             Console.WriteLine($"ExpenseGuard: {total} baseline tests passed. Running authoritative CSAssay verify.");
             var verify = await Processes.Run(["dotnet", Engine, "verify", Path.Combine(sample, Solution), "--policy", Path.Combine(sample, ".csassay.json"),
-                "--json", Path.Combine(output, "verify.json"), "--sarif", Path.Combine(output, "verify.sarif")], Root, Path.Combine(output, "verify.log"), 300);
+                "--json", Path.Combine(output, "verify.json"), "--sarif", Path.Combine(output, "verify.sarif"), "--html", Path.Combine(output, "verify.html"), "--markdown", Path.Combine(output, "verify.md")], Root, Path.Combine(output, "verify.log"), 300);
             verify.Require("ExpenseGuard authoritative verification");
             var receipt = Json.Read(Path.Combine(output, "verify.json")); var evidence = receipt["evidence"]!;
             Json.Check(receipt.S("verdict") == "pass" && evidence.B("authoritative") && evidence.S("verificationMode") == "verification" &&

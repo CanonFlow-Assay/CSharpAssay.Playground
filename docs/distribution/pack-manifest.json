@@ -1,0 +1,130 @@
+{
+  "schema": "csassay-publication-pack/0.1",
+  "approvalState": "DRAFT",
+  "targetAccount": "Not selected",
+  "externalPublicationAuthorized": false,
+  "files": [
+    {
+      "path": "docs/assets/historical.js",
+      "sha256": "1a26d000afa1d17a89ca7ecddfb0f03e63785e6eac28866c42ce5506dde7f67e",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/assets/recorded.js",
+      "sha256": "061f2479bcf6b27f65ec0c8581282dccb84bb2ec3cb0ed950aac64bb45bac75a",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/assets/site.css",
+      "sha256": "b847f0fff649a887f17d22c56bd51d6c9566a1a21dabdf7c23a3f17beba22456",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/assets/site.js",
+      "sha256": "f444f4b0deb01a81ff09038d8f48434da10045cfac20adf6f36cc249d6e2f493",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/distribution/README.md",
+      "sha256": "1472ffeba01af0b1c159e894d73ba12336e13611aa8931e2cbac5fc6d2f4deee",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/distribution/claims.json",
+      "sha256": "78d993ed399cfaf60741f02feaa2f14f63d5c9cbd6aa949d97036232416d0898",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/distribution/community.md",
+      "sha256": "c56f0dced695b312779b76ce019b0769c63d52f2879cc3c65bee09c784c960ea",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/distribution/linkedin.md",
+      "sha256": "b22556bfe9c37f221ade4991ad9d329f0d16d824fce371f753c41f08387d7ac6",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/distribution/medium.md",
+      "sha256": "82117d5de921d79948c770777bded5da74fa57548b8b9ab06ee6f68019ecc88d",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/distribution/outreach.md",
+      "sha256": "930690d972ac4d625f2dd99471f2820ea1594bc1e02b55a5cf25d7b058f6f296",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/distribution/qualification-and-rollout.md",
+      "sha256": "56898d9f2b201271ad4365accef9e255c6a335ce955f1597a04b3e0594c342f6",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/distribution/substack.md",
+      "sha256": "07d5bc7ebb25ad179de4ca1e722d9fb7264ed0be1dbd165dbed7114b0c6801fb",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/distribution/youtube.md",
+      "sha256": "1ff5e857f53992d81a3b3b96b2f26204e1bd516d53b1edb949bb8a4a61f7c584",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/examples/catalogue.json",
+      "sha256": "8562a061912ff3cb9f7b3a14281c45850052dc207f20ce3394c74f94c6f1445b",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/examples/recorded-evidence-index.json",
+      "sha256": "13d9afed54707b8f605208bacd6d18dfc62324de92521fde5b8e459b8f8f9272",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/examples/recorded-expenseguard-receipt.json",
+      "sha256": "4b38b40990f7c165a60edb9536d028326d3a625d09abf458c83826d0d59c0f8a",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/examples/recorded-status.svg",
+      "sha256": "6726592f8b41c60d6f737c87bb742425a0b859fd001db97d350a0c1670c93608",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "docs/index.html",
+      "sha256": "3dcde156ce716fdf54cbd11acd38ee86ce1a4367b30fa3ecc7ce6d386da5419b",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "samples/100-expenseguard/src/ExpenseGuard.Api/wwwroot/app.css",
+      "sha256": "da8641bf6d8a29746920a04b52a5b3732c28fb77c2d829b88a62298965ccc190",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "samples/100-expenseguard/src/ExpenseGuard.Api/wwwroot/app.js",
+      "sha256": "56a776349a518618e0fb409b0006f1d30c85b11347700d99e81fd7396dc6bbc6",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "samples/100-expenseguard/src/ExpenseGuard.Api/wwwroot/guide-examples.json",
+      "sha256": "8562a061912ff3cb9f7b3a14281c45850052dc207f20ce3394c74f94c6f1445b",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "samples/100-expenseguard/src/ExpenseGuard.Api/wwwroot/guide.js",
+      "sha256": "5b709ce0cbd074f7c76f3245ad6ccf55237ed6dcf450b94c1e4627e8b15883c8",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "samples/100-expenseguard/src/ExpenseGuard.Api/wwwroot/index.html",
+      "sha256": "6438293f8417b590ab135e554a2631023d59052f8273c5ea5ed9b52a6acecf09",
+      "approvalState": "DRAFT"
+    },
+    {
+      "path": "samples/100-expenseguard/src/ExpenseGuard.Api/wwwroot/recorded.js",
+      "sha256": "061f2479bcf6b27f65ec0c8581282dccb84bb2ec3cb0ed950aac64bb45bac75a",
+      "approvalState": "DRAFT"
+    }
+  ],
+  "limits": "No publisher or approval bypass. Human approval must identify channel/account and exact content/asset bytes; edits require new approval.",
+  "contentDigest": "89a2775e8f0666da1dd13f24832e4da1b861f2da0f513a6d506f9d1ce17e209c"
+}

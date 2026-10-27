@@ -1,0 +1,177 @@
+{
+  "schema": "csassay-public-claims/0.1",
+  "approvalState": "DRAFT",
+  "audience": "C# developers, reviewers and teams using coding agents",
+  "enginePublicSource": "717d5d2daff548b580c651c7bc1247964bc826c2",
+  "engineQualifiedSource": "fa9c682e544ed5ccbdc0602fc7e7842be498aa09",
+  "toolchain": "11.0.100-rc.2.26504.105; net11.0; preview; rollForward disable",
+  "policy": "samples/100-expenseguard/.csassay.json; exact digests recorded with each fixture",
+  "producerCommit": "6397583033176a870563146ad3651844c2861969",
+  "evidenceIndex": "../examples/catalogue.json",
+  "claims": [
+    {
+      "id": "C01",
+      "wording": "Selected admitted immutable-carrier findings can be inspected and explained offline.",
+      "scope": "Seven canonical admitted-rule examples",
+      "owner": "Packaged CSAssay analyzer and verifier",
+      "implementation": [
+        "docs/assets/site.js",
+        "eng/Assay.Tooling/DistributionQualification.cs"
+      ],
+      "positiveControl": "CSAI0001-after",
+      "negativeControl": "CSAI0001-before",
+      "status": "executed",
+      "limits": "init is shallow; selected shapes are not universal purity.",
+      "requalify": "Example, analyzer, compiler, policy or package identity changes"
+    },
+    {
+      "id": "C02",
+      "wording": "Simulated approval advice does not bypass ExpenseGuard\u0027s missing-receipt rule.",
+      "scope": "Synthetic authenticated HTTP/PostgreSQL cases around the USD receipt threshold",
+      "owner": "Domain policy and required application tests",
+      "implementation": [
+        "samples/100-expenseguard/src/ExpenseGuard.Domain/PolicyEngine.cs",
+        "samples/100-expenseguard/tests/ExpenseGuard.Tests/GuidedDemoTests.cs"
+      ],
+      "positiveControl": "D01-at",
+      "negativeControl": "D01",
+      "status": "executed",
+      "limits": "Offline simulation; business requirements are not inferred by Roslyn.",
+      "requalify": "Domain, facts, tests, policy, application or toolchain changes"
+    },
+    {
+      "id": "C03",
+      "wording": "An external receipt assertion differs from server-verified stored bytes.",
+      "scope": "expense-v2 and synthetic uploaded PDF",
+      "owner": "Domain, receipt storage and HTTP/PostgreSQL tests",
+      "implementation": [
+        "samples/100-expenseguard/tests/ExpenseGuard.Tests/GuidedDemoTests.cs"
+      ],
+      "positiveControl": "D02/uploaded",
+      "negativeControl": "D02/asserted",
+      "fixture": "D02",
+      "status": "executed",
+      "limits": "Bytes/hash do not prove authenticity, itemization or malware safety.",
+      "requalify": "Receipt, policy, API or persistence changes"
+    },
+    {
+      "id": "C04",
+      "wording": "The normal authenticated API rejects self-approval in the guided case.",
+      "scope": "One-company server-configured identities",
+      "owner": "Domain transitions plus HTTP/PostgreSQL tests",
+      "implementation": [
+        "samples/100-expenseguard/tests/ExpenseGuard.Tests/GuidedDemoTests.cs"
+      ],
+      "positiveControl": "D03/distinct-manager",
+      "negativeControl": "D03/self-manager",
+      "fixture": "D03",
+      "status": "executed",
+      "limits": "Not enterprise identity/tenant qualification.",
+      "requalify": "Roles, authorization, transition or API changes"
+    },
+    {
+      "id": "C05",
+      "wording": "Native-union exhaustiveness and CSAU0004 advice have different authority.",
+      "scope": "One controlled union expression",
+      "owner": "C# compiler CS8509; separate prototype analyzer observation",
+      "implementation": [
+        "eng/Assay.Tooling/DistributionQualification.cs"
+      ],
+      "positiveControl": "CSAU0004-catch-all",
+      "negativeControl": "compiler-missing-case",
+      "fixture": "D05",
+      "status": "executed",
+      "limits": "CSAU0004 is prototype/advisory and nonblocking.",
+      "requalify": "Compiler, analyzer, language settings or specimen changes"
+    },
+    {
+      "id": "C06",
+      "wording": "Changing a declared web asset invalidates a previously bound application receipt.",
+      "scope": "Actual ExpenseGuard local build-binding reader",
+      "owner": "BuildEvidence and a disposable current-build probe",
+      "implementation": [
+        "samples/100-expenseguard/src/ExpenseGuard.Api/GuidedFreshness.cs",
+        "samples/100-expenseguard/src/ExpenseGuard.Infrastructure/BuildEvidence.cs"
+      ],
+      "positiveControl": "D06/before",
+      "negativeControl": "D06/after",
+      "fixture": "D06",
+      "status": "executed",
+      "limits": "Trusted local hash binding, not remote attestation; viewer NotAvailable is not an engine enum.",
+      "requalify": "Assemblies, declared assets/configuration or reader changes"
+    },
+    {
+      "id": "C07",
+      "wording": "A registered offline repair is independently checked within a two-round budget.",
+      "scope": "One isolated structural specimen, no live model",
+      "owner": "Protected-input validation, actual builds and verifier",
+      "implementation": [
+        "eng/Assay.Tooling/RepairExercise.cs"
+      ],
+      "positiveControl": "round-2",
+      "negativeControl": "round-1; protected-policy-edit; stale-feedback; malformed-feedback; no-progress; budget-exhausted",
+      "status": "executed",
+      "limits": "No business tests configured for this structural specimen; not model-quality or productivity evidence.",
+      "requalify": "Repair, feedback, protected inputs, verifier or compiler changes"
+    },
+    {
+      "id": "C08",
+      "wording": "A recorded scoped badge links source-bound completed evidence.",
+      "scope": "Historical producer SHA only",
+      "owner": "Existing completed receipt and local binding; summary consumer",
+      "implementation": [
+        "eng/Assay.Tooling/DistributionReports.cs"
+      ],
+      "positiveControl": "bound-summary",
+      "negativeControl": "stale-source; absent-authority; failed-tests; incomplete; hostile-svg; output-failure",
+      "status": "executed",
+      "limits": "Not current-main monitoring or correctness/security certification.",
+      "requalify": "Source/report binding, policy, tests, projection or output changes"
+    }
+  ],
+  "laws": [
+    {
+      "id": "L01",
+      "name": "Detector attribution",
+      "falsifier": "Receipt rejection labelled Roslyn finding",
+      "status": "executed controls; independent human review pending",
+      "evidence": "Recorded scenarios and raw retained execution"
+    },
+    {
+      "id": "L02",
+      "name": "Authority preservation",
+      "falsifier": "Edited source keeps a current Pass",
+      "status": "executed controls; independent human review pending",
+      "evidence": "Fixture invalidation; stale-source/report tests; D06"
+    },
+    {
+      "id": "L03",
+      "name": "Advice isolation",
+      "falsifier": "Simulated recommendation changes authority or bypasses receipt requirements",
+      "status": "executed controls; independent human review pending",
+      "evidence": "D01-advice-invariance: paired Approved/Rejected actual HTTP/PostgreSQL/payment-request controls; existing worker controls"
+    },
+    {
+      "id": "L04",
+      "name": "Fixture identity",
+      "falsifier": "Edited fixture inherits recorded findings",
+      "status": "executed controls; independent human review pending",
+      "evidence": "Digest checks, edited-input invalidation and semantic projection"
+    },
+    {
+      "id": "L05",
+      "name": "Failure stays visible",
+      "falsifier": "Missing execution or export becomes success",
+      "status": "executed controls; independent human review pending",
+      "evidence": "Missing/malformed/output/budget controls and existing qualification prerequisites"
+    },
+    {
+      "id": "L06",
+      "name": "Approval binds bytes",
+      "falsifier": "Changed draft published under old permission",
+      "status": "specified",
+      "evidence": "Digest manifest and human checklist; no publication adapter is implemented or authorized"
+    }
+  ],
+  "recordingQualificationSha256": "a463cc45f39a89be178218d4418ec9ef8a7529095f8460452eb1d5ac5b501986"
+}

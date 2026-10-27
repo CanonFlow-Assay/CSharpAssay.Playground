@@ -1,0 +1,18 @@
+{
+  "schema": "csassay-scoped-summary/0.1",
+  "headline": "Verification passed",
+  "verdict": "pass",
+  "sourceCommit": "6397583033176a870563146ad3651844c2861969",
+  "toolVersion": "0.2.0-rc.1",
+  "input": "ExpenseGuard.slnx",
+  "scope": "ExpenseGuard.Domain",
+  "authoritative": true,
+  "policySha256": "97cd5b0a9b3cc618cee1a2180818a20a32b33f01e7b1585bcae58c557ff80ee4",
+  "requiredTests": "passed: 189 passed, 0 failed",
+  "observedAt": "2026-10-27T07:30:43.2551137\u002B00:00",
+  "receiptSha256": "c24bbde65f4e509b3f1b5a220e6cc694d1f305c58306677b9b257e28b86c6e19",
+  "receipt": "recorded-expenseguard-receipt.json",
+  "limits": "Recorded local evidence, not a signature, current-main service or correctness/security certification.",
+  "fixtureProducerCommit": "6397583033176a870563146ad3651844c2861969",
+  "kind": "Historical recorded example at the producer SHA; not current-main status"
+}

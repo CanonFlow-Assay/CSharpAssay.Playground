@@ -13,13 +13,15 @@ public sealed class PinnedRateSource(ImmutableArray<ExchangeRate> rates) : IRate
             ? rate : new RateMissing();
 }
 
-public sealed class DemoAdvisor : IExpenseAdvisor
+public sealed class DemoAdvisor(string recommendation = "Approved") : IExpenseAdvisor
 {
+    private readonly string recommendation = recommendation is "Approved" or "Rejected" ? recommendation :
+        throw new ArgumentException("The offline demonstration supports Approved or Rejected only.", nameof(recommendation));
     public Task<Advice> SuggestAsync(ExpenseClaim claim, CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
-        return Task.FromResult(new Advice("offline-demo-v1", "Approved", claim.Category.ToString(),
-            ["SIMULATED advice deliberately recommends approval even when evidence is missing."],
+        return Task.FromResult(new Advice("offline-demo-v1", recommendation, claim.Category.ToString(),
+            ["SIMULATED advice. Recommendation is a controlled display fixture, never decision authority."],
             "Advisory suggestion only. The deterministic engine evaluates the actual evidence.", true));
     }
 }

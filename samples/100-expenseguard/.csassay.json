@@ -4,7 +4,7 @@
     "allowPreviewToolchain": true,
     "requiredTargetFrameworks": ["net11.0"],
     "requiredRules": ["CSAI0001", "CSAI0002", "CSAN0001", "CSAN0002", "CSAN0003", "CSAN0004", "CSAP0001"],
-    "tests": [{"input": "tests/ExpenseGuard.Tests/ExpenseGuard.Tests.csproj", "configuration": "Release", "noBuild": false, "minimumExpectedTests": 182}]
+    "tests": [{"input": "tests/ExpenseGuard.Tests/ExpenseGuard.Tests.csproj", "configuration": "Release", "noBuild": false, "minimumExpectedTests": 189}]
   },
   "boundaries": {
     "coreProjects": ["src/ExpenseGuard.Domain/ExpenseGuard.Domain.csproj"],

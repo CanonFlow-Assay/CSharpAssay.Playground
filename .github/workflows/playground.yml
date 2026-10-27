@@ -10,7 +10,7 @@ on:
       assay_ref:
         description: Matching CSharpAssay revision containing .NET 11 and the assess API
         required: true
-        default: dbb678ae3c44c91c896b970cf0354051eea658b0
+        default: 717d5d2daff548b580c651c7bc1247964bc826c2
 
 permissions:
   contents: read
@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: CanonFlow-Assay/CSharpAssay
-          ref: ${{ inputs.assay_ref || vars.CSHARP_ASSAY_REF || 'dbb678ae3c44c91c896b970cf0354051eea658b0' }}
+          ref: ${{ inputs.assay_ref || vars.CSHARP_ASSAY_REF || '717d5d2daff548b580c651c7bc1247964bc826c2' }}
           path: .assay
       - name: Setup .NET 11 RC2
         uses: actions/setup-dotnet@v4

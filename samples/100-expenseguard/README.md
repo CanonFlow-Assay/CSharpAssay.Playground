@@ -115,6 +115,13 @@ succeeded but database commit acknowledgement is uncertain.
 The default advisor runs offline and deliberately suggests Approved despite
 missing evidence, making its lack of authority observable.
 
+For a controlled local demonstration only, server configuration
+`ExpenseGuard__DemoRecommendation=Rejected` selects the other simulated display
+fixture. The default remains Approved; other values are rejected at startup.
+Neither setting is a client input or a domain approval fact. Paired real API/
+PostgreSQL tests require identical policy-relevant inputs to keep the same
+domain decision and reject payment under both recommendations.
+
 The OpenAI receipt-extraction adapter is implemented and tested with controlled
 HTTP responses. It follows the official [structured-output format](https://developers.openai.com/api/docs/guides/structured-outputs),
 [PDF inputs](https://developers.openai.com/api/docs/guides/file-inputs) and
@@ -155,7 +162,7 @@ export ASSAY_RUNNER=/absolute/path/to/qualified-engine/src/CsAssay.Runner/bin/Re
 The source-bound qualifier requires clean committed source and a fresh output
 directory. Missing PostgreSQL fails, never skips. It performs:
 
-1. Locked restore/build and all 182 named tests (the original 159 retained), including real HTTP/PostgreSQL,
+1. Locked restore/build and all 189 named tests (the prior 182, including the original 159, retained), including real HTTP/PostgreSQL,
    the actual worker, file authorization/integrity, concurrency, cancellation,
    audit corruption, rollback, retry and offline provider-protocol controls.
 2. Authoritative CSAssay `verify` and `assess`, with JSON and SARIF.
@@ -234,3 +241,9 @@ scanning/authenticity, database/storage operations, load/platform acceptance and
 browser visual/accessibility review remain separate from this bounded sample.
 No browser surface was available for visual automation; HTTP UI delivery and
 JavaScript syntax were checked. No production/security/compliance certification.
+
+## Recorded guided demonstrations
+
+Choose Recorded guide in the workbench (or `/?demo=recorded`). These six source-bound synthetic examples are recorded observations, not live scans or current claim data. They require no identity to read and never bypass normal API authentication, seed/reset a user database, or change a working tree. Reset closes the guide only. Tests use isolated PostgreSQL schemas and synthetic receipts. Guide asset changes invalidate previous application freshness bindings.
+
+D01 compares below/at/above the receipt threshold with simulated approval advice; D02 compares an external assertion with stored bytes; D03 exercises self-approval through the authenticated API; D04 records an actual structural finding; D05 separates compiler exhaustiveness from prototype advice; D06 changes a declared asset in a disposable copy and observes NotAvailable. The full reproduction/qualification process is in `docs/distribution/README.md` at the Playground root. Historical fixture producer and current application qualification retain separate identities.

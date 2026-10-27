@@ -1,173 +1,20 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Reproducible CSharpAssay 0.1.1 evidence and a bounded Gang of Four functional-C# crosswalk.">
-  <meta name="theme-color" content="#4f378b">
-  <title>CSharpAssay Playground — evidence, not automation</title>
-  <link rel="stylesheet" href="assets/site.css">
-  <script src="assets/site.js" defer></script>
-</head>
-<body>
-<aside><strong>Current development: CSharpAssay 0.2.0-rc.1, .NET 11 RC1 only.</strong> <a href="net11-migration.md">Migration report</a>. Earlier package and eShop evidence below is historical.</aside>
-
-  <a class="skip-link" href="#content">Skip to content</a>
-  <header class="top-app-bar">
-    <a class="brand" href="#top" aria-label="CSharpAssay Playground home">
-      <span class="brand-mark" aria-hidden="true">C#</span>
-      <span>CSharpAssay Playground</span>
-    </a>
-    <nav aria-label="Primary">
-      <a href="#crosswalk">Crosswalk</a>
-      <a href="#evidence">Evidence</a>
-      <a href="#baseline">0.1.1 baseline</a>
-    </nav>
-    <a class="button button-tonal" href="https://github.com/CanonFlow-Assay/CSharpAssay.Playground" rel="noreferrer">View source</a>
-  </header>
-
-  <main id="content">
-    <section class="hero" id="top">
-      <div class="hero-copy">
-        <p class="eyebrow">Published packages · pinned evidence · human control</p>
-        <h1>Design signals you can inspect, reproduce, and adjudicate.</h1>
-        <p class="hero-lede">Five Gang of Four patterns meet smaller functional-first C# alternatives. Shared tests hold business outcomes constant while CSharpAssay 0.1.1 records exactly what it observes.</p>
-        <div class="hero-actions">
-          <a class="button button-filled" href="#crosswalk">Explore the crosswalk</a>
-          <a class="button button-outlined" href="csharp-assay-0.1.1.md">Read the 0.1.1 notes</a>
-        </div>
-      </div>
-      <div class="hero-visual" aria-label="Evidence summary">
-        <div class="signal-orbit orbit-one"></div>
-        <div class="signal-orbit orbit-two"></div>
-        <div class="evidence-panel">
-          <span class="status-dot" aria-hidden="true"></span>
-          <span class="label">Refined evidence</span>
-          <strong>Pass</strong>
-          <span>10 tests · 0 findings</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="metrics" aria-label="Crosswalk totals">
-      <article><strong>5</strong><span>bounded patterns</span></article>
-      <article><strong>10</strong><span>behavior cases</span></article>
-      <article><strong>5</strong><span>classic advisories</span></article>
-      <article><strong>0</strong><span>refined findings</span></article>
-    </section>
-
-    <section class="section" id="crosswalk">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Pattern crosswalk</p>
-          <h2>Same outcome, different representation</h2>
-        </div>
-        <p>These examples are normal implementations of small business tasks. Findings are prompts for review, not a ranking of paradigms.</p>
-      </div>
-
-      <div class="filter-bar" role="group" aria-label="Filter patterns">
-        <button class="filter-chip selected" type="button" data-filter="all" aria-pressed="true">All patterns</button>
-        <button class="filter-chip" type="button" data-filter="function">Function candidates</button>
-        <button class="filter-chip" type="button" data-filter="state">State</button>
-        <button class="filter-chip" type="button" data-filter="ownership">Ownership</button>
-      </div>
-
-      <div class="pattern-grid">
-        <article class="pattern-card" data-category="function">
-          <div class="card-icon" aria-hidden="true">S</div>
-          <div><span class="rule-pill">CSAF0001</span><h3>Strategy</h3></div>
-          <p>An interface and implementation become a function supplied at the call site.</p>
-          <dl><dt>Classic wins when</dt><dd>DI identity, discovery, dependencies, or public versioning matter.</dd></dl>
-        </article>
-        <article class="pattern-card" data-category="function">
-          <div class="card-icon" aria-hidden="true">B</div>
-          <div><span class="rule-pill">CSAF0001</span><h3>Builder</h3></div>
-          <p>A stateful fluent builder becomes an immutable draft transformed with functions.</p>
-          <dl><dt>Classic wins when</dt><dd>Construction is staged, validated, framework-bound, or intentionally fluent.</dd></dl>
-        </article>
-        <article class="pattern-card" data-category="function">
-          <div class="card-icon" aria-hidden="true">V</div>
-          <div><span class="rule-pill">CSAF0001</span><h3>Visitor</h3></div>
-          <p>Double dispatch becomes closed shipment data and an explicit pattern match.</p>
-          <dl><dt>Classic wins when</dt><dd>The hierarchy is stable while operations and external visitors evolve.</dd></dl>
-        </article>
-        <article class="pattern-card" data-category="state">
-          <div class="card-icon" aria-hidden="true">St</div>
-          <div><span class="rule-pill">CSAD0002</span><h3>State</h3></div>
-          <p>Two constrained booleans become one closed state and pure transition functions.</p>
-          <dl><dt>Classic wins when</dt><dd>Identity, lifecycle hooks, observable mutation, or effectful transitions lead.</dd></dl>
-        </article>
-        <article class="pattern-card" data-category="ownership">
-          <div class="card-icon" aria-hidden="true">C</div>
-          <div><span class="rule-pill">CSAI0003</span><h3>Composite</h3></div>
-          <p>A publicly mutable child list becomes immutable recursive data and a fold.</p>
-          <dl><dt>Classic wins when</dt><dd>UI or document trees require identity, parent links, and incremental edits.</dd></dl>
-        </article>
-      </div>
-    </section>
-
-    <section class="section evidence-section" id="evidence">
-      <div class="section-heading">
-        <div><p class="eyebrow">Evidence contract</p><h2>Counts drift? CI stops.</h2></div>
-        <p>The gate restores published 0.1.1 packages, builds with locked dependencies, tests both lanes, runs the assay twice, and compares report bytes.</p>
-      </div>
-      <div class="evidence-layout">
-        <div class="terminal" role="img" aria-label="Passing crosswalk evidence output">
-          <div class="terminal-bar"><span></span><span></span><span></span></div>
-          <pre><code>$ ./eng/run-gof-crosswalk.sh
-
-Tests       10 passed · 0 failed
-Classic     CSAF0001 ×3
-            CSAD0002 ×1
-            CSAI0003 ×1
-Refined     0 findings
-Evidence    JSON byte-identical
-            SARIF byte-identical
-Status      PASS</code></pre>
-        </div>
-        <div class="evidence-cards">
-          <article><span class="step">01</span><h3>Pin</h3><p>Tool manifest and lock files resolve only published 0.1.1 packages.</p></article>
-          <article><span class="step">02</span><h3>Compare</h3><p>Shared tests assert identical totals, orders, quotes, transitions, and trees.</p></article>
-          <article><span class="step">03</span><h3>Adjudicate</h3><p>Every finding has a human disposition and an explicit classic-use case.</p></article>
-          <article><span class="step">04</span><h3>Fail closed</h3><p>Unexpected findings, missing required evidence, failures, or byte drift fail CI.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="baseline">
-      <div class="baseline-panel">
-        <div>
-          <p class="eyebrow">Frozen supported lane</p>
-          <h2>CSharpAssay 0.1.1</h2>
-          <p>.NET SDK 10.0.301 · net10.0 · C# 14 · compat profile</p>
-        </div>
-        <div class="command-box">
-          <button class="copy-button" type="button" data-copy="dotnet tool install CsAssay.Tool --version 0.1.1" aria-label="Copy install command">Copy</button>
-          <code>dotnet tool install CsAssay.Tool --version 0.1.1</code>
-        </div>
-        <ul class="limitations">
-          <li>Selected non-functional design risks only.</li>
-          <li>Advisories always require human context.</li>
-          <li>Zero findings is not a correctness or purity proof.</li>
-          <li>Known CLI help-link limitations remain documented for 0.1.1.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="positioning" aria-labelledby="positioning-title">
-      <p class="eyebrow">Final positioning</p>
-      <blockquote id="positioning-title">CSharpAssay 0.1.1 is a published C# design-assessment and CI enforcement tool with reproducible evidence. It identifies selected non-functional design risks and guides human-controlled refinement. It is not an automatic functional-C# converter or a correctness proof system.</blockquote>
-      <div class="text-links">
-        <a href="https://github.com/CanonFlow-Assay/CSharpAssay.Playground/tree/main/samples/30-gof-functional-crosswalk">Sample guide</a>
-        <a href="https://github.com/CanonFlow-Assay/CSharpAssay.Playground/blob/main/samples/30-gof-functional-crosswalk/ADJUDICATION.md">Full adjudication</a>
-        <a href="https://github.com/CanonFlow-Assay/CSharpAssay">CSharpAssay source</a>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <span>CSharpAssay Playground</span>
-    <span>Evidence first. Human decision always.</span>
-  </footer>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Explore recorded CSharpAssay code findings, follow ExpenseGuard decisions, and reproduce verification locally. Native .NET 11 development build; scoped evidence, not a correctness proof.">
+<title>CSharpAssay Playground — understand, change, verify</title><link rel="stylesheet" href="assets/site.css"><script type="module" src="assets/site.js"></script></head>
+<body><a class="skip-link" href="#content">Skip to content</a>
+<header class="top-app-bar"><a class="brand" href="#top">C# / Assay Playground</a><nav aria-label="Primary"><a href="#rules">Explore a rule</a><a href="#expenseguard">Follow a decision</a><a href="#run">Run locally</a><a href="#history">History</a></nav><a href="https://github.com/CanonFlow-Assay/CSharpAssay.Playground">Source ↗</a></header>
+<main id="content"><section class="hero" id="top"><div class="hero-copy"><p class="eyebrow">CSharpAssay 0.2.0-rc.1 · native development build</p><h1>Understand the finding.<br>Inspect the evidence.</h1><p class="hero-lede">Functional C# for AI-assisted development. Explore a small code change, follow an ExpenseGuard decision, then reproduce the checks locally.</p><p>AI advises. The domain decides. Evidence states exactly what ran.</p><div class="hero-actions"><a class="button button-filled" href="#rules">Explore one finding ↓</a><a class="button button-outlined" href="#run">Reproduce locally</a></div></div><aside class="evidence-panel"><span class="label">Three different responsibilities</span><strong>Compiler · Policy checks · Tests</strong><p>The compiler checks native-union exhaustiveness. CSAssay applies selected code policy. Application tests assert receipt rules.</p><p><strong>Recorded examples</strong>, not a browser compiler or verification of your edits.</p></aside></section>
+<section class="section notice" aria-label="Toolchain and release status"><h2>Check the lane before trying it</h2><p>Current source pins SDK <code>11.0.100-rc.2.26504.105</code>, <code>net11.0</code> and <code>LangVersion=preview</code>, with roll-forward disabled. This is the preserved RC2 qualification lane, not a claim of current vendor support or final-SDK qualification. Microsoft’s newer release status must be reviewed separately.</p><p>The native development packages are prepared from a local feed. Historical NuGet 0.1.x installs are a different release. No account, email or model key is needed to explore this page.</p></section>
+<section class="section" id="rules"><p class="eyebrow">01 / Explore a rule</p><h2>A small shape. A clear explanation.</h2><p>Seven admitted rules are shown first. The compiler case and CSAU0004 prototype are separate observations; prototype advice is not an admitted blocker.</p>
+<label for="case">Recorded rule / variant</label><select id="case" disabled><option>Loading recorded fixtures…</option></select><p id="fixtureStatus" role="status" aria-live="polite">Loading recorded evidence…</p>
+<div class="demo-grid"><div><label for="code">Example C# — editing marks this Unverified</label><textarea id="code" rows="12" spellcheck="false" disabled></textarea><div class="actions"><button id="reset" type="button" disabled>Reset recorded input</button><button id="export" type="button" disabled>Export recorded example</button></div><p class="hint">No code is sent anywhere or executed. Your edit stays in this page and cannot inherit a recorded result.</p></div><div><h3 id="ruleTitle">Recorded result</h3><p id="ruleMeta"></p><p id="findingSummary"></p><details><summary>Recorded evidence and original receipt digest</summary><pre id="observation" tabindex="0" aria-label="Recorded observation"></pre></details><details><summary>Source, tool and policy identities</summary><pre id="provenance"></pre></details><a id="ruleDocs" hidden>Canonical rule guide ↗</a></div></div><details><summary>Practical explanation, examples and limits</summary><pre id="guide" class="prose-code" tabindex="0"></pre></details></section>
+<section class="section" id="expenseguard"><p class="eyebrow">02 / Follow an ExpenseGuard decision</p><h2>Advice has no approval authority.</h2><p>The default advisor deliberately suggests approval. It is an offline simulation, not a live model attempting fraud. The domain evaluates actual facts; payment effects stay simulated.</p><label for="scenario">Recorded guided scenario</label><select id="scenario" disabled><option>Loading scenarios…</option></select><p id="scenarioStatus" role="status" aria-live="polite"></p><pre id="scenarioResult" tabindex="0" aria-label="Recorded decision scenario"></pre><p><a href="https://github.com/CanonFlow-Assay/CSharpAssay.Playground/blob/ec1304e9c9d379a7ae72b0ab65f35d64cc9874df/samples/100-expenseguard/README.md">ExpenseGuard workbench, source and local setup ↗</a></p><p>In a local workbench, choose <strong>Recorded guide</strong>. The guide does not create claims, change identities or delete data. Normal API authorization remains required.</p></section>
+<section class="section" id="run"><p class="eyebrow">03 / Run verification locally</p><h2>Reproduce it with the actual tool.</h2><p>Install the exact repository SDK first. Follow the canonical engine local-feed guide rather than installing an unpublished native version from NuGet. Dependency restore can require network access; the verifier itself does not need an AI provider.</p><ol><li><a href="https://github.com/CanonFlow-Assay/CSharpAssay/blob/717d5d2daff548b580c651c7bc1247964bc826c2/docs/adoption.md">Prepare and install matching local analyzer/tool packages</a>.</li><li>From the Playground root, prepare qualified packages from the matching clean qualified engine checkout.</li><li>Run the actual ExpenseGuard gate with Docker/PostgreSQL available. Missing database execution is a failure, not a skipped success.</li></ol>
+<pre id="commands" tabindex="0">./eng/prepare-assay.sh ../CSharpAssay --qualified-bootstrap-locks
+./eng/tooling packed-assay -- explain CSAI0001
+export ASSAY_RUNNER="$PWD/../CSharpAssay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll"
+./eng/run-expenseguard.sh --output "$PWD/evidence/generated/expenseguard/first-run"</pre><button id="copyCommands" type="button">Copy reproduction commands</button><p id="copyStatus" role="status" aria-live="polite"></p><p>Use a fresh disposable checkout/output directory. The engine checkout must contain its completed qualification; preparation records local consumer-lock changes. Artifact paths include <code>qualification.json</code>, <code>verify.json</code>, <code>verify.sarif</code>, <code>verify.html</code> and <code>verify.md</code>.</p><p><a href="https://github.com/CanonFlow-Assay/CSharpAssay/blob/717d5d2daff548b580c651c7bc1247964bc826c2/docs/expenseguard-first-change.md">Follow the known failing control: change 25 to 30, keep the tests, inspect failure, restore only your edit ↗</a></p><p><code>check</code> is analysis only. <code>doctor</code> checks prerequisites, not the application. An authoritative <code>verify</code> result applies only to recorded scope and evidence. Zero findings with missing evidence is incomplete.</p></section>
+<section class="section" aria-label="Recorded qualification"><h2>A receipt for one recorded source.</h2><p>This badge describes the historical source named inside its evidence index. It does not track current main or verify your edits.</p><a href="examples/recorded-evidence-index.json"><img src="examples/recorded-status.svg" alt="Historical scoped CSAssay qualification; open the evidence index for source, policy, tests and observation time" style="max-width:100%;height:auto"></a><p><a href="examples/recorded-evidence-index.json">Recorded source and evidence index</a> · <a href="examples/recorded-expenseguard-receipt.json">Redacted receipt derivative</a>. The derivative binds its retained original by digest; hashes are not signatures or security certification.</p></section>
+<section class="section" id="history"><p class="eyebrow">Historical material</p><h2>Keep old evidence in its original lane.</h2><p><a href="historical/0.1.1.html">Historical 0.1.1 GoF crosswalk site</a> · <a href="csharp-assay-0.1.1.md">0.1.1 notes</a> · <a href="https://www.nuget.org/packages/CsAssay.Tool/0.1.2">Historical public 0.1.2 package</a></p><p>Classic/advisory crosswalk IDs CSAF0001, CSAD0002 and CSAI0003 remain contextual guidance. Historical compatibility/toolchain records do not qualify a new native build.</p></section>
+<footer><p>Selected functional C# policy, configured tests and scoped evidence. No universal purity, security, financial or business correctness certification.</p><a href="distribution/README.md">Local distribution drafts and evidence requirements</a></footer></main></body></html>

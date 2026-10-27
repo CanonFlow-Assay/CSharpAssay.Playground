@@ -3,6 +3,43 @@ namespace Assay.Tooling;
 
 public static class PackageTools
 {
+    public static string PackedTool
+    {
+        get
+        {
+            var binding = Json.Read(Path.Combine(Root, ".packages/tool-binding.json")); var path = Inside(Root, binding.S("path"));
+            Json.Check(binding.S("packageSha256") == Json.Sha(Path.Combine(Root, ".packages/CsAssay.Tool.0.2.0-rc.1.nupkg")) && binding.S("cliSha256") == Json.Sha(path), "Installed tool differs from its exact local package binding.");
+            ValidateInstalledPayload(Path.Combine(Root, ".packages/CsAssay.Tool.0.2.0-rc.1.nupkg"), Path.GetDirectoryName(path)!);
+            return path;
+        }
+    }
+
+    public static async Task<JsonObject> InstallPackedTool()
+    {
+        var package = Path.Combine(Root, ".packages/CsAssay.Tool.0.2.0-rc.1.nupkg"); var digest = Json.Sha(package);
+        var destination = Path.Combine(Root, ".packages/installed-assay", digest);
+        if (!Directory.Exists(destination))
+            (await Processes.Run(["dotnet", "tool", "install", "CsAssay.Tool", "--version", "0.2.0-rc.1", "--tool-path", destination, "--configfile", Path.Combine(Root, "NuGet.config"), "--no-cache"], Root, Path.Combine(Root, ".packages/tool-install-" + digest + ".log"))).Require("Fresh package-scoped tool installation");
+        var cli = Directory.GetFiles(destination, "cs-assay.dll", SearchOption.AllDirectories).Single();
+        var directory = Path.GetDirectoryName(cli)!;
+        ValidateInstalledPayload(package, directory);
+        var binding = Json.Create(("schema", "assay-installed-tool/0.1"), ("packageSha256", digest), ("path", Relative(Root, cli)), ("cliSha256", Json.Sha(cli)),
+            ("scope", "Exact package-scoped install; same-version global resolver state is not authority."));
+        Json.Write(Path.Combine(Root, ".packages/tool-binding.json"), binding); return binding;
+    }
+
+    public static void ValidateInstalledPayload(string package, string directory)
+    {
+        using var zip = ZipFile.OpenRead(package);
+        var entries = zip.Entries.Where(e => e.FullName.StartsWith("tools/net11.0/any/", StringComparison.Ordinal) && e.Name.Length > 0).ToArray();
+        Json.Check(entries.Any(e => e.FullName == "tools/net11.0/any/cs-assay.dll"), "Tool package lacks its runtime entry point.");
+        foreach (var entry in entries)
+        {
+            var installed = Inside(directory, entry.FullName["tools/net11.0/any/".Length..]);
+            using var input = entry.Open(); var expected = Convert.ToHexStringLower(SHA256.HashData(input));
+            Json.Check(File.Exists(installed) && Json.Sha(installed) == expected, "Installed payload differs from package: " + entry.FullName);
+        }
+    }
     private static readonly string[] Inputs = ["src/Assay.Workflow.Domain", "src/Assay.Workflow.Cli", "samples/50-decision-assistance/src/DecisionAssist.Domain", "Directory.Build.props", "Directory.Build.targets", "Directory.Packages.props", "global.json", "NuGet.config", ".editorconfig", "eng/prepare-application-workflow.sh", "eng/Assay.Tooling"];
     private static readonly string[] sourceArray = new[] { "samples", "src", "tests", "eng/Assay.Tooling" };
 

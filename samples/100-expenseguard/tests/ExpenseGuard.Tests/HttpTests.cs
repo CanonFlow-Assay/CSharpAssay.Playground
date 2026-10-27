@@ -9,6 +9,7 @@ namespace ExpenseGuard.Tests;
 
 public sealed class HttpServer : IAsyncLifetime
 {
+    public string DemoRecommendation { get; init; } = "Approved";
     private DatabaseScope? database;
     private Process? process;
     private Task<string>? stdout;
@@ -38,6 +39,7 @@ public sealed class HttpServer : IAsyncLifetime
         start.Environment["ConnectionStrings__Expenses"] = database.Connection;
         start.Environment["ExpenseGuard__Initialize"] = "false";
         start.Environment["ExpenseGuard__EnableLiveExtraction"] = "false";
+        start.Environment["ExpenseGuard__DemoRecommendation"] = DemoRecommendation;
         start.Environment["ExpenseGuard__ReceiptDirectory"] = ReceiptDirectory;
         start.Environment.Remove("ExpenseGuard__EvidenceRoot");
         foreach (var (index, key, employee, role) in new[] { (0, EmployeeKey, "alice", "Employee"), (1, OtherKey, "bob", "Employee"), (2, FinanceKey, "finance", "Finance"),
