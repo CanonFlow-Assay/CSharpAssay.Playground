@@ -7,6 +7,9 @@ The playground consumes locally packed `CsAssay.Tool` and `CsAssay.Analyzers` `0
 The [application workflow preview](docs/application-workflow.md) adds reusable
 assessment and typed Decision Assist APIs, bounded Mutation/CodeRisk/Contract/
 Resilience checks, a real Polly consumer, and standalone application scaffolding.
+The [portable playground convergence map](docs/portable-playground-convergence.md)
+keeps the C# examples useful as a language-specific reference without claiming
+that every Assay shares their policy or verification authority.
 The [inventory reservation application](samples/80-inventory-reservation/README.md)
 adds a second domain with real HTTP and PostgreSQL, declared worker contracts,
 named acceptance criteria and registered investigations.
