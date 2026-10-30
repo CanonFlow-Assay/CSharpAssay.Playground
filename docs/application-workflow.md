@@ -57,8 +57,8 @@ producer inputs to be committed deliberately; it does not commit user work.
 These generated bootstrap commits identify rebuilt packages, not a new release
 qualification of the original publication commit.
 
-The all-sample gate evaluates all 36 projects, builds the 30 runnable sample
-projects and shared/test projects, including real PostgreSQL/HTTP inventory tests.
+The all-sample gate evaluates all 46 listed projects: 40 sample projects plus
+six shared or test projects, including real PostgreSQL/HTTP inventory tests.
 Docker is required; no fake database or skipped test fallback is used. Six actual invalid
 MSBuild configurations must fail with their corresponding mandate diagnostics.
 Three intentional negative/upstream fixtures retain reviewed compiler-policy

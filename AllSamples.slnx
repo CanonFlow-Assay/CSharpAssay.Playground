@@ -44,4 +44,5 @@
   <Project Path="samples/100-expenseguard/src/ExpenseGuard.Api/ExpenseGuard.Api.csproj" />
   <Project Path="samples/100-expenseguard/src/ExpenseGuard.Worker/ExpenseGuard.Worker.csproj" />
   <Project Path="samples/100-expenseguard/tests/ExpenseGuard.Tests/ExpenseGuard.Tests.csproj" />
+  <Project Path="samples/110-newtonsoft-functional/NewtonsoftFunctional.csproj" />
 </Solution>

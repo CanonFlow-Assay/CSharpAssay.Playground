@@ -1,0 +1,19 @@
+{
+  "schema": "newtonsoft-functional-upstream/0.1",
+  "sourceRepository": "https://github.com/JamesNK/Newtonsoft.Json",
+  "sourceCommit": "52fa3aef1f2cadcd3a3f874251eddc98d3efbbaa",
+  "sourcePathsRead": [
+    "LICENSE.md",
+    "Src/Newtonsoft.Json/JsonConvert.cs",
+    "Src/Newtonsoft.Json.Tests/Benchmarks/JTokenBenchmarks.cs"
+  ],
+  "sourceToolchain": "10.0.300 with latestFeature roll-forward",
+  "packageOracle": {
+    "id": "Newtonsoft.Json",
+    "version": "13.0.4",
+    "source": "https://api.nuget.org/v3/index.json"
+  },
+  "license": "MIT",
+  "scope": "A clean-room feature-flag projection uses JObject parsing as a bounded adapter oracle. No Newtonsoft.Json source is copied or modified.",
+  "limits": "The source checkout and package oracle are intentionally distinct. This does not assess Json.NET behavior, compatibility, security, or performance beyond the declared strict feature-flag contract."
+}

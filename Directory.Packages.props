@@ -5,6 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="CsAssay.Analyzers" Version="0.2.0-rc.1" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="xunit.v3" Version="4.0.2" />
     <PackageVersion Include="coverlet.MTP" Version="10.1.0" />
   </ItemGroup>
