@@ -65,6 +65,11 @@ The preparation script populates ignored `.packages/`, uses a checkout-local pac
 - [`80-inventory-reservation`](samples/80-inventory-reservation/README.md): immutable native decisions, HTTP hosting, transactional PostgreSQL stock/reservation/outbox writes, concurrency and idempotency tests, a registered requirement change and an actual wire-contract regression investigation.
 - [`100-expenseguard`](samples/100-expenseguard/README.md): native-union expense decisions, receipt/category/FX/duplicate rules, manager/finance approvals, PostgreSQL audit receipts/outbox, authenticated HTTP, offline advisory and simulated payment adapters, an evidence viewer, CSAssay and typed DAA evidence coordination, and controlled business/structural counterexamples. Run `eng/run-expenseguard.sh` for its source-bound qualification.
 - [`110-newtonsoft-functional`](samples/110-newtonsoft-functional/README.md): a clean-room strict feature-flag JSON boundary comparison between a `Newtonsoft.Json.Linq.JObject` adapter and an immutable functional projection, with contract probes and an equality-checked opt-in benchmark.
+- [`120-configuration-firewall`](samples/120-configuration-firewall/README.md): explicit validated service settings from a small key/value boundary, with no silent defaults.
+- [`130-versioned-webhook`](samples/130-versioned-webhook/README.md): pure version/event routing after the shell has established signature and delivery facts.
+- [`140-rules-dsl`](samples/140-rules-dsl/README.md): a small parsed rules language, native-union AST, and explicit eligibility decisions.
+- [`150-scheduling-decisions`](samples/150-scheduling-decisions/README.md): reproducible decisions for valid, skipped, and ambiguous local times around the time-zone boundary.
+- [`160-source-generated-json`](samples/160-source-generated-json/README.md): strict feature-flag gate followed by source-generated `System.Text.Json` projection.
 - `20-eshop-agent-assay`: historical external .NET 10 case study, excluded from the current gate. The separate eShop repository is outside this migration.
 
 Impure samples must produce their expected findings. Only complete `verify` evidence on refined projects is release authority. Historical evidence retains its original SDK and package identity.

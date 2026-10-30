@@ -64,4 +64,6 @@ performance claim about either JSON library.
 4. Are the paths equivalent for your number, date, reference, and error cases
    before a benchmark matters?
 5. Would a source-generated `System.Text.Json` contract be a more useful second
-   comparator for the production workload?
+   comparator for the production workload? See the separate, strict
+   [`160-source-generated-json`](../160-source-generated-json/README.md) boundary
+   for one deliberately non-benchmarking answer.

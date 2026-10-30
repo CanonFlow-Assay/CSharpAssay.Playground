@@ -45,4 +45,9 @@
   <Project Path="samples/100-expenseguard/src/ExpenseGuard.Worker/ExpenseGuard.Worker.csproj" />
   <Project Path="samples/100-expenseguard/tests/ExpenseGuard.Tests/ExpenseGuard.Tests.csproj" />
   <Project Path="samples/110-newtonsoft-functional/NewtonsoftFunctional.csproj" />
+  <Project Path="samples/120-configuration-firewall/ConfigurationFirewall.csproj" />
+  <Project Path="samples/130-versioned-webhook/VersionedWebhook.csproj" />
+  <Project Path="samples/140-rules-dsl/RulesDsl.csproj" />
+  <Project Path="samples/150-scheduling-decisions/SchedulingDecisions.csproj" />
+  <Project Path="samples/160-source-generated-json/SourceGeneratedJson.csproj" />
 </Solution>
