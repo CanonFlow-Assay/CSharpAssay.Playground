@@ -5,7 +5,7 @@
       "CanonFlow.Assay.Workflow": {
         "type": "Transitive",
         "resolved": "0.1.0-preview.1",
-        "contentHash": "Ym9wK0nqFvbxC6jezoXUxhGb0BAarh+BiNkmf3UB7aAilVJHr2e0D3fJEVsvAbE3oR70ii07Ck5vNI4o8X2omw=="
+        "contentHash": "8w1ouqd23sAuomEuAcn/n0QLx101iGRk9i45OzO/w5qLno/LDYLQ+wUYJIDw4FOys8WK/1970790eQWrEbzibg=="
       },
       "Npgsql": {
         "type": "Transitive",

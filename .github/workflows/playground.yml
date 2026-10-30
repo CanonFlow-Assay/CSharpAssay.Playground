@@ -10,7 +10,7 @@ on:
       assay_ref:
         description: Matching CSharpAssay revision containing .NET 11 and the assess API
         required: true
-        default: 717d5d2daff548b580c651c7bc1247964bc826c2
+        default: 94fa35239a84d538c220f9c41283d6becfa4fff5
 
 permissions:
   contents: read
@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: CanonFlow-Assay/CSharpAssay
-          ref: ${{ inputs.assay_ref || vars.CSHARP_ASSAY_REF || '717d5d2daff548b580c651c7bc1247964bc826c2' }}
+          ref: ${{ inputs.assay_ref || vars.CSHARP_ASSAY_REF || '94fa35239a84d538c220f9c41283d6becfa4fff5' }}
           path: .assay
       - name: Setup .NET 11 RC2
         uses: actions/setup-dotnet@v4
@@ -68,6 +68,11 @@ jobs:
         run: |
           echo '::add-matcher::.github/expenseguard-problem-matcher.json'
           ./eng/run-expenseguard.sh --output "$PWD/evidence/generated/expenseguard/ci"
+      - name: Exercise packaged analyzer, business-test and missing-evidence repair
+        run: |
+          ./eng/tooling with-inventory-database -- \
+            ./eng/tooling exercise-change-verification \
+            --output "$PWD/evidence/generated/expenseguard/change-verification-ci"
       - name: Upload evidence
         if: always() && hashFiles('evidence/generated/**/*') != ''
         uses: actions/upload-artifact@v4

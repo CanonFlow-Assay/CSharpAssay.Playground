@@ -247,3 +247,10 @@ JavaScript syntax were checked. No production/security/compliance certification.
 Choose Recorded guide in the workbench (or `/?demo=recorded`). These six source-bound synthetic examples are recorded observations, not live scans or current claim data. They require no identity to read and never bypass normal API authentication, seed/reset a user database, or change a working tree. Reset closes the guide only. Tests use isolated PostgreSQL schemas and synthetic receipts. Guide asset changes invalidate previous application freshness bindings.
 
 D01 compares below/at/above the receipt threshold with simulated approval advice; D02 compares an external assertion with stored bytes; D03 exercises self-approval through the authenticated API; D04 records an actual structural finding; D05 separates compiler exhaustiveness from prototype advice; D06 changes a declared asset in a disposable copy and observes NotAvailable. The full reproduction/qualification process is in `docs/distribution/README.md` at the Playground root. Historical fixture producer and current application qualification retain separate identities.
+
+## Repair and verify three distinct failures
+
+[The isolated change-verification tutorial](docs/change-verification.md) uses the
+installed packaged tool, unchanged application requirements, fresh reports and
+real PostgreSQL to distinguish an admitted blocker, a business-test failure and
+missing required evidence.
