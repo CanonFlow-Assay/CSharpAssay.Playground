@@ -7,7 +7,7 @@ published engine and original qualification worktrees unchanged. Owner's
 qualification, Forgejo staging and qualified GitHub publication. Preserve prior
 evidence and the original 159 cases/twelve mutations; no force push or release.
 
-Use the exact .NET 11 RC2 SDK and native unions. Domain code has no infrastructure
+Use the exact .NET 11 SDK and native unions. Domain code has no infrastructure
 references. CSAssay checks selected structural rules; behavioral tests establish
 the expense requirements. Neither constitutes universal security or business
 correctness proof. AI and payment defaults are explicitly simulated. No live

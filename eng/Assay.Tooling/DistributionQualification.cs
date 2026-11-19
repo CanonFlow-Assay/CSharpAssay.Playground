@@ -5,7 +5,7 @@ public static class DistributionQualification
     private static readonly string[] Admitted = ["CSAI0001", "CSAI0002", "CSAN0001", "CSAN0002", "CSAN0003", "CSAN0004", "CSAP0001"];
     private static readonly string[] Frameworks = ["net11.0"];
     private static readonly string[] CoreProjects = ["Example.csproj"];
-    private const string NativeProject = "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net11.0</TargetFramework><LangVersion>preview</LangVersion><Nullable>enable</Nullable><RestorePackagesWithLockFile>true</RestorePackagesWithLockFile></PropertyGroup></Project>\n";
+    private const string NativeProject = "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net11.0</TargetFramework><LangVersion>15.0</LangVersion><Nullable>enable</Nullable><RestorePackagesWithLockFile>true</RestorePackagesWithLockFile></PropertyGroup></Project>\n";
 
     public static async Task WriteProject(string folder, string code)
     {

@@ -1,11 +1,10 @@
-# .NET 11 RC1 migration
+# Historical .NET 11 migration
 
-This is the historical 26 September 2026 RC1 migration record. Its validation
-counts and SDK identities below are preserved as history. The current checkout
-uses separately qualified SDK `11.0.100-rc.2.26504.105`, `net11.0` and preview C#;
-use `global.json` and the current paired qualification, not this historical pin.
-The engine's `docs/agent-overhaul/toolchain-prerequisite.md` describes that separate
-prerequisite. RC2 runtime support does not make native union syntax stable.
+This page records the original September 2026 migration. The current
+repository uses released SDK `11.0.100`, `net11.0`, and C# 15. Follow the
+current [setup instructions](../README.md) for package preparation and verification.
+
+Historical prerequisites and results follow.
 
 Required: SDK `11.0.100-rc.1.26425.128`, `net11.0`, C# preview, and matching local `CsAssay.Tool` / `CsAssay.Analyzers` `0.2.0-rc.1` packages.
 

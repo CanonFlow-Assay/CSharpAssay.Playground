@@ -1,7 +1,7 @@
 {
   "schema": "assay-sample-toolchain/0.1",
   "targetFramework": "net11.0",
-  "languageVersion": "preview",
+  "languageVersion": "15.0",
   "negativeControls": [
     {"project": "samples/00-rule-matrix/impure/RuleMatrix.Impure.csproj", "reason": "Intentional nullable and suppression violations; the negative evidence gate must continue reporting them."},
     {"project": "samples/10-gilded-rose/harness/GildedRose.Upstream.csproj", "reason": "Unmodified pinned upstream Item has an uninitialized property. Preserve source identity and its expected finding."},

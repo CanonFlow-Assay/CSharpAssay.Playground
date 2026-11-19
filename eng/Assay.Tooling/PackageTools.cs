@@ -135,7 +135,7 @@ public static class PackageTools
                 var execution = await Processes.Run(["dotnet", "msbuild", project, "-nologo", "-getProperty:TargetFramework,TargetFrameworks,LangVersion,Nullable,TreatWarningsAsErrors,NETCoreSdkVersion,NoWarn"], Root); execution.Require("Evaluate " + project);
                 var props = Json.Parse(execution.Output)["Properties"]!;
                 var frameworks = (props.S("TargetFrameworks") is { Length: > 0 } tfms ? tfms : props.S("TargetFramework")).Split(';');
-                Json.Check(frameworks.Length > 0 && frameworks.All(t => t == "net11.0" || t.StartsWith("net11.0-", StringComparison.Ordinal)) && props.S("LangVersion") == "preview" && props.S("NETCoreSdkVersion") == pin.S("version"), "Native toolchain mandate violated: " + project);
+                Json.Check(frameworks.Length > 0 && frameworks.All(t => t == "net11.0" || t.StartsWith("net11.0-", StringComparison.Ordinal)) && props.S("LangVersion") == "15.0" && props.S("NETCoreSdkVersion") == pin.S("version"), "Native toolchain mandate violated: " + project);
                 Json.Check(exceptions.ContainsKey(project) || (props.S("Nullable") == "enable" && props.S("TreatWarningsAsErrors").Equals("true", StringComparison.OrdinalIgnoreCase) && !props.S("NoWarn").Contains("CSA", StringComparison.OrdinalIgnoreCase)), "Compiler mandate violated: " + project);
                 report.A("projects").Add(Json.Create(("path", project), ("properties", props), ("classification", exceptions.ContainsKey(project) ? "reviewed-negative-control" : "strict-positive"), ("reason", exceptions.GetValueOrDefault(project, ""))));
             }

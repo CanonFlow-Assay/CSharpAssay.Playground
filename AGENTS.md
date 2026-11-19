@@ -8,7 +8,7 @@ Improve Decision Assist and its developer/agent workflow. The owner has authoriz
 
 ## Prerequisites and first run
 
-Use the exact SDK in `global.json`, `net11.0`, and C# `preview`. Native unions depend on this toolchain. Keep a matching CSharpAssay checkout beside this repository or supply its path.
+Use the exact SDK in `global.json`, `net11.0`, and C# 15. Native unions depend on this toolchain. Keep a matching CSharpAssay checkout beside this repository or supply its path.
 
 From the repository root:
 
@@ -34,7 +34,7 @@ For changes affecting the other samples:
 ```
 
 The all-sample solution includes every authored project. Exact SDK, .NET 11-only
-targeting (including multi-target lists), preview C#, nullable analysis and
+targeting (including multi-target lists), C# 15, nullable analysis and
 warnings-as-errors are mandatory. Only the three reviewed negative/upstream
 fixtures in `workflows/sample-toolchain.json` retain their deliberate nullable/
 warning exceptions; they still require the native SDK/TFM/language. Preserve and

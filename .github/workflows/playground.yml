@@ -8,16 +8,16 @@ on:
   workflow_dispatch:
     inputs:
       assay_ref:
-        description: Matching CSharpAssay revision containing .NET 11 and the assess API
+        description: Matching CSharpAssay revision for stable .NET 11 and C# 15
         required: true
-        default: 94fa35239a84d538c220f9c41283d6becfa4fff5
+        default: 92af5f6a702890e7c65f35df8cb596c5a0a60161
 
 permissions:
   contents: read
 
 jobs:
   evidence:
-    name: .NET 11 RC2 native evidence gate
+    name: .NET 11 native evidence gate
     runs-on: ubuntu-latest
     env:
       ASSAY_RUNNER: ${{ github.workspace }}/.assay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
@@ -29,9 +29,9 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: CanonFlow-Assay/CSharpAssay
-          ref: ${{ inputs.assay_ref || vars.CSHARP_ASSAY_REF || '94fa35239a84d538c220f9c41283d6becfa4fff5' }}
+          ref: ${{ inputs.assay_ref || vars.CSHARP_ASSAY_REF || '92af5f6a702890e7c65f35df8cb596c5a0a60161' }}
           path: .assay
-      - name: Setup .NET 11 RC2
+      - name: Setup .NET 11
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json

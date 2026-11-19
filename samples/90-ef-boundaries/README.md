@@ -1,6 +1,6 @@
 # EF boundary specimen
 
-This bounded .NET 11 specimen uses EF Core SQLite **11.0.0-rc.2.26504.105**.
+This bounded .NET 11 specimen uses EF Core SQLite **11.0.0**.
 The immutable Domain has native outcomes and decisions, with no EF or
 Infrastructure reference, tracked entity or IQueryable API. Infrastructure owns
 the real SQLite context, tracked mutable rows, query, transaction and mapping.
@@ -10,7 +10,7 @@ advice; Domain represents absence with `NoMemo | MemoText`.
 Eight tests execute SQLite persistence, native missing/invalid outcomes,
 mapping and a Domain dependency/API architecture check. This does not qualify
 other database providers, concurrency, production operations, NativeAOT or
-trimming. Runtime RC2 support does not make native union preview syntax stable.
+trimming. The sample follows the repository C# language configuration.
 
 After preparing exact paired engine/toolkit packages and committing source:
 

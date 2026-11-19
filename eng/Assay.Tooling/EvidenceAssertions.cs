@@ -11,7 +11,7 @@ public static class EvidenceAssertions
         Json.Check(evidence.S("toolVersion") == "0.2.0-rc.1" && evidence.S("requestedProfile") == "native" && evidence.S("profile") == "native", "Evidence must use the pinned native engine/profile.");
         foreach (var project in evidence.A("projects"))
         {
-            Json.Check((project.S("targetFramework") == "net11.0" || project.S("targetFramework").StartsWith("net11.0-", StringComparison.Ordinal)) && project.S("profile") == "native" && project.S("profileEvidence") == "native" && project.S("languageVersion") == "preview" && project.B("loaded"), "Incomplete native project evidence.");
+            Json.Check((project.S("targetFramework") == "net11.0" || project.S("targetFramework").StartsWith("net11.0-", StringComparison.Ordinal)) && project.S("profile") == "native" && project.S("profileEvidence") == "native" && project.S("languageVersion") == "15.0" && project.B("loaded"), "Incomplete C# 15 native project evidence.");
         }
     }
     private static JsonNode ValidReport(string path, string verdict, bool authoritative, int projectCount)

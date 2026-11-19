@@ -5,7 +5,7 @@ public sealed class PrimaryReceiptBoundaryTests
     private static JsonObject Expected() => Json.Create(("verdict", "fail"), ("exitCode", 1), ("authoritative", false), ("verificationMode", "analysis"), ("projects", 1), ("missingEvidenceCounts", Json.Create(("CSASSAY-NULLABLE-FLOW-INCOMPLETE", 2))));
     private static JsonObject Negative() => Json.Create(("verdict", "fail"), ("exitCode", 1), ("evidence", Json.Create(
         ("toolVersion", "0.2.0-rc.1"), ("requestedProfile", "native"), ("profile", "native"), ("authoritative", false), ("verificationMode", "analysis"),
-        ("projects", new JsonArray(Json.Create(("targetFramework", "net11.0"), ("profile", "native"), ("profileEvidence", "native"), ("languageVersion", "preview"), ("loaded", true)))),
+        ("projects", new JsonArray(Json.Create(("targetFramework", "net11.0"), ("profile", "native"), ("profileEvidence", "native"), ("languageVersion", "15.0"), ("loaded", true)))),
         ("failures", new JsonArray()),
         ("missingEvidence", new JsonArray(Json.Create(("code", "CSASSAY-NULLABLE-FLOW-INCOMPLETE")), Json.Create(("code", "CSASSAY-NULLABLE-FLOW-INCOMPLETE")))),
         ("findings", new JsonArray(Json.Create(("ruleId", "CSAP0001"), ("disposition", "block"), ("suppressed", false)))))));
@@ -26,6 +26,7 @@ public sealed class PrimaryReceiptBoundaryTests
     [InlineData("advisory-integrity")]
     [InlineData("execution-failure")]
     [InlineData("verification")]
+    [InlineData("preview-language")]
     public void Unrelated_or_weakened_receipts_cannot_satisfy_a_declared_negative(string change)
     {
         var report = Negative(); var evidence = report["evidence"]!;
@@ -40,6 +41,7 @@ public sealed class PrimaryReceiptBoundaryTests
             case "advisory-integrity": evidence.A("findings")[0]!["disposition"] = "advise"; break;
             case "execution-failure": evidence.A("failures").Add(Json.Create(("code", "TOOL-FAILED"))); break;
             case "verification": evidence["verificationMode"] = "verification"; break;
+            case "preview-language": evidence.A("projects")[0]!["languageVersion"] = "preview"; break;
         }
         Assert.Throws<InvalidDataException>(() => EvidenceAssertions.AssertPrimaryReceipt(report, Expected()));
     }

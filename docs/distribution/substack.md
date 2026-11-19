@@ -76,7 +76,7 @@ Another concerns progress. Correctly refusing one invalid queued item is not eno
 
 ## Make the trial honest and small
 
-The current native development line uses an exact .NET 11 RC2 SDK pin, preview language settings and locally prepared packages. Historical public NuGet releases are a different lane. Current vendor support and any final-SDK upgrade need separate review and qualification; a new ecosystem release does not automatically qualify this tool or sample.
+The current native development line uses an exact .NET 11 SDK pin, preview language settings and locally prepared packages. Historical public NuGet releases are a different lane. Current vendor support and any final-SDK upgrade need separate review and qualification; a new ecosystem release does not automatically qualify this tool or sample.
 
 The first useful outcome is modest: a developer understands one finding, reproduces one failed requirement control and can explain what the resulting evidence supports. No account, model key or live payment is needed to explore the recorded examples. Running the complete application checks requires the documented local prerequisites, including real isolated PostgreSQL.
 

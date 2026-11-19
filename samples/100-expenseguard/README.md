@@ -3,7 +3,7 @@
 AI advises. The domain decides. Evidence states exactly what ran.
 
 Five application projects and one test project implement a bounded expense
-approval/reimbursement product sample. The exact .NET 11 RC2 SDK and native C#
+approval/reimbursement product sample. The exact .NET 11 SDK and native C#
 unions are mandatory; the language feature remains preview-qualified.
 
 ## Product flow

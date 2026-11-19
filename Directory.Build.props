@@ -6,7 +6,7 @@
           Condition="'$(_AssaySdkProducer)' == 'true' and Exists('$(MSBuildThisFileDirectory).packages/sdk-source.props')" />
   <PropertyGroup>
     <TargetFramework Condition="'$(TargetFramework)' == ''">net11.0</TargetFramework>
-    <LangVersion>preview</LangVersion>
+    <LangVersion>15.0</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

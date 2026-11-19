@@ -10,7 +10,7 @@ This is not an argument for moving all framework code into immutable records. Se
 
 ### Prepare the actual lane
 
-The current inspected native build is 0.2.0-rc.1 with exact SDK `11.0.100-rc.2.26504.105`, net11.0 and preview language settings. It is not the historical public 0.1.x package line. Review current vendor support before adopting this preserved lane; final-SDK qualification is separate.
+The current inspected native build is 0.2.0-rc.1 with exact SDK `11.0.100`, net11.0 and preview language settings. It is not the historical public 0.1.x package line. Review current vendor support before adopting this preserved lane; final-SDK qualification is separate.
 
 Follow the canonical adoption guide to build, qualify and install matching local packages. Do not assume this development version can be installed from NuGet.org. For a clean disposable Playground with the qualified engine as its sibling:
 

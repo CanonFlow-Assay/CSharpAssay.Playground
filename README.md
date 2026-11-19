@@ -1,6 +1,6 @@
 # CSharpAssay Playground
 
-CSharpAssay helps developers and coding agents follow a chosen functional C# policy with verifiable rules and optional decision assistance. This Playground provides runnable examples and evidence, now **strictly .NET 11 RC2**. Both repositories pin SDK `11.0.100-rc.2.26504.105`, target `net11.0`, and enable C# preview for native unions. Older targets are rejected. SDK go-live support and preview-language capability are qualified separately from the boundary/output overhaul.
+CSharpAssay helps developers and coding agents follow a chosen functional C# policy with verifiable rules and optional decision assistance. This Playground provides runnable examples and evidence, now **strictly .NET 11**. Both repositories pin SDK `11.0.100`, target `net11.0`, and use C# 15 native unions. Older targets are rejected. The build pins the released SDK and C# language version.
 
 The playground consumes locally packed `CsAssay.Tool` and `CsAssay.Analyzers` `0.2.0-rc.1`, preserving package-consumer testing without publication or source project references to CSharpAssay.
 
@@ -31,7 +31,7 @@ This prepares local packages and runs the offline demonstration and synthetic ro
 then executes every test project, including ExpenseGuard.
 Docker is required for the inventory tests; the gate starts an isolated, pinned
 PostgreSQL container and removes it afterward.
-The build rejects older or mixed framework targets, another SDK, non-preview C#,
+The build rejects older or mixed framework targets, another SDK, a language version other than C# 15,
 and disabled nullable/warnings-as-errors settings in positive samples. The three
 reviewed negative/upstream fixture exceptions are listed in
 `workflows/sample-toolchain.json`; their expected violations remain visible in

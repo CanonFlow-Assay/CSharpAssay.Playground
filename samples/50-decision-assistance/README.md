@@ -1,6 +1,6 @@
 # Decision assistance: typed provider mappings
 
-This .NET 11 RC2 sample demonstrates useful investigation feedback without allowing model advice to change a verification result. Its domain uses native unions, immutable records, and explicit Present/Absent/Unknown observations. Effects live in the CLI shell. Native unions still require preview C#; SDK qualification is separate from provider quality.
+This .NET 11 sample demonstrates useful investigation feedback without allowing model advice to change a verification result. Its domain uses native unions, immutable records, and explicit Present/Absent/Unknown observations. Effects live in the CLI shell. The sample uses C# 15 native unions; SDK qualification is separate from provider quality.
 
 ## Start as a developer or agent
 

@@ -28,13 +28,21 @@ if [[ "$use_qualified" == true ]]; then
   (cd "$assay_root" && dotnet eng/CsAssay.Qualification/bin/Release/net11.0/CsAssay.Qualification.dll copy-qualified --destination "$repo_root/.packages")
 else
   cd "$assay_root"
+  assay_commit="$(git rev-parse HEAD)"
+  # Keep the engine's explicit repository URL and commit. Disable SourceLink's
+  # inferred nuspec branch so detached CI gets the same local package hashes.
+  pack_identity=(-p:PublishRepositoryUrl=false "-p:RepositoryCommit=$assay_commit")
+  mkdir -p "$repo_root/.packages"
+  pack_dir=$(mktemp -d "$repo_root/.packages/engine-pack.XXXXXX")
+  trap 'rm -rf -- "$pack_dir"' EXIT
   dotnet restore CSharpAssay.slnx --locked-mode
   dotnet build CSharpAssay.slnx --no-restore --configuration Release
-  dotnet pack src/CsAssay.Analyzers --no-build --no-restore --configuration Release --output "$repo_root/.packages"
-  dotnet pack src/CsAssay.Runner --no-build --no-restore --configuration Release --output "$repo_root/.packages"
+  dotnet pack src/CsAssay.Analyzers --no-build --no-restore --configuration Release --output "$pack_dir" "${pack_identity[@]}"
+  dotnet pack src/CsAssay.Runner --no-build --no-restore --configuration Release --output "$pack_dir" "${pack_identity[@]}"
   dotnet eng/CsAssay.PackageAudit/bin/Release/net11.0/CsAssay.PackageAudit.dll \
-    "$repo_root/.packages/engine-provenance" "$(git rev-parse HEAD)" "$(dotnet --version)" unsigned normalize \
-    "$repo_root/.packages/CsAssay.Analyzers.0.2.0-rc.1.nupkg" "$repo_root/.packages/CsAssay.Tool.0.2.0-rc.1.nupkg"
+    "$repo_root/.packages/engine-provenance" "$assay_commit" "$(dotnet --version)" unsigned normalize \
+    "$pack_dir/CsAssay.Analyzers.0.2.0-rc.1.nupkg" "$pack_dir/CsAssay.Tool.0.2.0-rc.1.nupkg"
+  cp "$pack_dir"/*.nupkg "$repo_root/.packages/"
 fi
 cd "$repo_root"
 export NUGET_PACKAGES="$repo_root/.packages/cache"

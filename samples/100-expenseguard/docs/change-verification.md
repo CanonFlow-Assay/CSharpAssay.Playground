@@ -9,7 +9,7 @@ business condition.
 
 ## Prepare and run
 
-Use the exact `global.json` .NET 11 RC2 SDK, native unions, Docker and the pinned
+Use the exact `global.json` .NET 11 SDK, native unions, Docker and the pinned
 PostgreSQL image already used by `with-inventory-database`. Follow the engine's
 local-feed adoption and qualification instructions first. The tool version here
 is development version `0.2.0-rc.1`; public NuGet availability is not assumed.

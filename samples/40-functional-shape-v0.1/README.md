@@ -19,7 +19,7 @@ CSharpAssay source repository.
 
 ## Reproduce
 
-Use the pinned, separately qualified .NET 11 RC2 SDK. From the Playground root:
+Use the pinned, separately qualified .NET 11 SDK. From the Playground root:
 
 ```text
 ./eng/prepare-assay.sh ../CSharpAssay

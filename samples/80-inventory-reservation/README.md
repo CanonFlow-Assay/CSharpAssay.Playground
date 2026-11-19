@@ -4,7 +4,7 @@ This application uses native C# unions for immutable decisions, a real HTTP
 endpoint and PostgreSQL transactions. It consumes the locally packed
 `CanonFlow.Assay.Workflow` preview SDK; it has no source reference into the
 toolkit or CSharpAssay engine. All five projects target the pinned .NET 11 SDK
-with preview C#, nullable analysis and warnings treated as errors.
+with C# 15, nullable analysis and warnings treated as errors.
 
 `Inventory.Domain` validates a request and returns commit, replay, invalid,
 insufficient-stock or conflict outcomes. `Inventory.Adapter` owns the database:

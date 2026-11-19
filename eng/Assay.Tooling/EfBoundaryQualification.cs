@@ -15,7 +15,7 @@ public static class EfBoundaryQualification
         var toolingHash = Json.Sha(Tool);
         var original = Bindings(Path.Combine(Root, RelativeSample));
         var report = Json.Create(("schema", "assay-ef-boundary/0.1"), ("executionStatus", "running"), ("sourceCommit", source),
-            ("engineSha256", engineHash), ("toolSha256", toolingHash), ("inputSha256", original), ("provider", "Microsoft.EntityFrameworkCore.Sqlite 11.0.0-rc.2.26504.105; in-memory SQLite connection"),
+            ("engineSha256", engineHash), ("toolSha256", toolingHash), ("inputSha256", original), ("provider", "Microsoft.EntityFrameworkCore.Sqlite 11.0.0; in-memory SQLite connection"),
             ("providerRequests", 0), ("cases", new JsonArray()), ("authority", "Bounded persistence, policy-boundary and consumer checks. No broad EF, other provider, NativeAOT, trimming, IDE, Windows or production qualification."));
         var reportPath = Path.Combine(output, "qualification.json");
         Json.Write(reportPath, report);
