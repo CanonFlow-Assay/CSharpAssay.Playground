@@ -1,9 +1,9 @@
 using System.Text.Json;
 using Playground.Saga.Demo;
 
-if (args is not [var outputPath])
+if (args.Length is < 1 or > 2)
 {
-    Console.Error.WriteLine("Usage: Saga.Demo <runtime-traces.json>");
+    Console.Error.WriteLine("Usage: Saga.Demo <runtime-traces.json> [fresh-outbox-directory]");
     return 64;
 }
 
@@ -14,10 +14,13 @@ if (!traces.All(trace => EvidenceJournal.Verify(trace.Entries, trace.HeadSha256)
     return 1;
 }
 
-var report = new { Schema = "saga-assay-simulation/1", Simulated = true, Traces = traces };
-using (var destination = new FileStream(outputPath, FileMode.CreateNew))
+var report = new { Schema = "saga-assay-simulation/2", Simulated = true, Traces = traces };
+WriteReport(args[0], report);
+if (args.Length == 2)
 {
-    JsonSerializer.Serialize(destination, report, new JsonSerializerOptions { WriteIndented = true });
+    var refundTrace = traces.Single(trace => trace.Scenario == "confirmed-nonpayment");
+    var recovery = OutboxExercise.Run(refundTrace, args[1]);
+    WriteReport(Path.Combine(args[1], "recovery.json"), recovery);
 }
 
 foreach (var trace in traces)
@@ -31,3 +34,9 @@ foreach (var trace in traces)
 }
 
 return 0;
+
+static void WriteReport<T>(string path, T report)
+{
+    using var destination = new FileStream(path, FileMode.CreateNew);
+    JsonSerializer.Serialize(destination, report, new JsonSerializerOptions { WriteIndented = true });
+}

@@ -87,7 +87,7 @@ public sealed class SagaTests
         var cleared = new ScreeningCleared(screening.Key, "cleared-ref");
         var boundary = PaymentSaga.Apply(pending.State, cleared, ValidQuote.ExpiresAt);
         Assert.IsType<NoAction>(boundary.Action.Value);
-        Assert.Equal("QuoteExpiredBeforeDebit", boundary.Evidence);
+        Assert.Equal(RejectionReason.QuoteExpiredBeforeDebit, Assert.IsType<RejectionEvidence>(boundary.Evidence.Value).Reason);
         Assert.IsType<Debit>(PaymentSaga.Apply(pending.State, cleared, ValidQuote.ExpiresAt.AddTicks(-1)).Action.Value);
     }
 
@@ -146,10 +146,109 @@ public sealed class SagaTests
     }
 
     [Fact]
-    public void TimeoutsBeforeDebitOrEscrowConfirmationAvoidFundsMovement()
+    public void TimeoutReconcilesEachPendingOperationUsingItsOriginalKey()
     {
-        Assert.IsType<NoAction>(PaymentSaga.Apply(new AwaitingDebit(Funds.Price, "debit-key"), new TimedOut(), Now).Action.Value);
-        Assert.IsType<NoAction>(PaymentSaga.Apply(new AwaitingEscrow(Funds.Price, "debit-ref", "escrow-key"), new TimedOut(), Now).Action.Value);
+        AssertLookup(new AwaitingDebit(Funds.Price, "debit-key"), new ReconcileDebit("debit-key"), PartnerOperation.Debit, "debit-key");
+        AssertLookup(new AwaitingEscrow(Funds.Price, "debit-ref", "escrow-key"), new ReconcileEscrow("escrow-key"), PartnerOperation.EscrowHold, "escrow-key");
+        AssertLookup(new Settling(Funds, "credit-ref", "settle-key"), new ReconcileEscrowRelease("settle-key"), PartnerOperation.EscrowRelease, "settle-key");
+        AssertLookup(new Unwinding(Funds, "nonpayment-ref", "unwind-key"), new ReconcileEscrowRelease("unwind-key"), PartnerOperation.EscrowRelease, "unwind-key");
+        AssertLookup(new RefundPending(new EscrowReleasedAfterNonpayment(Funds, "nonpayment-ref", "unwind-key"), "refund-key"),
+            new ReconcileRefund("refund-key"), PartnerOperation.Refund, "refund-key");
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CreditThenCorrelatedNonpaymentDisputesBeforeOrAfterSettlement(bool settled)
+    {
+        SagaState state = settled ? new Settled(Funds, "credit-ref") : new Settling(Funds, "credit-ref", "release-key");
+        var unrelated = PaymentSaga.Apply(state, new CreditRejected("foreign-key", "rejection-ref"), Now);
+        Assert.Equal(state, unrelated.State);
+        Assert.IsType<NoAction>(unrelated.Action.Value);
+        var result = PaymentSaga.Apply(state, new CreditRejected(Funds.PayoutKey, "rejection-ref"), Now);
+        var dispute = Assert.IsType<Disputed>(result.State.Value);
+        Assert.IsType<Review>(result.Action.Value);
+        Assert.Equal(new CreditConflict(Funds.PayoutKey, "credit-ref", "rejection-ref"), dispute.Conflict);
+        Assert.Equal(dispute.Conflict, Assert.IsType<CreditConflict>(result.Evidence.Value));
+        Assert.IsType<NoAction>(PaymentSaga.Apply(result.State, new EscrowReleased("release-key"), Now).Action.Value);
+    }
+
+    [Fact]
+    public void DefinitiveDebitRejectionStopsWithoutEscrowOrRefund()
+    {
+        var state = new AwaitingDebit(Funds.Price, "debit-key");
+        var unrelated = PaymentSaga.Apply(state, new DebitRejected("foreign-key", "not-booked"), Now);
+        Assert.IsType<AwaitingDebit>(unrelated.State.Value);
+        var result = PaymentSaga.Apply(state, new DebitRejected("debit-key", "not-booked"), Now);
+        Assert.IsType<NoAction>(result.Action.Value);
+        Assert.Equal(new RejectionEvidence(RejectionReason.DebitRejected, "not-booked"),
+            Assert.IsType<RejectionEvidence>(result.Evidence.Value));
+    }
+
+    [Fact]
+    public void DefinitiveEscrowRejectionPermitsRefundWithoutCreatingAPayout()
+    {
+        var pending = new AwaitingEscrow(Funds.Price, Funds.DebitReference, "escrow-key");
+        var unrelated = PaymentSaga.Apply(pending, new EscrowRejected("foreign-key", "no-hold"), Now);
+        Assert.IsType<NoAction>(unrelated.Action.Value);
+        var result = PaymentSaga.Apply(pending, new EscrowRejected("escrow-key", "no-hold"), Now);
+        var refund = Assert.IsType<Refund>(result.Action.Value);
+        Assert.Equal(Funds.DebitReference, refund.DebitReference);
+        Assert.Equal(Funds.Price.Transfer.Usd, refund.Usd);
+        var state = Assert.IsType<RefundPending>(result.State.Value);
+        Assert.Equal("no-hold", Assert.IsType<EscrowNeverHeld>(state.Basis.Value).RejectionReference);
+        Assert.IsType<NoAction>(PaymentSaga.Apply(result.State, new EscrowRejected("escrow-key", "no-hold"), Now).Action.Value);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DefinitiveEscrowReleaseFailureFreezesBothReleasePaths(bool acceptCredit)
+    {
+        SagaState state = acceptCredit ? new Settling(Funds, "credit-ref", "release-key") : new Unwinding(Funds, "nonpayment-ref", "release-key");
+        var frozen = PaymentSaga.Apply(state, new EscrowReleaseFailed("release-key", "release-failed"), Now);
+        AssertFrozen(frozen, new OperationFailure(PartnerOperation.EscrowRelease, "release-key", "release-failed"));
+        Assert.IsType<NoAction>(PaymentSaga.Apply(frozen.State, new EscrowReleased("release-key"), Now).Action.Value);
+        PaymentEvent contradiction = acceptCredit ? new CreditRejected(Funds.PayoutKey, "no-credit") : new CreditConfirmed(Funds.PayoutKey, "late-credit");
+        Assert.IsType<Disputed>(PaymentSaga.Apply(frozen.State, contradiction, Now).State.Value);
+    }
+
+    [Fact]
+    public void DefinitiveRefundRejectionRequestsReviewWithoutReissuingRefund()
+    {
+        var pending = new RefundPending(new EscrowReleasedAfterNonpayment(Funds, "nonpayment-ref", "release-key"), "refund-key");
+        var result = PaymentSaga.Apply(pending, new RefundRejected("refund-key", "refund-rejected"), Now);
+        AssertFrozen(result, new OperationFailure(PartnerOperation.Refund, "refund-key", "refund-rejected"));
+        Assert.IsType<NoAction>(PaymentSaga.Apply(result.State, new DebitRefunded("refund-key", "late-refund"), Now).Action.Value);
+    }
+
+    [Fact]
+    public void SanctionsClearanceMustMatchCaseAndRecheckQuoteExpiry()
+    {
+        var hold = new SanctionsHold(Funds.Price, "screen-key", "case-ref");
+        var wrongCase = PaymentSaga.Apply(hold, new SanctionsCleared("screen-key", "other-case", "review-ref"), Now);
+        Assert.IsType<SanctionsHold>(wrongCase.State.Value);
+        Assert.IsType<NoAction>(wrongCase.Action.Value);
+        var cleared = new SanctionsCleared("screen-key", "case-ref", "review-ref");
+        var expired = PaymentSaga.Apply(hold, cleared, ValidQuote.ExpiresAt);
+        Assert.IsType<NoAction>(expired.Action.Value);
+        Assert.Equal(RejectionReason.QuoteExpiredBeforeDebit, Assert.IsType<Rejected>(expired.State.Value).Reason);
+        var valid = PaymentSaga.Apply(hold, cleared, ValidQuote.ExpiresAt.AddTicks(-1));
+        Assert.IsType<Debit>(valid.Action.Value);
+        Assert.IsType<NoAction>(PaymentSaga.Apply(valid.State, cleared, Now).Action.Value);
+    }
+
+    [Fact]
+    public void SanctionsDenialRejectsAndEscalationKeepsTheHold()
+    {
+        var hold = new SanctionsHold(Funds.Price, "screen-key", "case-ref");
+        var escalation = PaymentSaga.Apply(hold, new SanctionsEscalated("screen-key", "case-ref", "escalation-ref"), Now);
+        Assert.IsType<SanctionsHold>(escalation.State.Value);
+        Assert.IsType<Review>(escalation.Action.Value);
+        Assert.Equal(SanctionsStatus.SanctionsEscalated, Assert.IsType<SanctionsEvidence>(escalation.Evidence.Value).Status);
+        var denial = PaymentSaga.Apply(escalation.State, new SanctionsDenied("screen-key", "case-ref", "denial-ref"), Now);
+        Assert.Equal(RejectionReason.SanctionsDenied, Assert.IsType<Rejected>(denial.State.Value).Reason);
+        Assert.IsType<NoAction>(denial.Action.Value);
     }
 
     [Fact]
@@ -167,4 +266,21 @@ public sealed class SagaTests
     }
 
     private static Trace TraceFor(string scenario) => Assert.Single(Scenarios.Run(), trace => trace.Scenario == scenario);
+
+    private static void AssertLookup(SagaState initial, PaymentAction action, PartnerOperation operation, string key)
+    {
+        var lookup = PaymentSaga.Apply(initial, new TimedOut(), Now);
+        Assert.Equal(initial, lookup.State);
+        Assert.Equal(action, lookup.Action);
+        Assert.Equal(new ReconciliationEvidence(operation, key), Assert.IsType<ReconciliationEvidence>(lookup.Evidence.Value));
+        Assert.Equal(action, PaymentSaga.Apply(lookup.State, new TimedOut(), Now.AddSeconds(1)).Action);
+    }
+
+    private static void AssertFrozen(Decision decision, OperationFailure failure)
+    {
+        Assert.Equal(failure, Assert.IsType<PartnerReview>(decision.State.Value).Failure);
+        Assert.Equal(failure, Assert.IsType<OperationFailure>(decision.Evidence.Value));
+        Assert.Equal(failure.Reference, Assert.IsType<Review>(decision.Action.Value).Reference);
+        Assert.IsType<NoAction>(PaymentSaga.Apply(decision.State, new TimedOut(), Now).Action.Value);
+    }
 }
