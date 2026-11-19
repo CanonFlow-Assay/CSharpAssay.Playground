@@ -41,6 +41,8 @@ jobs:
         run: ./eng/run-all-samples.sh
       - name: Run playground gate
         run: ./eng/run-assay.sh .assay/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
+      - name: Verify the payment saga and its negative controls
+        run: ./eng/run-saga-assay.sh "$ASSAY_RUNNER" evidence/generated/saga-assay
       - name: Run native GoF crosswalk
         run: ./eng/run-gof-crosswalk.sh
       - name: Run Functional Shape evidence

@@ -1,0 +1,23 @@
+{
+  "profile": "native",
+  "release": {
+    "allowPreviewToolchain": true,
+    "requiredTargetFrameworks": ["net11.0"],
+    "requiredRules": ["CSAI0001", "CSAI0002", "CSAN0001", "CSAN0002", "CSAN0003", "CSAN0004", "CSAP0001"],
+    "tests": [
+      {
+        "input": "tests/Saga.Tests/Saga.Tests.csproj",
+        "configuration": "Release",
+        "noBuild": false,
+        "minimumExpectedTests": 17
+      }
+    ]
+  },
+  "boundaries": {
+    "coreProjects": ["src/Saga.Domain/Saga.Domain.csproj"],
+    "coreNamespaces": ["Playground.Saga.Domain"],
+    "shellProjects": ["src/Saga.Demo/Saga.Demo.csproj", "tests/Saga.Tests/Saga.Tests.csproj"],
+    "shellNamespaces": ["Playground.Saga.Demo", "Playground.Saga.Tests"]
+  },
+  "suppressions": []
+}

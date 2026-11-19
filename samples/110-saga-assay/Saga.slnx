@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/Saga.Domain/Saga.Domain.csproj" />
+  <Project Path="src/Saga.Demo/Saga.Demo.csproj" />
+  <Project Path="tests/Saga.Tests/Saga.Tests.csproj" />
+</Solution>
