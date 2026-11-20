@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../samples/native-parity/Parity.Domain/Parity.Domain.csproj" />
+    <ProjectReference Include="../../samples/00-rule-matrix/refined/RuleMatrix.Refined.csproj" />
+    <ProjectReference Include="../../samples/10-gilded-rose/refined/GildedRose.Refined.csproj" />
+    <ProjectReference Include="../../samples/30-gof-functional-crosswalk/refined/Gof.Refined.csproj" />
+    <ProjectReference Include="../../samples/40-functional-shape-v0.1/src/Shape.Domain/Shape.Domain.csproj" />
+    <ProjectReference Include="../../samples/60-csvhelper-functional/src/CsvFunctional.Domain/CsvFunctional.Domain.csproj" />
+    <ProjectReference Include="../../samples/70-polly-resilience/src/PollyAssay.Domain/PollyAssay.Domain.csproj" />
+    <ProjectReference Include="../../samples/80-inventory-reservation/src/Inventory.Domain/Inventory.Domain.csproj" />
+    <ProjectReference Include="../../samples/90-ef-boundaries/src/EfBoundary.Domain/EfBoundary.Domain.csproj" />
+    <ProjectReference Include="../../samples/100-expenseguard/src/ExpenseGuard.Domain/ExpenseGuard.Domain.csproj" />
+    <ProjectReference Include="../../samples/110-saga-assay/src/Saga.Domain/Saga.Domain.csproj" />
+    <Using Include="Xunit" />
+    <None Include="../../cross-playground/native-cases.json" Link="native-cases.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

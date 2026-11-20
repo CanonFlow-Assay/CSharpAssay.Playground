@@ -55,9 +55,9 @@ The preparation script populates ignored `.packages/`, uses a checkout-local pac
 
 ## Samples
 
-The [shared playground catalogue](cross-playground/README.md) includes the
-complete C# and F# collections. Both can be opened and qualified from this
-checkout.
+The [native sample catalogue](cross-playground/README.md) has 28 paired sample
+groups and 95 shared behavior cases. Each playground runs those cases through
+its own domain code. The catalogue also links to the pinned source archives.
 
 - `00-rule-matrix`: controlled positive and negative policy examples.
 - `10-gilded-rose`: pinned upstream source, .NET 11 harness, characterization tests, and immutable derivative.
@@ -69,6 +69,7 @@ checkout.
 - [`80-inventory-reservation`](samples/80-inventory-reservation/README.md): immutable native decisions, HTTP hosting, transactional PostgreSQL stock/reservation/outbox writes, concurrency and idempotency tests, a registered requirement change and an actual wire-contract regression investigation.
 - [`100-expenseguard`](samples/100-expenseguard/README.md): native-union expense decisions, receipt/category/FX/duplicate rules, manager/finance approvals, PostgreSQL audit receipts/outbox, authenticated HTTP, offline advisory and simulated payment adapters, an evidence viewer, CSAssay and typed DAA evidence coordination, and controlled business/structural counterexamples. Run `eng/run-expenseguard.sh` for its source-bound qualification.
 - [`110-saga-assay`](samples/110-saga-assay/README.md) walks through a simulated cross-border payout, dispute, reconciliation and refund. Thirteen negative controls show what the compiler, Assay rules and required tests detect. A SQLite exercise recovers a pending refund and retries after a lost acknowledgement.
+- [`native-parity`](cross-playground/README.md) adds native C# counterparts for the F# enterprise, functional patterns, wallet, and offline mutation-advice scenarios.
 - `20-eshop-agent-assay`: historical external .NET 10 case study, excluded from the current gate. The separate eShop repository is outside this migration.
 
 Impure samples must produce their expected findings. Only complete `verify` evidence on refined projects is release authority. Historical evidence retains its original SDK and package identity.

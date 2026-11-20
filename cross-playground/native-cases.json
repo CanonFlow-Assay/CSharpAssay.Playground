@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 1,
+  "samples": [
+    {
+      "id": "rule-matrix",
+      "original": "csharp:samples/00-rule-matrix",
+      "cases": [
+        {"id": "present", "input": ["Ada"], "expected": "present:Ada"},
+        {"id": "missing", "input": [null], "expected": "missing"}
+      ]
+    },
+    {
+      "id": "gilded-rose",
+      "original": "csharp:samples/10-gilded-rose",
+      "cases": [
+        {"id": "expired-normal", "input": ["ordinary", 0, 12], "expected": "-1:10"},
+        {"id": "stays-legendary", "input": ["legendary", -1, 80], "expected": "-1:80"},
+        {"id": "brie-capped", "input": ["brie", 0, 49], "expected": "-1:50"},
+        {"id": "backstage-late", "input": ["pass", 0, 49], "expected": "-1:0"},
+        {"id": "backstage-five-days", "input": ["pass", 5, 10], "expected": "4:13"}
+      ]
+    },
+    {
+      "id": "gof-crosswalk",
+      "original": "csharp:samples/30-gof-functional-crosswalk",
+      "cases": [
+        {"id": "parcel", "input": ["parcel", 2], "expected": "7"},
+        {"id": "freight", "input": ["freight", 3], "expected": "105"}
+      ]
+    },
+    {
+      "id": "functional-shape",
+      "original": "csharp:samples/40-functional-shape-v0.1",
+      "cases": [
+        {"id": "no-lines", "input": [[]], "expected": "empty"},
+        {"id": "too-many", "input": [[1, 1, 1, 1, 1, 1]], "expected": "too-many"},
+        {"id": "quantity-zero", "input": [[1, 0]], "expected": "invalid-quantity"},
+        {"id": "accepted", "input": [[1, 2]], "expected": "accepted"}
+      ]
+    },
+    {
+      "id": "decision-assist",
+      "original": "fsharp:samples/50-decision-assist",
+      "cases": [
+        {"id": "stale", "input": [false, "passed", "passed", true, 1], "expected": "ContextRequired"},
+        {"id": "red-baseline", "input": [true, "failed", "passed", true, 1], "expected": "RepairBaseline"},
+        {"id": "invalid-candidate", "input": [true, "passed", "invalid", true, 1], "expected": "RepairCandidate"},
+        {"id": "killed", "input": [true, "passed", "failed", true, 1], "expected": "NoInvestigation"},
+        {"id": "survivor-review", "input": [true, "passed", "passed", false, 1], "expected": "SurvivorReview"},
+        {"id": "budget", "input": [true, "passed", "passed", true, 0], "expected": "BudgetExhausted"},
+        {"id": "registered-probe", "input": [true, "passed", "passed", true, 1], "expected": "ProbeRequested"}
+      ]
+    },
+    {
+      "id": "csvhelper",
+      "original": "csharp:samples/60-csvhelper-functional",
+      "cases": [
+        {"id": "missing", "input": [null, "en-US"], "expected": "missing"},
+        {"id": "german-decimal", "input": ["1,25", "de-DE"], "expected": "1.25"},
+        {"id": "invalid-amount", "input": ["abc", "en-US"], "expected": "invalid"}
+      ]
+    },
+    {
+      "id": "polly-resilience",
+      "original": "csharp:samples/70-polly-resilience",
+      "cases": [
+        {"id": "success", "input": ["success"], "expected": "success:no-retry"},
+        {"id": "permanent", "input": ["permanent"], "expected": "permanent:no-retry"},
+        {"id": "transient", "input": ["transient"], "expected": "exhausted:retry"}
+      ]
+    },
+    {
+      "id": "inventory-reservation",
+      "original": "csharp:samples/80-inventory-reservation",
+      "cases": [
+        {"id": "commit", "input": [3, 3, null], "expected": "commit:0:8"},
+        {"id": "insufficient", "input": [2, 1, null], "expected": "insufficient:1"},
+        {"id": "cap", "input": [4, 8, null], "expected": "invalid"},
+        {"id": "replay-over-cap", "input": [4, 0, 4], "expected": "replay:2:7"},
+        {"id": "mismatched-replay", "input": [2, 8, 1], "expected": "conflict"}
+      ]
+    },
+    {
+      "id": "ef-boundaries",
+      "original": "csharp:samples/90-ef-boundaries",
+      "cases": [
+        {"id": "bad-id", "input": [0, 1, null], "expected": "invalid-id"},
+        {"id": "bad-quantity", "input": [1, 0, null], "expected": "invalid-quantity"},
+        {"id": "memo-absent", "input": [1, 2, null], "expected": "stored:none"},
+        {"id": "memo-present", "input": [1, 2, "gift"], "expected": "stored:gift"}
+      ]
+    },
+    {
+      "id": "expenseguard",
+      "original": "csharp:samples/100-expenseguard",
+      "cases": [
+        {"id": "receipt-at-threshold", "input": [25, false, false], "expected": "Approve"},
+        {"id": "receipt-above-threshold", "input": [25.01, false, false], "expected": "MoreInfo"},
+        {"id": "asserted-receipt", "input": [25.01, true, false], "expected": "MoreInfo"},
+        {"id": "manager", "input": [200.01, true, true], "expected": "Manager"},
+        {"id": "finance", "input": [1000.01, true, true], "expected": "ManagerThenFinance"}
+      ]
+    },
+    {
+      "id": "payment-saga",
+      "original": "csharp:samples/110-saga-assay",
+      "cases": [
+        {"id": "late-credit", "input": ["quote", "screen", "debit", "escrow", "timeout", "unknown", "credit", "release-settled"], "expected": "quote,screen,debit,hold-escrow,submit-credit,reconcile-credit,none,release-settled,none|settled"},
+        {"id": "definitive-nonpayment", "input": ["quote", "screen", "debit", "escrow", "nonpayment", "timeout", "release-unwind", "refund-posted"], "expected": "quote,screen,debit,hold-escrow,submit-credit,release-unwind,reconcile-release,refund,none|refunded"},
+        {"id": "foreign-payout", "input": ["quote", "screen", "debit", "escrow", "foreign-nonpayment"], "expected": "quote,screen,debit,hold-escrow,submit-credit,none|pending"},
+        {"id": "credit-after-refund", "input": ["quote", "screen", "debit", "escrow", "nonpayment", "release-unwind", "refund-posted", "credit"], "expected": "quote,screen,debit,hold-escrow,submit-credit,release-unwind,refund,none,review|disputed"},
+        {"id": "nonpayment-after-settlement", "input": ["quote", "screen", "debit", "escrow", "credit", "release-settled", "nonpayment"], "expected": "quote,screen,debit,hold-escrow,submit-credit,release-settled,none,review|disputed"},
+        {"id": "expired-sanctions-clearance", "input": ["quote", "hold", "timeout", "late-clear"], "expected": "quote,screen,review,review,none|rejected"},
+        {"id": "escrow-never-held", "input": ["quote", "screen", "debit", "no-escrow", "timeout", "refund-posted"], "expected": "quote,screen,debit,hold-escrow,refund,reconcile-refund,none|refunded"},
+        {"id": "debit-and-escrow-timeouts", "input": ["quote", "screen", "timeout", "debit", "timeout"], "expected": "quote,screen,debit,reconcile-debit,hold-escrow,reconcile-escrow|awaiting-escrow"},
+        {"id": "failed-release", "input": ["quote", "screen", "debit", "escrow", "nonpayment", "release-failed", "release-unwind"], "expected": "quote,screen,debit,hold-escrow,submit-credit,release-unwind,review,none|partner-review"}
+      ]
+    },
+    {
+      "id": "airline",
+      "original": "fsharp:samples/10-enterprise/airline-core",
+      "cases": [
+        {"id": "normalizes", "input": ["maa"], "expected": "MAA"},
+        {"id": "wrong-length", "input": ["AA"], "expected": "invalid"},
+        {"id": "missing", "input": [null], "expected": "invalid"}
+      ]
+    },
+    {
+      "id": "arangetram",
+      "original": "fsharp:samples/10-enterprise/arangetram-adversaries",
+      "cases": [
+        {"id": "positive", "input": [1], "expected": "valid"},
+        {"id": "nonpositive", "input": [0], "expected": "invalid"}
+      ]
+    },
+    {
+      "id": "banking",
+      "original": "fsharp:samples/10-enterprise/banking-core",
+      "cases": [
+        {"id": "positive", "input": [0.01], "expected": "valid"},
+        {"id": "zero", "input": [0], "expected": "invalid"}
+      ]
+    },
+    {
+      "id": "gatepass",
+      "original": "fsharp:samples/10-enterprise/gatepass-core",
+      "cases": [
+        {"id": "max-hours", "input": [72], "expected": "valid"},
+        {"id": "too-long", "input": [72.01], "expected": "invalid"},
+        {"id": "too-short", "input": [0.99], "expected": "invalid"}
+      ]
+    },
+    {
+      "id": "hospital",
+      "original": "fsharp:samples/10-enterprise/hospital-core",
+      "cases": [
+        {"id": "first-registration", "input": [false], "expected": "registered"},
+        {"id": "duplicate", "input": [true], "expected": "invalid"}
+      ]
+    },
+    {
+      "id": "kutcheri",
+      "original": "fsharp:samples/10-enterprise/kutcheri-season",
+      "cases": [
+        {"id": "sold-out", "input": [12, 12], "expected": "valid"},
+        {"id": "oversold", "input": [12, 13], "expected": "invalid"}
+      ]
+    },
+    {
+      "id": "layam",
+      "original": "fsharp:samples/10-enterprise/layam-academy",
+      "cases": [
+        {"id": "exam-at-cap", "input": [50, 50], "expected": "valid"},
+        {"id": "split-over-cap", "input": [51, 50], "expected": "invalid"},
+        {"id": "only-sum-constrained", "input": [101, -1], "expected": "valid"}
+      ]
+    },
+    {
+      "id": "migration",
+      "original": "fsharp:samples/10-enterprise/migration-demo",
+      "cases": [
+        {"id": "old-zero", "input": ["v1", 0], "expected": "invalid"},
+        {"id": "new-zero", "input": ["v2", 0], "expected": "valid"},
+        {"id": "new-negative", "input": ["v2", -1], "expected": "invalid"}
+      ]
+    },
+    {
+      "id": "mock-drill",
+      "original": "fsharp:samples/10-enterprise/mock-drill",
+      "cases": [
+        {"id": "adult", "input": [18], "expected": "valid"},
+        {"id": "too-young", "input": [17], "expected": "invalid"},
+        {"id": "max-exclusive", "input": [120], "expected": "invalid"}
+      ]
+    },
+    {
+      "id": "sangam",
+      "original": "fsharp:samples/10-enterprise/sangam-credit",
+      "cases": [
+        {"id": "underage-with-guardian", "input": [20, true], "expected": "valid"},
+        {"id": "underage-without-guardian", "input": [20, false], "expected": "invalid"},
+        {"id": "adult", "input": [21, false], "expected": "valid"}
+      ]
+    },
+    {
+      "id": "trading",
+      "original": "fsharp:samples/10-enterprise/trading-core",
+      "cases": [
+        {"id": "at-equity-floor", "input": [25000, 3], "expected": "valid"},
+        {"id": "below-equity-floor", "input": [24999, 3], "expected": "restricted"},
+        {"id": "second-trade", "input": [24999, 2], "expected": "valid"}
+      ]
+    },
+    {
+      "id": "urbanclub",
+      "original": "fsharp:samples/10-enterprise/urbanclub-core",
+      "cases": [
+        {"id": "at-scheduled-time", "input": [0], "expected": "completed"},
+        {"id": "too-early", "input": [-1], "expected": "invalid"}
+      ]
+    },
+    {
+      "id": "webuy",
+      "original": "fsharp:samples/10-enterprise/webuy-core",
+      "cases": [
+        {"id": "same-location", "input": [0], "expected": "deliver"},
+        {"id": "outside-geofence", "input": [1], "expected": "invalid"}
+      ]
+    },
+    {
+      "id": "wecar",
+      "original": "fsharp:samples/10-enterprise/wecar-core",
+      "cases": [
+        {"id": "same-instant", "input": [0], "expected": "read"},
+        {"id": "before-sent", "input": [-1], "expected": "invalid"}
+      ]
+    },
+    {
+      "id": "fintech-wallet",
+      "original": "fsharp:samples/10-enterprise/src/FintechWallet.Domain",
+      "cases": [
+        {"id": "exact-balance", "input": [10, 10], "expected": "valid"},
+        {"id": "negative", "input": [10, -1], "expected": "invalid"},
+        {"id": "overdraft", "input": [10, 11], "expected": "invalid"}
+      ]
+    },
+    {
+      "id": "functional-patterns",
+      "original": "fsharp:samples/20-functional-patterns",
+      "cases": [
+        {"id": "accumulates", "input": ["", 0], "expected": "EmptyCustomer,InvalidQuantity"},
+        {"id": "quantity-upper-bound", "input": ["Ada", 99], "expected": "priced:198"},
+        {"id": "quantity-outside-bound", "input": ["Ada", 100], "expected": "InvalidQuantity"}
+      ]
+    },
+    {
+      "id": "wallet",
+      "original": "fsharp:samples/40-wallet",
+      "cases": [
+        {"id": "exact-balance", "input": [10, 20, [["wallet", " op ", 10]]], "expected": "accepted:0"},
+        {"id": "replay", "input": [10, 20, [["wallet", " op ", 3], ["wallet", "op", 3]]], "expected": "accepted:7,accepted:7"},
+        {"id": "conflict", "input": [10, 20, [["wallet", "op", 3], ["wallet", "op", 4], ["other", "op", 3]]], "expected": "accepted:7,conflict,conflict"},
+        {"id": "insufficient-replay", "input": [4, 20, [["wallet", "op", 5], ["wallet", "op", 5]]], "expected": "insufficient-funds,insufficient-funds"},
+        {"id": "validation", "input": [10, 20, [["wallet", " ", 3], ["wallet", "op", 0], ["wallet", "op", 1.001], ["wallet", "op", 21]]], "expected": "invalid-reference,invalid-amount,precision,limit-exceeded"}
+      ]
+    }
+  ]
+}

@@ -2,11 +2,10 @@
 set -euo pipefail
 
 directory="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-root="$(cd "$directory/.." && pwd)"
 manifest="$directory/manifest.json"
 
 usage() {
-  echo 'Usage: cross-playground/playground check | list | checkout <csharp|fsharp> <new-directory> | qualify <csharp|fsharp> <assay-engine-checkout> <new-output-directory>' >&2
+  echo 'Usage: cross-playground/playground check [paired-repository] | list | checkout <csharp|fsharp> <new-directory> | qualify <csharp|fsharp> <assay-engine-checkout> <new-output-directory>' >&2
   exit 64
 }
 
@@ -28,30 +27,24 @@ check_archive() {
   fi
 }
 
-check_native() {
-  local language path expected actual
-  if [[ -f "$root/AllSamples.slnx" ]]; then
-    language=csharp
-  elif [[ -f "$root/FSharpAssay.Playground.slnx" ]]; then
-    language=fsharp
-  else
-    echo 'Run from one of the two playground repositories.' >&2
-    return 1
-  fi
-
-  local -a inputs=()
-  while IFS=$'\t' read -r path expected; do
-    inputs+=("$path")
-    actual=$(git -C "$root" rev-parse --verify "HEAD:$path") || return 1
-    if [[ "$actual" != "$expected" ]]; then
-      printf 'The %s snapshot differs from the committed native input %s.\n' "$language" "$path" >&2
-      return 1
-    fi
-  done < <(source_value "$language" '.sources[$language].nativeInputs | to_entries[] | [.key,.value] | @tsv')
-  if (( ${#inputs[@]} == 0 )); then return 1; fi
-  if [[ -n "$(git -C "$root" status --porcelain --untracked-files=all -- "${inputs[@]}")" ]]; then
-    echo 'The native inputs have uncommitted changes.' >&2
-    return 1
+check_catalogue() {
+  local catalogue="$directory/native-cases.json"
+  jq -e '
+    .schemaVersion == 1 and
+    (.samples | length > 0) and
+    (.samples | map(.id) | length == (unique | length)) and
+    all(.samples[];
+      (.id | type == "string" and length > 0) and
+      (.original | test("^(csharp|fsharp):samples/")) and
+      (.cases | length > 0) and
+      (.cases | map(.id) | length == (unique | length)) and
+      all(.cases[];
+        (.id | type == "string" and length > 0) and
+        (.input | type == "array") and
+        (.expected | type == "string")))
+  ' "$catalogue" >/dev/null
+  if [[ $# == 1 ]]; then
+    cmp -- "$catalogue" "$1/cross-playground/native-cases.json"
   fi
 }
 
@@ -146,11 +139,12 @@ qualify() (
 
 case "${1:-}" in
   check)
-    [[ $# == 1 ]] || usage
+    [[ $# == 1 || $# == 2 ]] || usage
+    shift
     check_archive csharp
     check_archive fsharp
-    check_native
-    echo 'Both snapshot digests and the native inputs match the catalogue.'
+    check_catalogue "$@"
+    echo 'Archive digests and native case catalogue verified.'
     ;;
   list)
     [[ $# == 1 ]] || usage

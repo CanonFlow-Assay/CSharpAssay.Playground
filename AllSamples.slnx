@@ -47,4 +47,6 @@
   <Project Path="samples/110-saga-assay/src/Saga.Domain/Saga.Domain.csproj" />
   <Project Path="samples/110-saga-assay/src/Saga.Demo/Saga.Demo.csproj" />
   <Project Path="samples/110-saga-assay/tests/Saga.Tests/Saga.Tests.csproj" />
+  <Project Path="samples/native-parity/Parity.Domain/Parity.Domain.csproj" />
+  <Project Path="tests/Parity.Tests/Parity.Tests.csproj" />
 </Solution>
