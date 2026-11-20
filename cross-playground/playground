@@ -1,0 +1,170 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+directory="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+root="$(cd "$directory/.." && pwd)"
+manifest="$directory/manifest.json"
+
+usage() {
+  echo 'Usage: cross-playground/playground check | list | checkout <csharp|fsharp> <new-directory> | qualify <csharp|fsharp> <assay-engine-checkout> <new-output-directory>' >&2
+  exit 64
+}
+
+source_value() {
+  jq -er --arg language "$1" "$2" "$manifest"
+}
+
+archive_for() {
+  printf '%s/%s\n' "$directory" "$(source_value "$1" '.sources[$language].archive')"
+}
+
+check_archive() {
+  local language=$1 archive expected
+  archive=$(archive_for "$language")
+  expected=$(source_value "$language" '.sources[$language].sha256')
+  if ! printf '%s  %s\n' "$expected" "$archive" | sha256sum --check --status; then
+    printf 'The %s archive checksum differs from the catalogue.\n' "$language" >&2
+    return 1
+  fi
+}
+
+check_native() {
+  local language path expected actual
+  if [[ -f "$root/AllSamples.slnx" ]]; then
+    language=csharp
+  elif [[ -f "$root/FSharpAssay.Playground.slnx" ]]; then
+    language=fsharp
+  else
+    echo 'Run from one of the two playground repositories.' >&2
+    return 1
+  fi
+
+  local -a inputs=()
+  while IFS=$'\t' read -r path expected; do
+    inputs+=("$path")
+    actual=$(git -C "$root" rev-parse --verify "HEAD:$path") || return 1
+    if [[ "$actual" != "$expected" ]]; then
+      printf 'The %s snapshot differs from the committed native input %s.\n' "$language" "$path" >&2
+      return 1
+    fi
+  done < <(source_value "$language" '.sources[$language].nativeInputs | to_entries[] | [.key,.value] | @tsv')
+  if (( ${#inputs[@]} == 0 )); then return 1; fi
+  if [[ -n "$(git -C "$root" status --porcelain --untracked-files=all -- "${inputs[@]}")" ]]; then
+    echo 'The native inputs have uncommitted changes.' >&2
+    return 1
+  fi
+}
+
+checkout_snapshot() {
+  local language=$1 target=$2 archive source tree date
+  check_archive "$language"
+  archive=$(archive_for "$language")
+  source=$(source_value "$language" '.sources[$language].commit')
+  tree=$(source_value "$language" '.sources[$language].tree')
+  date=$(source_value "$language" '.sources[$language].committedAt')
+
+  mkdir -- "$target"
+  tar --extract --gzip --file "$archive" --directory "$target" --no-same-owner
+  git init --quiet --initial-branch=main "$target"
+  git -C "$target" -c core.autocrlf=false add --force --all
+  if [[ "$(git -C "$target" write-tree)" != "$tree" ]]; then
+    echo "The extracted $language files differ from the recorded Git tree." >&2
+    return 1
+  fi
+  GIT_AUTHOR_DATE="$date" GIT_COMMITTER_DATE="$date" git -C "$target" \
+    -c user.name='Playground snapshots' -c user.email='playground@localhost.invalid' \
+    -c commit.gpgsign=false -c core.hooksPath=/dev/null \
+    commit --quiet -m "Materialize $language playground $source"
+  printf '%s snapshot %s materialized at %s.\n' "$language" "$source" "$target"
+}
+
+run_stage() {
+  local output=$1 stage=$2 result
+  shift 2
+  printf '%q ' "$@" > "$output/$stage.command"
+  printf '\n' >> "$output/$stage.command"
+  if "$@" > "$output/$stage.log" 2>&1; then result=0; else result=$?; fi
+  printf '%s\n' "$result" > "$output/$stage.exit"
+  printf '%s: exit %s (%s)\n' "$stage" "$result" "$output/$stage.log"
+  return "$result"
+}
+
+qualify() (
+  local language=$1 engine=$2 output=$3 producer workspace checkout engine_name engine_copy
+  engine=$(realpath -e -- "$engine")
+  producer=$(source_value "$language" '.sources[$language].producerCommit')
+  engine_name=$(source_value "$language" '.sources[$language].producerRepository | split("/")[-1]')
+  git -C "$engine" cat-file -e "$producer^{commit}"
+  mkdir -- "$output"
+  output=$(realpath -e -- "$output")
+  # MSBuild searches ancestors for Directory.Build.targets and package
+  # settings. A nested Git checkout alone does not isolate those inputs.
+  workspace=$(mktemp -d /tmp/assay-playground.XXXXXXXX)
+  checkout="$workspace/playground"
+  engine_copy="$workspace/$engine_name"
+  printf '%s\n' "$workspace" > "$output/execution-root.txt"
+  trap '
+    cd "$output"
+    if [[ -d "$checkout" ]]; then mv -T -- "$checkout" "$output/playground"; fi
+    if [[ -d "$engine_copy" ]]; then mv -T -- "$engine_copy" "$output/$engine_name"; fi
+    rmdir -- "$workspace"
+  ' EXIT
+  checkout_snapshot "$language" "$checkout"
+  git clone --quiet --no-hardlinks --no-checkout "$engine" "$engine_copy"
+  git -C "$engine_copy" checkout --quiet --detach "$producer"
+
+  source_value "$language" '.sources[$language] | {repository, commit, tree, sha256, producerRepository, producerCommit}' \
+    > "$output/source.json"
+  git -C "$checkout" rev-parse HEAD > "$output/materialized-head.txt"
+  cd "$checkout"
+  # Qualification runs in independent repositories. CI identity for the
+  # outer checkout must never be attributed to the materialized source.
+  unset GITHUB_SHA GITHUB_EVENT_NAME FSASSAY_APPROVED_HEAD_SHA FSASSAY_SYNTHETIC_MERGE_SHA FSASSAY_PACKAGE_SHA256
+  case "$language" in
+    csharp)
+      local runner="$engine_copy/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll"
+      export ASSAY_RUNNER="$runner"
+      run_stage "$output" prepare ./eng/prepare-assay.sh "$engine_copy" --bootstrap-locks
+      git rev-parse HEAD > "$output/qualified-head.txt"
+      run_stage "$output" samples ./eng/run-all-samples.sh
+      run_stage "$output" verify ./eng/run-assay.sh "$runner"
+      run_stage "$output" gof ./eng/run-gof-crosswalk.sh
+      run_stage "$output" shape ./eng/run-functional-shape.sh
+      run_stage "$output" saga ./eng/run-saga-assay.sh "$runner" evidence/generated/cross-playground-saga
+      ;;
+    fsharp)
+      git rev-parse HEAD > "$output/qualified-head.txt"
+      run_stage "$output" prepare python3 eng/prepare.py --engine "$engine_copy"
+      run_stage "$output" verify python3 eng/qualify.py --output artifacts/cross-playground
+      run_stage "$output" clients python3 eng/clients.py --output artifacts/cross-playground-clients
+      run_stage "$output" mutations python3 eng/mutations.py --output artifacts/cross-playground-mutations
+      ;;
+  esac
+  test -z "$(git status --porcelain)"
+  printf 'The %s playground qualified. Logs and receipts are under %s.\n' "$language" "$output"
+)
+
+case "${1:-}" in
+  check)
+    [[ $# == 1 ]] || usage
+    check_archive csharp
+    check_archive fsharp
+    check_native
+    echo 'Both snapshot digests and the native inputs match the catalogue.'
+    ;;
+  list)
+    [[ $# == 1 ]] || usage
+    jq -r '.sources | to_entries[] | .key as $language | .value.catalogue[] | [$language,.status,.path] | @tsv' "$manifest"
+    ;;
+  checkout|qualify)
+    [[ "${2:-}" == csharp || "${2:-}" == fsharp ]] || usage
+    if [[ "$1" == checkout && $# == 3 ]]; then
+      checkout_snapshot "$2" "$3"
+    elif [[ "$1" == qualify && $# == 4 ]]; then
+      qualify "$2" "$3" "$4"
+    else
+      usage
+    fi
+    ;;
+  *) usage ;;
+esac

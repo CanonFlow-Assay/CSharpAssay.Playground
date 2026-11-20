@@ -25,6 +25,8 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
+      - name: Check shared playground parity
+        run: ./cross-playground/playground check
       - name: Checkout matching CSharpAssay source
         uses: actions/checkout@v6
         with:

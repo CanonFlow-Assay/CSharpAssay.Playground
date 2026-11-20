@@ -55,6 +55,10 @@ The preparation script populates ignored `.packages/`, uses a checkout-local pac
 
 ## Samples
 
+The [shared playground catalogue](cross-playground/README.md) includes the
+complete C# and F# collections. Both can be opened and qualified from this
+checkout.
+
 - `00-rule-matrix`: controlled positive and negative policy examples.
 - `10-gilded-rose`: pinned upstream source, .NET 11 harness, characterization tests, and immutable derivative.
 - `30-gof-functional-crosswalk`: behavior-equivalent functional alternatives; shipment and recursive menu use native C# unions.

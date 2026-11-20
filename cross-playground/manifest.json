@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "sources": {
+    "csharp": {
+      "repository": "https://github.com/CanonFlow-Assay/CSharpAssay.Playground",
+      "commit": "418d6be099554aafc0391d15f0d880f1f903bb45",
+      "tree": "0fd17a1afa5a02fa5b27caab71b2cb97708204dc",
+      "committedAt": "2026-11-19T17:52:21+05:30",
+      "producerRepository": "https://github.com/CanonFlow-Assay/CSharpAssay",
+      "producerCommit": "92af5f6a702890e7c65f35df8cb596c5a0a60161",
+      "archive": "snapshots/csharp.tar.gz",
+      "sha256": "98abf2d40c1bd5310a86c672d1819c4f411fc67d3805823f88cfcc6e3e9f12ab",
+      "trackedFiles": 437,
+      "solution": "AllSamples.slnx",
+      "solutionProjects": 48,
+      "nativeInputs": {
+        ".config": "2545def9f3688bb574e725d7dda1fdb0e5a8261a",
+        ".csassay.gildedrose-upstream.json": "32dd3ea84c80691f3d09f18e72bd02c87838a70c",
+        ".csassay.impure.json": "ab36fd973aa2c2c0fd9da5a5ebf9c37480fdae06",
+        ".csassay.inventory.json": "c2b4774f86b3cfa0b74c503e2c50b5d8ea720711",
+        ".csassay.refined.json": "9aa6a409046ff0bed471b7bf1715a57c26162cbf",
+        ".csassay.workflow.json": "d68789832556c88d30583e739212926f192c4525",
+        ".editorconfig": "dcc64dd01237dfb73283afd7b043aa0f6c0ebd8b",
+        ".gitignore": "117b6915a191ab62514c90679703a6716b9c4fe2",
+        "AGENTS.md": "118822c554be09d3a3af6bd96216c8e7728a68c6",
+        "AllSamples.slnx": "b09560ef5fe26a4153f53451d2dd3bbd5aba2004",
+        "Assay.Workflow.slnx": "5bd9e16768afcf22f043a16897959a3f1060b039",
+        "CSharpAssay.Playground.slnx": "c0ee879e70a0e3bf063aaa98a0f30a99eb656e96",
+        "Directory.Build.props": "69700ea545ff9ec7b3840c6936a1055ec353875c",
+        "Directory.Build.targets": "33c486c7287a0b714f6fb2a0b17d36df186e27a2",
+        "Directory.Packages.props": "c903567a272679f1142e553310b83c1443e4c00d",
+        "Inventory.slnx": "4fb412397ab6ad4044eee76623ccf69b0313d663",
+        "LICENSE": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+        "NuGet.config": "b1737015156c2f305a08ae866fbd44ca8fa5afea",
+        "Playground.Refined.slnx": "f708d76336158687f03bab3336c153bf6b53aa1e",
+        "docs": "c392d1e5c467fbce8feb2ae2492c0f73248a3c7c",
+        "eng": "2b06d0d64434a4d3dcba84a805551ee2468212c6",
+        "evidence": "422bc9d36011f4343d66d496e833f119c91a5c76",
+        "global.json": "78423f81817952c90ce4f7c867c35daaea271c98",
+        "samples": "1e185dae3693821b3989103ad5cfaeb1ae263bd0",
+        "src": "160c67e195724085edc25224d5c82c3f88cae4f3",
+        "tests": "d64b56963d593d9d312c28cce5e64642a8970fab",
+        "workflows": "42aad0f492f83b6d29292c7f6fc34ed4d1fb075e"
+      },
+      "catalogue": [
+        {
+          "path": "samples/00-rule-matrix",
+          "status": "active"
+        },
+        {
+          "path": "samples/10-gilded-rose",
+          "status": "active"
+        },
+        {
+          "path": "samples/20-eshop-agent-assay",
+          "status": "historical"
+        },
+        {
+          "path": "samples/30-gof-functional-crosswalk",
+          "status": "active"
+        },
+        {
+          "path": "samples/40-functional-shape-v0.1",
+          "status": "active"
+        },
+        {
+          "path": "samples/50-decision-assistance",
+          "status": "active"
+        },
+        {
+          "path": "samples/60-csvhelper-functional",
+          "status": "active"
+        },
+        {
+          "path": "samples/70-polly-resilience",
+          "status": "active"
+        },
+        {
+          "path": "samples/80-inventory-reservation",
+          "status": "active"
+        },
+        {
+          "path": "samples/90-ef-boundaries",
+          "status": "active"
+        },
+        {
+          "path": "samples/100-expenseguard",
+          "status": "active"
+        },
+        {
+          "path": "samples/110-saga-assay",
+          "status": "active"
+        }
+      ]
+    },
+    "fsharp": {
+      "repository": "https://github.com/CanonFlow-Assay/FSharpAssay.Playground",
+      "commit": "c76247c9973d68a6a304340a36358b0c65f4d29e",
+      "tree": "4a808f22ed857c61f0d37213b6f3f7ef23fdae90",
+      "committedAt": "2026-11-19T15:51:08+05:30",
+      "producerRepository": "https://github.com/CanonFlow-Assay/FSharpAssay",
+      "producerCommit": "5b36c80d70fa75d6cc91c6243b3cd4777052d00a",
+      "archive": "snapshots/fsharp.tar.gz",
+      "sha256": "3d97c33c885238c5b716a8d877a68317afa1057a4e89ddb2f86394b1e6dc93f2",
+      "trackedFiles": 695,
+      "solution": "FSharpAssay.Playground.slnx",
+      "solutionProjects": 35,
+      "nativeInputs": {
+        ".fsassayrc": "6030a86658c7dba169aabdebdf70378627aa9ca9",
+        ".gitignore": "b5bb13318f8a83a6a4d6b77a5d6d25f74dd005f1",
+        "AGENTS.md": "cd2173694ed6ac7a3c7ab6fc78476cfaf1b5eefb",
+        "Directory.Build.props": "337ab69199624227e55517667731dadd2b115b79",
+        "FSharpAssay.Playground.slnx": "eafea1c9c8d97023074be03e8289f56593261b5f",
+        "LICENSE": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+        "NOTICE": "798588686764104e631488dc37389a6747174169",
+        "NuGet.Config": "cce52015ede1f1c8fe0598774c1ad4fb60e4a781",
+        "docs": "4dff998d435f608a22077b36b7067fcbcbe23a4c",
+        "eng": "062a9ec7c7b0fa804a35a2009be0e815e5c74491",
+        "fsassay-policy.lock.json": "bdbb0d241530a3b76686cfd921d56bcbb3dd5ef2",
+        "global.json": "1ab7a3c415aabd88d676657c9d092a938f7b87d4",
+        "historical": "674ab612a1b77ae26068c29c6032cd5e44cb22c4",
+        "samples": "20fc32d61bfa8c669996eefdf8afd0e1c46b6390",
+        "tests": "e295e96a54bd7a244612bac57dba74baa309fae9",
+        "workflows": "32bab075378fdc7b0d0f615f1d849348081e22d9"
+      },
+      "catalogue": [
+        {
+          "path": "samples/10-enterprise",
+          "status": "active"
+        },
+        {
+          "path": "samples/20-functional-patterns",
+          "status": "active"
+        },
+        {
+          "path": "samples/40-wallet",
+          "status": "active"
+        },
+        {
+          "path": "samples/50-decision-assist",
+          "status": "active"
+        },
+        {
+          "path": "samples/10-enterprise/airline-core",
+          "status": "enterprise example"
+        },
+        {
+          "path": "samples/10-enterprise/arangetram-adversaries",
+          "status": "enterprise example"
+        },
+        {
+          "path": "samples/10-enterprise/banking-core",
+          "status": "enterprise example"
+        },
+        {
+          "path": "samples/10-enterprise/frontend",
+          "status": "retained frontend"
+        },
+        {
+          "path": "samples/10-enterprise/gatepass-core",
+          "status": "enterprise example"
+        },
+        {
+          "path": "samples/10-enterprise/hospital-core",
+          "status": "enterprise example"
+        },
+        {
+          "path": "samples/10-enterprise/kutcheri-season",
+          "status": "enterprise example"
+        },
+        {
+          "path": "samples/10-enterprise/layam-academy",
+          "status": "enterprise example"
+        },
+        {
+          "path": "samples/10-enterprise/migration-demo",
+          "status": "enterprise example"
+        },
+        {
+          "path": "samples/10-enterprise/mock-drill",
+          "status": "enterprise example"
+        },
+        {
+          "path": "samples/10-enterprise/sangam-credit",
+          "status": "enterprise example"
+        },
+        {
+          "path": "samples/10-enterprise/trading-core",
+          "status": "enterprise example"
+        },
+        {
+          "path": "samples/10-enterprise/urbanclub-core",
+          "status": "enterprise example"
+        },
+        {
+          "path": "samples/10-enterprise/webuy-core",
+          "status": "enterprise example"
+        },
+        {
+          "path": "samples/10-enterprise/wecar-core",
+          "status": "enterprise example"
+        },
+        {
+          "path": "historical/legacy-playground",
+          "status": "historical"
+        }
+      ]
+    }
+  }
+}
