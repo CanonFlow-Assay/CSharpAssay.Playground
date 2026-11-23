@@ -6,7 +6,7 @@
         "type": "Direct",
         "requested": "[0.2.0-rc.1, )",
         "resolved": "0.2.0-rc.1",
-        "contentHash": "HzepKAA+HYAqfQLGyqCpJXtwhKP6m089+usuFWgJUALc4cryMsIPU8DGmd8EA9ebtpgL7On+z3nbStIN1TdMcA=="
+        "contentHash": "YPkQzcK6PW9BtUpPw9iLdHcuqTBEWQtdX/M++ZbAyTz1rdNnspbI14PC+n4IoDb86pIhCYHbFOKQPj/UGB97Cg=="
       },
       "CsvHelper": {
         "type": "Direct",

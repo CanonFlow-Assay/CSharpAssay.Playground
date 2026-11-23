@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -eq 0 ]]; then
+  printf '%s\n' 'Supply the command to run with PostgreSQL.' >&2
+  exit 64
+fi
+if [[ -n "${ASSAY_INVENTORY_DATABASE:-}" ]]; then
+  exec "$@"
+fi
+
+if [[ "$(podman info --format '{{.Host.Security.Rootless}}')" != true ]]; then
+  printf '%s\n' 'Start the temporary PostgreSQL instance with rootless Podman.' >&2
+  exit 1
+fi
+
+workspace=$(mktemp -d)
+container_file="$workspace/container-id"
+cleanup() {
+  local status=$?
+  trap - EXIT
+  if [[ -s "$container_file" ]] &&
+    ! timeout 30s podman rm --force --ignore "$(<"$container_file")" >/dev/null; then
+    if [[ "$status" -eq 0 ]]; then status=1; fi
+  fi
+  if ! rm -f -- "$container_file" || ! rmdir -- "$workspace"; then
+    if [[ "$status" -eq 0 ]]; then status=1; fi
+  fi
+  exit "$status"
+}
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+
+image='docker.io/library/postgres@sha256:5a5a84b19854a9ffaa54082c166ff4ec27473a361e496e5ea167f298f2da9722'
+password=$(openssl rand -hex 32)
+name=${ASSAY_TEMP_POSTGRES_NAME:-assay-inventory-${workspace##*/}}
+POSTGRES_PASSWORD="$password" timeout 120s podman run --detach --rm \
+  --name "$name" --cidfile "$container_file" --label canonflow.assay=inventory-qualification \
+  --env POSTGRES_PASSWORD --env POSTGRES_USER=assay --env POSTGRES_DB=assay \
+  --publish 127.0.0.1::5432 "$image" >/dev/null
+container=$(<"$container_file")
+
+ready=false
+for _ in {1..40}; do
+  if timeout 5s podman exec "$container" pg_isready -h 127.0.0.1 -U assay -d assay >/dev/null 2>&1; then
+    ready=true
+    break
+  fi
+  sleep 0.5
+done
+if [[ "$ready" != true ]]; then
+  printf '%s\n' 'The temporary PostgreSQL instance did not become ready.' >&2
+  exit 1
+fi
+
+binding=$(podman port "$container" 5432/tcp)
+if [[ ! "$binding" =~ ^127\.0\.0\.1:([0-9]+)$ ]]; then
+  printf '%s\n' 'Podman did not report a single loopback PostgreSQL port.' >&2
+  exit 1
+fi
+port=${BASH_REMATCH[1]}
+ASSAY_INVENTORY_DATABASE="Host=127.0.0.1;Port=$port;Database=assay;Username=assay;Password=$password;Timeout=10;Command Timeout=20;Maximum Pool Size=30" "$@"

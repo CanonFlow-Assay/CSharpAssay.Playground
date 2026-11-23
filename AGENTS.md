@@ -72,7 +72,8 @@ publication; it does not authorize bulk remote activity, force pushes, package
 publication or automatic GitHub merging. Keep local review and qualification
 history separate from clean GitHub publication commits. Marketing drafts remain local.
 
-The inventory sample requires Docker/PostgreSQL for real HTTP/database evidence.
+The inventory sample requires real PostgreSQL for HTTP/database evidence.
+Rootless Podman provides the default temporary instance.
 Run `./eng/run-inventory-maturity.sh` for its registered requirement and contract
 regression exercise. Commit SDK producer inputs before local package preparation;
 `eng/tooling sdk-source` pins their identity. Do not rebuild toolkit/engine binaries or

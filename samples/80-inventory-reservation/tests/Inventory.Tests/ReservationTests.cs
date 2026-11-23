@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 using Inventory.Adapter;
 using Inventory.Api;
 using Inventory.Domain;
@@ -115,8 +116,36 @@ public sealed class ReservationTests
         await using var server = await Server.Start(await Store(), Token);
         using var response = await server.Client.PostAsJsonAsync("/reservations", new ReservationRequestDto("http", "widget", 2), Token);
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        Assert.Equal("application/json", response.Content.Headers.ContentType?.MediaType);
         var body = await response.Content.ReadFromJsonAsync<ReservationResponse>(Token);
         Assert.Equal(new("reserved", "http", 3, ""), body);
+
+        using var rejected = await server.Client.PostAsJsonAsync(
+            "/reservations", new ReservationRequestDto("invalid", "widget", 0), Token);
+        Assert.Equal(HttpStatusCode.BadRequest, rejected.StatusCode);
+        var rejection = Assert.IsType<ReservationResponse>(await rejected.Content.ReadFromJsonAsync<ReservationResponse>(Token));
+        Assert.Equal("invalid", rejection.Status);
+        Assert.NotEmpty(rejection.Reason);
+
+        using var schemaResponse = await server.Client.GetAsync("/openapi/v1.json", Token);
+        Assert.Equal(HttpStatusCode.OK, schemaResponse.StatusCode);
+        using var schema = JsonDocument.Parse(await schemaResponse.Content.ReadAsStringAsync(Token));
+        var operation = schema.RootElement.GetProperty("paths").GetProperty("/reservations").GetProperty("post");
+        var request = operation.GetProperty("requestBody").GetProperty("content").GetProperty("application/json");
+        Assert.Equal("#/components/schemas/ReservationRequestDto", request.GetProperty("schema").GetProperty("$ref").GetString());
+
+        var responses = operation.GetProperty("responses");
+        foreach (var statusCode in new[] { "200", "201", "400", "409" })
+        {
+            var content = responses.GetProperty(statusCode).GetProperty("content").GetProperty("application/json");
+            Assert.Equal("#/components/schemas/ReservationResponse", content.GetProperty("schema").GetProperty("$ref").GetString());
+        }
+
+        var schemas = schema.RootElement.GetProperty("components").GetProperty("schemas");
+        Assert.False(schemas.TryGetProperty(nameof(ReservationDecision), out _));
+        Assert.DoesNotContain(
+            typeof(ReservationDecision).Assembly.GetReferencedAssemblies(),
+            reference => string.Equals(reference.Name, "System.Text.Json", StringComparison.Ordinal));
     }
     [Fact]
     public async Task HttpReplayReturnsStableReceipt()

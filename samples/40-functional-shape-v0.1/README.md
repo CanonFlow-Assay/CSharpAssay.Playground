@@ -79,8 +79,8 @@ validation mutations, and nine API mapping mutations. The harness compiles and
 executes every mutation in an isolated copy against both the original 16 tests
 and all 55 tests. It rejects failed baselines, failed compilation, unexpected test
 counts, skipped tests, process failures, and unexpected final outcomes. The
-integer-equivalent quantity mutation remains an unresolved survivor for contract
-review. It is never automatically removed from the corpus or a denominator.
+quantity mutation survived and its equivalence decision is recorded in the
+[human adjudication receipt](../../evidence/expectations/mutation-survivor-review.md).
 
 Coverage uses `Microsoft.Testing.Extensions.CodeCoverage` 17.14.2, compatible with
 the current Microsoft Testing Platform runner. The [Microsoft coverage guide](https://learn.microsoft.com/en-us/dotnet/core/testing/microsoft-testing-platform-code-coverage)
@@ -133,7 +133,7 @@ quality or prove useful reviewer effort. Human adjudication remains pending.
 | Mutations detected, fixed 26-case corpus | 12 | 25 |
 
 Thirteen previously surviving mutations were detected by the added tests. The
-integer-equivalent quantity mutation remains unresolved; it was not excluded.
+adjudicated quantity mutation counts as a survivor in the 26-case corpus.
 All 26 before/after cases completed, producing 52 experiment/advice pairs.
 These are targeted sample results, not a general mutation score or proof of all
 requirements.

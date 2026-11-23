@@ -54,9 +54,9 @@ individual tests in the registered receipts.
 ## Browse and reproduce the source archives
 
 The [archive manifest](manifest.json) records the original commits, Git trees,
-archive SHA-256 values, and Assay producer pins. These are historical snapshots
-of the complete original collections with their test harnesses, build policies,
-documentation, and licenses.
+archive SHA-256 values, and Assay producer pins. The C# snapshot captures the
+native parity baseline at `b718c99` with engine `ee00156`. Each snapshot includes
+its tracked test harnesses, build policies, documentation, and licenses.
 
 ```sh
 ./cross-playground/playground list
@@ -69,5 +69,6 @@ documentation, and licenses.
 The checkout command verifies the archive against the original tree.
 Qualification uses a temporary workspace, restores the pinned Assay producer,
 and saves the commands, exit codes, logs, reports, and materialized checkouts
-in the new results directory. See the extracted READMEs for prerequisites and
-sample-specific commands.
+in the new results directory. The C# sample gate uses the current rootless
+Podman PostgreSQL launcher and passes its connection to the materialized
+checkout. See the extracted READMEs for sample-specific commands.

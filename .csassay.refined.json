@@ -41,6 +41,7 @@
       "Assay.Workflow.Domain"
     ],
     "shellNamespaces": [
+      "Playground.RuleMatrix.Refined.Shell",
       "Playground.Tests",
       "Playground.DecisionAssist.Cli"
     ]

@@ -20,7 +20,7 @@ export ASSAY_RUNNER="$PWD/../CSharpAssay/src/CsAssay.Runner/bin/Release/net11.0/
 ./eng/run-expenseguard.sh --output "$PWD/evidence/generated/expenseguard/tutorial"
 ```
 
-The engine must already contain its successful exact-source qualification. Docker/PostgreSQL is required for ExpenseGuard integration, and restore may download dependencies. Choose a fresh output path. This is not a one-command install on an unprepared machine.
+The engine must already contain its successful exact-source qualification. ExpenseGuard integration uses real PostgreSQL, with rootless Podman providing the temporary instance by default. Restore may download dependencies. Choose a fresh output path.
 
 ### Inspect the outcome
 

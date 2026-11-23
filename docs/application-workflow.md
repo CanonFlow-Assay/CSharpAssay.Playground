@@ -59,8 +59,9 @@ qualification of the original publication commit.
 
 The all-sample gate evaluates all 36 projects, builds the 30 runnable sample
 projects and shared/test projects, including real PostgreSQL/HTTP inventory tests.
-Docker is required; no fake database or skipped test fallback is used. Six actual invalid
-MSBuild configurations must fail with their corresponding mandate diagnostics.
+Rootless Podman starts the default PostgreSQL instance. Missing database evidence
+fails the gate. Six actual invalid MSBuild configurations must fail with their
+corresponding mandate diagnostics.
 Three intentional negative/upstream fixtures retain reviewed compiler-policy
 exceptions; the SDK, target and language mandate still applies to them.
 

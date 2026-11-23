@@ -163,7 +163,7 @@ Coverage readers resolve explicit roots and reject missing, ambiguous and
 out-of-scope files. Policies, finding fingerprints, production module scope and
 test minima remain intact.
 
-Run `./eng/run-inventory-maturity.sh --output <fresh-directory>` with Docker
+Run `./eng/run-inventory-maturity.sh --output <fresh-directory>` with rootless Podman
 available, and `./eng/run-application-workflow.sh --output <fresh-directory>` for
 Polly and the packaged starter. Both retain failures and require fresh output
 directories. Shared sample gates remain regression checks; CsvHelper feature

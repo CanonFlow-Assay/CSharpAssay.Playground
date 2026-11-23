@@ -14,12 +14,15 @@
       "testsPassed": 0,
       "ruleCounts": {
         "CSAI0001": 2,
-        "CSAI0002": 1,
+        "CSAI0002": 4,
         "CSAN0001": 2,
         "CSAN0002": 1,
         "CSAN0003": 2,
         "CSAN0004": 2,
         "CSAP0001": 2
+      },
+      "advisoryRuleCounts": {
+        "CSAA0002": 3
       }
     },
     {
@@ -64,6 +67,7 @@
       },
       "advisoryReview": "Shared workflow protocol metadata uses independent requirement/authority and change/coverage flags; trace options are configuration, not exclusive business cases. Contract comparison accumulation retains deterministic explicit differences. These six advisory findings are retained; no rule is suppressed or admitted by this review. Independent review pending.",
       "advisoryRuleCounts": {
+        "CSAA0002": 0,
         "CSAD0002": 3,
         "CSAF0002": 3
       }

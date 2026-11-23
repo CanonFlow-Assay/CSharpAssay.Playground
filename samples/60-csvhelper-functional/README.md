@@ -88,7 +88,7 @@ fetch the upstream GitHub repository. NuGet restore may use the network.
 | Line coverage | 95/187 (50.80%) → 148/187 (79.14%) | Entire Domain + Adapter, including generated record/union members |
 | Branch coverage | 26/62 (41.94%) → 57/62 (91.94%) | Same two assemblies and denominators; CLI exercised separately |
 | Mutation detection | 4/19 → 18/19 | Two authored smoke tests → 79 tests; 14 additional defects detected |
-| Survivor | `flag-equivalent-pattern` | `numeric == 0` → `numeric is 0`; contract review remains open |
+| Survivor | `flag-equivalent-pattern` | `numeric == 0` → `numeric is 0`, with equivalence approved in the [human adjudication receipt](../../evidence/expectations/mutation-survivor-review.md) |
 | Decision Assist | Offline advice for every phase | Killed cases request no model; equivalent candidate routes to ReviewContract; verdict remains Inconclusive |
 | Original upstream tests | 1,059 passed; four failed; 1,063 total | Unmodified net9 test target, Linux, runtime roll-forward Major |
 | Original upstream Assay check | ToolFailure, provisional | Unsupported original TFMs/language profile and missing .NET Framework reference packs |
@@ -147,9 +147,8 @@ The workload is agent-authored, not a blind human-adjudicated evaluation.
 
 [review-cases.json](review-cases.json) retains all seven advisory fingerprints
 and the survivor. A test exhaustively compares zero equality and a zero constant
-pattern for all **65,536 short values**. The agent conclusion is finite-domain
-equivalence of those expressions; human adjudication is pending. The corpus
-continues to count this case: no automatic equivalence exclusion or rule waiver.
+pattern for all **65,536 short values**. The human review approved equivalence
+for those expressions. The corpus counts the case as a survivor.
 
 The workload shell compares published CsvHelper record mapping with the
 functional adapter on valid generated CSV. Each pipeline processes the same

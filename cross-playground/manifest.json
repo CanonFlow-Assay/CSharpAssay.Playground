@@ -3,27 +3,28 @@
   "sources": {
     "csharp": {
       "repository": "https://github.com/CanonFlow-Assay/CSharpAssay.Playground",
-      "commit": "418d6be099554aafc0391d15f0d880f1f903bb45",
-      "tree": "0fd17a1afa5a02fa5b27caab71b2cb97708204dc",
-      "committedAt": "2026-11-19T17:52:21+05:30",
+      "commit": "b718c992dc106651cf2eb4b2258e6ee7a38c66f0",
+      "tree": "66c777a201e0cd990712edbbe68f0b2963efa041",
+      "committedAt": "2026-11-20T11:47:46+05:30",
       "producerRepository": "https://github.com/CanonFlow-Assay/CSharpAssay",
-      "producerCommit": "92af5f6a702890e7c65f35df8cb596c5a0a60161",
+      "producerCommit": "ee00156ef9f85367970f7cebd9c5df2373d40918",
       "archive": "snapshots/csharp.tar.gz",
-      "sha256": "98abf2d40c1bd5310a86c672d1819c4f411fc67d3805823f88cfcc6e3e9f12ab",
-      "trackedFiles": 437,
+      "sha256": "a864a25d809c46e4a6dbcafcb7062cd78efb8806f1dda1829f8c1910613cbb80",
+      "trackedFiles": 453,
       "solution": "AllSamples.slnx",
-      "solutionProjects": 48,
+      "solutionProjects": 50,
       "nativeInputs": {
         ".config": "2545def9f3688bb574e725d7dda1fdb0e5a8261a",
         ".csassay.gildedrose-upstream.json": "32dd3ea84c80691f3d09f18e72bd02c87838a70c",
         ".csassay.impure.json": "ab36fd973aa2c2c0fd9da5a5ebf9c37480fdae06",
         ".csassay.inventory.json": "c2b4774f86b3cfa0b74c503e2c50b5d8ea720711",
+        ".csassay.parity.json": "f01df016ed8e69046fb6c941d88ec67e260d39f7",
         ".csassay.refined.json": "9aa6a409046ff0bed471b7bf1715a57c26162cbf",
         ".csassay.workflow.json": "d68789832556c88d30583e739212926f192c4525",
         ".editorconfig": "dcc64dd01237dfb73283afd7b043aa0f6c0ebd8b",
         ".gitignore": "117b6915a191ab62514c90679703a6716b9c4fe2",
         "AGENTS.md": "118822c554be09d3a3af6bd96216c8e7728a68c6",
-        "AllSamples.slnx": "b09560ef5fe26a4153f53451d2dd3bbd5aba2004",
+        "AllSamples.slnx": "2b1d088078716670a9cac886b8eadbf1816481ce",
         "Assay.Workflow.slnx": "5bd9e16768afcf22f043a16897959a3f1060b039",
         "CSharpAssay.Playground.slnx": "c0ee879e70a0e3bf063aaa98a0f30a99eb656e96",
         "Directory.Build.props": "69700ea545ff9ec7b3840c6936a1055ec353875c",
@@ -33,13 +34,14 @@
         "LICENSE": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
         "NuGet.config": "b1737015156c2f305a08ae866fbd44ca8fa5afea",
         "Playground.Refined.slnx": "f708d76336158687f03bab3336c153bf6b53aa1e",
+        "cross-playground/native-cases.json": "f148d3634ff2a3cc1465f613acf94e684ecc64fb",
         "docs": "c392d1e5c467fbce8feb2ae2492c0f73248a3c7c",
         "eng": "2b06d0d64434a4d3dcba84a805551ee2468212c6",
         "evidence": "422bc9d36011f4343d66d496e833f119c91a5c76",
         "global.json": "78423f81817952c90ce4f7c867c35daaea271c98",
-        "samples": "1e185dae3693821b3989103ad5cfaeb1ae263bd0",
+        "samples": "50ed2d69f3b4a9fa68579c505999df1e409b586c",
         "src": "160c67e195724085edc25224d5c82c3f88cae4f3",
-        "tests": "d64b56963d593d9d312c28cce5e64642a8970fab",
+        "tests": "41bc695390ba896f4ad90d4e545a93105730c838",
         "workflows": "42aad0f492f83b6d29292c7f6fc34ed4d1fb075e"
       },
       "catalogue": [
@@ -89,6 +91,10 @@
         },
         {
           "path": "samples/110-saga-assay",
+          "status": "active"
+        },
+        {
+          "path": "samples/native-parity",
           "status": "active"
         }
       ]

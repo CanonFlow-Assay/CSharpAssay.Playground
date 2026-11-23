@@ -89,28 +89,30 @@ public static class LocalServices
     public static async Task<int> WithDatabase(string[] command)
     {
         Json.Check(command.Length > 0, "Supply an explicit command after --.");
-        if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ASSAY_INVENTORY_DATABASE")))
+        var launch = command;
+        var container = string.Empty;
+        Dictionary<string, string>? environment = null;
+        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ASSAY_INVENTORY_DATABASE")))
         {
-            return await Child(command, null);
+            container = $"assay-inventory-{Guid.NewGuid():N}";
+            environment = new() { ["ASSAY_TEMP_POSTGRES_NAME"] = container };
+            launch = [Path.Combine(Root, "eng/with-inventory-database"), .. command];
         }
 
-        const string image = "postgres@sha256:5a5a84b19854a9ffaa54082c166ff4ec27473a361e496e5ea167f298f2da9722";
-        var name = "assay-inventory-" + Convert.ToHexStringLower(RandomNumberGenerator.GetBytes(6)); var password = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
-        var start = await Processes.Run(["docker", "run", "--detach", "--rm", "--name", name, "--label", "canonflow.assay=inventory-qualification", "-e", "POSTGRES_PASSWORD", "-e", "POSTGRES_USER=assay", "-e", "POSTGRES_DB=assay", "-p", "127.0.0.1::5432", image], Root, seconds: 120, environment: new Dictionary<string, string> { ["POSTGRES_PASSWORD"] = password }); start.Require("Start pinned PostgreSQL");
-        try
+        var execution = await Processes.Run(launch, Directory.GetCurrentDirectory(), seconds: 14400, environment: environment);
+        Console.Write(execution.Output);
+        if (execution.State is not (ProcessState.TimedOut or ProcessState.Cancelled))
         {
-            var ready = false;
-            for (var i = 0; i < 40; i++) { var check = await Processes.Run(["docker", "exec", name, "pg_isready", "-U", "assay", "-d", "assay"], Root, seconds: 5); if (check.State == ProcessState.Passed) { ready = true; break; } await Task.Delay(500); }
-            Json.Check(ready, "Real PostgreSQL did not become ready; no fake or skip fallback.");
-            var port = await Processes.Run(["docker", "port", name, "5432/tcp"], Root); port.Require("Inspect loopback port");
-            var connection = $"Host=127.0.0.1;Port={port.Output.Trim().Split(':')[^1]};Database=assay;Username=assay;Password={password};Timeout=10;Command Timeout=20;Maximum Pool Size=30";
-            return await Child(command, connection);
+            return execution.ExitCode;
         }
-        finally { (await Processes.Run(["docker", "rm", "--force", name], Root)).Require("Remove temporary database"); }
-    }
-    private static async Task<int> Child(string[] command, string? connection)
-    {
-        var environment = connection is null ? null : new Dictionary<string, string> { ["ASSAY_INVENTORY_DATABASE"] = connection };
-        var execution = await Processes.Run(command, Directory.GetCurrentDirectory(), seconds: 14400, environment: environment); Console.Write(execution.Output); return execution.State is ProcessState.TimedOut or ProcessState.Cancelled ? 2 : execution.ExitCode;
+
+        // Killing the child process tree can bypass the launcher's exit trap.
+        if (container.Length > 0)
+        {
+            (await Processes.Run(["podman", "rm", "--force", "--ignore", container], Root, seconds: 30))
+                .Require("Remove interrupted PostgreSQL container");
+        }
+
+        return 2;
     }
 }

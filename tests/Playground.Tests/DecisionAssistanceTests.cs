@@ -153,10 +153,10 @@ public sealed class DecisionAssistanceTests
     {
         var body = string.Empty;
         var endpoint = string.Empty;
-        using var handler = new ResponseHandler(request =>
+        using var handler = new ResponseHandler(async (request, cancellationToken) =>
         {
             endpoint = Assert.IsType<Uri>(request.RequestUri).AbsoluteUri;
-            body = Assert.IsAssignableFrom<HttpContent>(request.Content).ReadAsStringAsync().GetAwaiter().GetResult();
+            body = await Assert.IsAssignableFrom<HttpContent>(request.Content).ReadAsStringAsync(cancellationToken);
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent("{\"answers\":{\"next\":{\"type\":\"choice\",\"choice\":\"inspect_assertion\"}}}")
@@ -207,9 +207,15 @@ public sealed class DecisionAssistanceTests
         Assert.DoesNotContain("synthetic", Assistance.Explain(advice, FeedbackTone.Concise), StringComparison.Ordinal);
     }
 
-    private sealed class ResponseHandler(Func<HttpRequestMessage, HttpResponseMessage> respond) : HttpMessageHandler
+    private sealed class ResponseHandler(
+        Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> respond) : HttpMessageHandler
     {
+        public ResponseHandler(Func<HttpRequestMessage, HttpResponseMessage> respond)
+            : this((request, _) => Task.FromResult(respond(request)))
+        {
+        }
+
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) =>
-            Task.FromResult(respond(request));
+            respond(request, cancellationToken);
     }
 }

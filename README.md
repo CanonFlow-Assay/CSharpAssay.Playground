@@ -29,8 +29,8 @@ This prepares local packages and runs the offline demonstration and synthetic ro
 
 `./eng/run-all-samples.sh` evaluates and builds the complete authored-project inventory,
 then executes every test project, including ExpenseGuard.
-Docker is required for the inventory tests; the gate starts an isolated, pinned
-PostgreSQL container and removes it afterward.
+The gate starts and removes an isolated PostgreSQL container with rootless
+Podman. It also accepts an explicit `ASSAY_INVENTORY_DATABASE` connection.
 The build rejects older or mixed framework targets, another SDK, a language version other than C# 15,
 and disabled nullable/warnings-as-errors settings in positive samples. The three
 reviewed negative/upstream fixture exceptions are listed in
@@ -84,7 +84,11 @@ Reviewed CSV observations retain exact comparison of the original finding fields
 The consumer validates additive scope/identity context separately, so new metadata
 does not require refreshing the reviewed findings or discarding their identities.
 
-CI's checked-in fallback is the paired engine developer-experience commit `717d5d2daff548b580c651c7bc1247964bc826c2`. Workflow input `assay_ref`, then repository variable `CSHARP_ASSAY_REF`, can override that fallback; inspect the actual hosted checkout identity rather than inferring it from this sentence.
+CI resolves the paired engine from the optional `assay_ref` input, then the
+repository variable `CSHARP_ASSAY_REF`, then the fallback pinned in the
+[Playground workflow](.github/workflows/playground.yml). The checkout log records
+the engine revision used for a run. The engine revision must be available in
+GitHub before the paired Playground revision can run there.
 
 Follow the [local Forgejo review workflow](docs/local-review-workflow.md): local tests, commits and PRs precede consolidated external publication.
 
@@ -95,10 +99,10 @@ Run `./eng/tooling run-decision-assistance` after the Release build to reproduce
 The workflow and evidence harnesses are C# applications under
 `eng/Assay.Tooling`; Python is no longer a prerequisite. `eng/tooling` and
 `eng/daa` are small Bash launchers for the same .NET executable. Run the DLL
-with `dotnet` directly when Bash is unavailable. The pinned SDK, Docker for the
-real inventory database, and a matching engine remain required. Host evidence
-is Linux-scoped. The optional Python SetFit bridge has been retired; external
-provider protocols remain advisory and do not grant verification authority.
+with `dotnet` directly when Bash is unavailable. The PostgreSQL launcher uses
+Bash, OpenSSL, and rootless Podman. The pinned SDK and a matching engine are
+required. Host evidence is Linux-scoped. The optional Python SetFit bridge has
+been retired. External provider protocols provide advisory evidence.
 
 The [22 October agent self-adjudication](docs/self-adjudication-2026-10-22.md)
 records corrected evidence gaps, regression cases and the fresh qualification

@@ -17,10 +17,10 @@ rejection, permit release and explicitly degraded fallback.
 ```
 
 The gate runs 39 workflow tests, authoritative native assessment and six exact
-production mutations. Five are expected to be killed and one equivalent-looking
-retry predicate remains a survivor requiring review. All execution states and
-findings remain in ignored evidence. The generated standalone app and an actual
-requirement change are checked by the same command.
+production mutations. Five are expected to be killed. The retry predicate counts
+as a survivor with an [approved equivalence decision](../../evidence/expectations/mutation-survivor-review.md).
+All execution states and findings are stored in ignored evidence. The generated
+standalone app and an actual requirement change are checked by the same command.
 
 See [the application workflow](../../docs/application-workflow.md) for API
 contracts, new-app commands, evidence boundaries and current limitations.

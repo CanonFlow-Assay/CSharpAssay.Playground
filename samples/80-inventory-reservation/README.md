@@ -14,6 +14,12 @@ together. `Inventory.Api` projects outcomes to HTTP 201/200/400/409. Reopening a
 store preserves receipts. The runnable API uses a persistent schema and does not
 reset stock on restart.
 
+`ReservationRequestDto` binds the incoming JSON. `ApiHost.Project` matches every
+case of the native `ReservationDecision` union and maps it to `ReservationResponse`
+and an HTTP status. The loopback API serves the generated DTO schema at
+`/openapi/v1.json`. The PostgreSQL-backed HTTP test round-trips success and
+rejection JSON and checks the request and response schemas.
+
 The tests and worker execute concurrency, idempotency, conflicting replays,
 rollback, cancellation and connection persistence against PostgreSQL. The worker
 declares seven scenario identities and three infrastructure checks; all outcomes
@@ -27,18 +33,18 @@ From the repository root, after preparing paired engine packages:
 ./eng/run-inventory-maturity.sh --output evidence/generated/maturity/final/inventory
 ```
 
-Docker must be available. The wrapper starts a temporary PostgreSQL 18 image
-pinned by digest, generates credentials in memory, binds to loopback, and removes
-the container after execution. An explicitly supplied `ASSAY_INVENTORY_DATABASE`
-connection is also supported; never print or commit its value. Each test creates
-its own schema. Missing infrastructure fails rather than skipping tests.
+By default, the wrapper uses rootless Podman to start a PostgreSQL 18 image
+pinned by digest. It generates credentials in memory, binds to loopback, and
+removes the container after execution. An explicitly supplied
+`ASSAY_INVENTORY_DATABASE` connection is also supported. Keep its value private.
+Each test creates its own schema. Missing infrastructure fails the gate.
 
 The qualification reconstructs the original 25-test baseline, registers a limit
 of three units for new reservations, records two failing acceptance tests, and
 then implements the limit. Historical receipts remain replayable even when their
 quantity exceeds the new limit. All 27 tests, previous named tests and the old
-contract pin must survive. Six isolated mutations retain five kills and an
-equivalent-looking survivor for review.
+contract pin must survive. Six isolated mutations retain five kills and one
+survivor with an [approved equivalence decision](../../evidence/expectations/mutation-survivor-review.md).
 
 In a separate retained workspace the qualification renames the wire member
 `remaining` to `available`. Typed behavior tests continue to pass; ContractAssay

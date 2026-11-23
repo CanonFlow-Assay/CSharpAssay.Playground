@@ -21,10 +21,9 @@ this flow. Read `/home/arun/Developer/AGENTS.md` and stop on restriction warning
 The local instance uses the official Forgejo 17.0.0 rootless image pinned by
 container digest, private repositories, disabled public registration and a
 loopback-only HTTP port at `http://127.0.0.1:3300`. Its Compose definition is under
-`/home/arun/Developer/services/forgejo/compose.yaml`; repository data and server
-configuration use separate persistent Docker volumes. Stop/start with
-`docker compose -f /home/arun/Developer/services/forgejo/compose.yaml stop` / `up -d`.
-Do not remove the volumes. Local sign-in details are saved outside Git in that
+`/home/arun/Developer/services/forgejo/compose.yaml`. Use the instance's service
+manager to start or stop it and preserve the separate repository and configuration
+volumes during maintenance. Local sign-in details are saved outside Git in that
 service directory with owner-only permissions; never include them in reports.
 
 Forgejo Actions is disabled: the existing local qualification commands produce
@@ -45,13 +44,11 @@ For each subsequent change:
 
 ## Paired engine
 
-The Playground CI defaults to the exact engine assessment commit
-`8fa9bbd32a8fffed77a072e56bd5bc4472b3a7c1` rather than assuming the new `assess` command already exists on
-engine main. `assay_ref` / `CSHARP_ASSAY_REF` can select another deliberately
-reviewed matching revision. This local workflow edit has not run on GitHub.
-The paired commit is currently reviewed only in local Forgejo. A separately
-authorized future external publication must make that engine commit available
-before requesting hosted Playground CI.
+The 22 October local review used engine assessment commit
+`8fa9bbd32a8fffed77a072e56bd5bc4472b3a7c1`. The
+[Playground workflow](../.github/workflows/playground.yml) records the current
+hosted fallback. A hosted override through `assay_ref` or `CSHARP_ASSAY_REF`
+must select a revision available in the hosted engine repository.
 
 The historical 21 October checkpoint in `application-workflow.md` remains scoped:
 301 C# tests passed, six invalid toolchain settings were rejected, and Polly /

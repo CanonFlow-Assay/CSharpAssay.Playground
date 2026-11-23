@@ -18,7 +18,7 @@
     "coreProjects": ["samples/00-rule-matrix/impure/RuleMatrix.Impure.csproj"],
     "shellProjects": [],
     "coreNamespaces": ["Playground.RuleMatrix.Impure"],
-    "shellNamespaces": []
+    "shellNamespaces": ["Playground.RuleMatrix.Impure.Shell"]
   },
   "representations": {
     "resultTypes": [],

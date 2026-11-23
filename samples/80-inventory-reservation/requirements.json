@@ -88,6 +88,13 @@
             "Inventory.Tests.ReservationTests.HttpReserveReturnsCreatedReceipt"
           ],
           "text": "The real HTTP endpoint projects explicit outcomes and status codes."
+        },
+        {
+          "id": "native-union-wire-boundary",
+          "testNames": [
+            "Inventory.Tests.ReservationTests.HttpReserveReturnsCreatedReceipt"
+          ],
+          "text": "HTTP JSON binds and returns shell DTOs for a successful reservation and a rejected request. Generated OpenAPI describes those DTOs for the reservation endpoint."
         }
       ],
       "description": "The real HTTP endpoint projects explicit outcomes and status codes.",

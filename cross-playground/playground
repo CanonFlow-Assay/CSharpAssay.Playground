@@ -119,7 +119,7 @@ qualify() (
       export ASSAY_RUNNER="$runner"
       run_stage "$output" prepare ./eng/prepare-assay.sh "$engine_copy" --bootstrap-locks
       git rev-parse HEAD > "$output/qualified-head.txt"
-      run_stage "$output" samples ./eng/run-all-samples.sh
+      run_stage "$output" samples "$directory/../eng/with-inventory-database" ./eng/run-all-samples.sh
       run_stage "$output" verify ./eng/run-assay.sh "$runner"
       run_stage "$output" gof ./eng/run-gof-crosswalk.sh
       run_stage "$output" shape ./eng/run-functional-shape.sh

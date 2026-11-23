@@ -16,7 +16,7 @@ The local freshness probe copies declared build/configuration files into a new d
 | --- | --- | --- |
 | Engine prerequisite | Exact clean seven-gate qualification; copied package hashes | Missing/mismatched package/source |
 | Changed tooling | Focused boundary tests plus full repository suite | Failed/missing/malformed/stale inputs |
-| ExpenseGuard | Original cases plus guided tests; real PostgreSQL/API/worker; unchanged 12 mutants | Missing Docker, compilation failure, skipped required tests, surviving authored mutant |
+| ExpenseGuard | Original cases plus guided tests; real PostgreSQL/API/worker; unchanged 12 mutants | Missing PostgreSQL, compilation failure, skipped required tests, surviving authored mutant |
 | Explorer fixtures | All 14 canonical before/after snippets compile; actual packaged checks; compiler/prototype controls | Named observation absent or prototype promoted |
 | Repair | Real baseline/fault/failed edit/fixed edit plus protected/stale/malformed/no-progress/budget stops | Candidate weakens protected inputs or self-certifies |
 | Reports | Completed receipt; source/report binding; safe SVG; per-file output failure | Stale/current confusion or success after output failure |
@@ -44,7 +44,7 @@ The public record's `payload` is fixed serialized text and its SHA-256 binds tha
 * Days 15–21: run the bounded repair and full qualification; finish and fact-check the article/video/drafts. No claim of an independent human review unless one actually occurs.
 * Days 22–30: hand the exact pack to the owner. Later approval can authorize a canonical article and LinkedIn example; relevant community activity follows venue rules. Answer actual feedback before adding channels.
 
-Measure a clean trial's preparation time and manual steps; separate already-installed SDK/Docker, cached image/dependencies and downloads. Five-minute orientation and fifteen-minute supported-host first result are goals, not measured promises. A maintainer cold trial is not a newcomer study. No telemetry is added. Count voluntary successful/return trials and unresolved onboarding failures; stars/views/downloads are discovery signals, not users or correctness.
+Measure a clean trial's preparation time and manual steps; separate the installed SDK and Podman, cached images and dependencies, and downloads. Five-minute orientation and fifteen-minute supported-host first result are goals, not measured promises. A maintainer cold trial is not a newcomer study. No telemetry is added. Count voluntary successful/return trials and unresolved onboarding failures; stars/views/downloads are discovery signals, not users or correctness.
 
 ## Measured maintainer setup trial, 27 October 2026
 
@@ -52,7 +52,7 @@ A separate clean checkout of producer `6397583` prepared qualified local package
 
 A second preparation preserved the first cache and used fresh package and HTTP caches: 33.44 seconds, including 22.309 seconds across three separately timed restore invocations. Restore time includes dependency resolution, downloads and cache population; transfer-only time was not measured. Existing build outputs and the package-scoped tool install were retained for that second preparation. These are two different trials, not an end-to-end speed comparison.
 
-The exact SDK, Linux host, Docker and completed engine qualification already existed. Their installation/qualification time is excluded. This was the implementing maintainer's trial, not an independent newcomer study, Windows result or full ExpenseGuard first-run timing. Raw logs and machine receipts are retained locally. The five/fifteen-minute usability targets remain proposed goals.
+The exact SDK, Linux host, container runtime and completed engine qualification already existed. Their installation/qualification time is excluded. This was the implementing maintainer's trial, not an independent newcomer study, Windows result or full ExpenseGuard first-run timing. Raw logs and machine receipts are retained locally. The five/fifteen-minute usability targets remain proposed goals.
 
 ## Exact publication approval
 

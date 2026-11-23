@@ -7,6 +7,7 @@ using Inventory.Adapter;
 using Inventory.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Inventory.Api;
@@ -21,8 +22,10 @@ public static class ApiHost
     {
         var builder = WebApplication.CreateBuilder();
         builder.Logging.ClearProviders();
+        builder.Services.AddOpenApi();
         var app = builder.Build();
         app.Urls.Add(url);
+        app.MapOpenApi();
         app.MapPost("/reservations", async (ReservationRequestDto request, CancellationToken token) =>
         {
             var outcome = request.RequestId is string key && request.Sku is string sku
@@ -30,7 +33,11 @@ public static class ApiHost
                 : new InvalidReservation("Request key and SKU are required.");
             var projection = Project(outcome);
             return Results.Json(projection.Response, statusCode: projection.StatusCode);
-        });
+        })
+            .Produces<ReservationResponse>(StatusCodes.Status200OK)
+            .Produces<ReservationResponse>(StatusCodes.Status201Created)
+            .Produces<ReservationResponse>(StatusCodes.Status400BadRequest)
+            .Produces<ReservationResponse>(StatusCodes.Status409Conflict);
         return app;
     }
 

@@ -40,7 +40,7 @@ public static class PackageTools
             Json.Check(File.Exists(installed) && Json.Sha(installed) == expected, "Installed payload differs from package: " + entry.FullName);
         }
     }
-    private static readonly string[] Inputs = ["src/Assay.Workflow.Domain", "src/Assay.Workflow.Cli", "samples/50-decision-assistance/src/DecisionAssist.Domain", "Directory.Build.props", "Directory.Build.targets", "Directory.Packages.props", "global.json", "NuGet.config", ".editorconfig", "eng/prepare-application-workflow.sh", "eng/Assay.Tooling"];
+    private static readonly string[] Inputs = ["src/Assay.Workflow.Domain", "src/Assay.Workflow.Cli", "samples/50-decision-assistance/src/DecisionAssist.Domain", "Directory.Build.props", "Directory.Build.targets", "Directory.Packages.props", "global.json", "NuGet.config", ".editorconfig", "eng/prepare-application-workflow.sh", "eng/with-inventory-database", "eng/Assay.Tooling"];
     private static readonly string[] sourceArray = new[] { "samples", "src", "tests", "eng/Assay.Tooling" };
 
     public static async Task<string> SdkSource()

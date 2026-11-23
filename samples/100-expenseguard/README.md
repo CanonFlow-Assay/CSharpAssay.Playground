@@ -152,7 +152,7 @@ evaluation is claimed by this offline qualification.
 ## Reproduce the evidence
 
 From the Playground root, after normal engine package preparation, with the
-pinned SDK on PATH and Docker available:
+pinned SDK on PATH and rootless Podman available:
 
 ```bash
 export ASSAY_RUNNER=/absolute/path/to/qualified-engine/src/CsAssay.Runner/bin/Release/net11.0/cs-assay.dll
