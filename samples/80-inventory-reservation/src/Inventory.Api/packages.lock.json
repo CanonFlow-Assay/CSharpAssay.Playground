@@ -6,7 +6,7 @@
         "type": "Direct",
         "requested": "[0.1.0-preview.1, )",
         "resolved": "0.1.0-preview.1",
-        "contentHash": "ukqh+VaVsvJ3TS8bAXhxjJ8Sm9LmbP0wkGgeeBpFcbVW6eI9ssc4OpGv1idxeWlwfSyXZM1zuDiwDnxBXZ1Ypg=="
+        "contentHash": "GtTWGB6OsMLFZQpY4ks3tBM37Y5LxxXNPySosrskUE2klk/wRlCIT9xw5m/OVMdNxZRsQiftJj2VwProPtMJbw=="
       },
       "Microsoft.AspNetCore.OpenApi": {
         "type": "Direct",
