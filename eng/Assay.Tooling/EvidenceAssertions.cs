@@ -3,7 +3,7 @@ namespace Assay.Tooling;
 public static class EvidenceAssertions
 {
     private static readonly string[] Required = ["CSAI0001", "CSAI0002", "CSAN0001", "CSAN0002", "CSAN0003", "CSAN0004", "CSAP0001"];
-    private static readonly string[] Catalogue = ["CSAA0001", "CSAA0002", "CSAD0001", "CSAD0002", "CSAE0001", "CSAE0002", "CSAF0001", "CSAF0002", "CSAI0001", "CSAI0002", "CSAI0003", "CSAN0001", "CSAN0002", "CSAN0003", "CSAN0004", "CSAP0001", "CSAU0001", "CSAU0002", "CSAU0004"];
+    private static readonly string[] Catalogue = ["CSAA0001", "CSAA0002", "CSAD0001", "CSAD0002", "CSAE0001", "CSAE0002", "CSAE0003", "CSAE0004", "CSAF0001", "CSAF0002", "CSAI0001", "CSAI0002", "CSAI0003", "CSAN0001", "CSAN0002", "CSAN0003", "CSAN0004", "CSAP0001", "CSAU0001", "CSAU0002", "CSAU0004"];
     private static readonly string[] sourceArray = new[] { "src", "tests" };
 
     public static void Native(JsonNode evidence)

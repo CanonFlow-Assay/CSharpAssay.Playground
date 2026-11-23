@@ -10,8 +10,11 @@ on a core record. Its shell exercises three synchronous task consumption pattern
 The refined matrix uses immutable collections in its core and awaits tasks in
 its shell. The primary evidence gate checks the exact finding counts for both.
 
-When a core-effect rule is available, the ambient-input controls will cover
-`DateTime.UtcNow`, `Guid.NewGuid()`, and `Environment.GetEnvironmentVariable`.
+`CSAE0003` reports the impure core's `DateTime.UtcNow`, `Guid.NewGuid()` and
+`Environment.GetEnvironmentVariable()` calls. `CSAE0004` reports its file,
+console and HTTP calls. The refined shell captures the same inputs and performs
+the I/O. Its core receives explicit data. The gate expects three advisories per
+prototype in the impure matrix and zero in the refined gate.
 
 This lane answers “did the detector fire exactly where expected?” It is not a
 realistic application and must not be used to estimate defect prevalence.

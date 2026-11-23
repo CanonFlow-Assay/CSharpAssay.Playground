@@ -6,7 +6,7 @@
         "type": "Direct",
         "requested": "[0.2.0-rc.1, )",
         "resolved": "0.2.0-rc.1",
-        "contentHash": "4SED3Lf24RH79f4bpw3mRUDq4qpwdtNQ2ZlqmUQOLUCHC2oV5hGNRiXkXkrGyRac7R7JalQtJ1MZSZL6xC5Kew=="
+        "contentHash": "dI6579wL73d3719/GfAmSGiMWZBXcvkfLJPCxIqvzeip9xCJhh5ymtWtJ68oeio7fd582z8MdVeoqfTB3lYNBg=="
       },
       "Microsoft.EntityFrameworkCore.Sqlite": {
         "type": "Direct",

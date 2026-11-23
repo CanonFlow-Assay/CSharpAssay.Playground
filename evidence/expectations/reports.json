@@ -22,7 +22,9 @@
         "CSAP0001": 2
       },
       "advisoryRuleCounts": {
-        "CSAA0002": 3
+        "CSAA0002": 3,
+        "CSAE0003": 3,
+        "CSAE0004": 3
       }
     },
     {
@@ -69,6 +71,8 @@
       "advisoryRuleCounts": {
         "CSAA0002": 0,
         "CSAD0002": 3,
+        "CSAE0003": 0,
+        "CSAE0004": 0,
         "CSAF0002": 3
       }
     }
