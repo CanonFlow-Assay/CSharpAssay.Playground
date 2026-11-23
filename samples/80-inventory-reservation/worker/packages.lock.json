@@ -5,7 +5,7 @@
       "CanonFlow.Assay.Workflow": {
         "type": "Transitive",
         "resolved": "0.1.0-preview.1",
-        "contentHash": "HuKkkGErkOOSmTp+4N29vm7fBu3ZvRuo/fJx3JxmrJiyY/pakp+DpuXK0+PwHtGwiQRv3mW9R9lbNIscaxICFA=="
+        "contentHash": "C11mjfoQLBNYuO0SC4m7VHfkte+VUbuD42NYgAeH0gOAaZfDMpvQwW27iw0ajs6CHn3aodd/rq7aMaDiw8+sZQ=="
       },
       "Microsoft.OpenApi": {
         "type": "Transitive",
