@@ -15,6 +15,7 @@ ExpenseGuard demonstrates the division of responsibility. AI advice is simulated
 | [LinkedIn drafts/carousel](linkedin.md) | Developers and engineering leads; C01/C06 | Same examples; inspect a finding and its limit |
 | [Medium tutorial/comparison outline](medium.md) | Developers trying the supported lane; C01/C05 | Canonical setup plus recorded fixtures |
 | [Community material](community.md) | Relevant technical communities; C02/C05 | Focused question and reproducible source; venue checks pending |
+| [Functional conversion showcase](functional-conversion-showcase.md) | Functional-curious C# developers; bounded conversion path and its limits | A distinct four-channel draft; classic/refined GoF crosswalk plus explicit eShop and preview-toolchain boundaries |
 | [Editorial/podcast packet](outreach.md) | Editors and hosts; C02/C06 | One engineering result and a documented tradeoff |
 | [Claims register](claims.json) | Reviewers | Exact wording, detector, source paths, controls, identities and expiry conditions |
 | [Readiness and rollback](qualification-and-rollout.md) | Maintainers | Qualification matrix, staged schedule, limits and rollback |

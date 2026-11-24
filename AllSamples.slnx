@@ -44,9 +44,15 @@
   <Project Path="samples/100-expenseguard/src/ExpenseGuard.Api/ExpenseGuard.Api.csproj" />
   <Project Path="samples/100-expenseguard/src/ExpenseGuard.Worker/ExpenseGuard.Worker.csproj" />
   <Project Path="samples/100-expenseguard/tests/ExpenseGuard.Tests/ExpenseGuard.Tests.csproj" />
+  <Project Path="samples/110-newtonsoft-functional/NewtonsoftFunctional.csproj" />
   <Project Path="samples/110-saga-assay/src/Saga.Domain/Saga.Domain.csproj" />
   <Project Path="samples/110-saga-assay/src/Saga.Demo/Saga.Demo.csproj" />
   <Project Path="samples/110-saga-assay/tests/Saga.Tests/Saga.Tests.csproj" />
+  <Project Path="samples/120-configuration-firewall/ConfigurationFirewall.csproj" />
+  <Project Path="samples/130-versioned-webhook/VersionedWebhook.csproj" />
+  <Project Path="samples/140-rules-dsl/RulesDsl.csproj" />
+  <Project Path="samples/150-scheduling-decisions/SchedulingDecisions.csproj" />
+  <Project Path="samples/160-source-generated-json/SourceGeneratedJson.csproj" />
   <Project Path="samples/native-parity/Parity.Domain/Parity.Domain.csproj" />
   <Project Path="tests/Parity.Tests/Parity.Tests.csproj" />
 </Solution>

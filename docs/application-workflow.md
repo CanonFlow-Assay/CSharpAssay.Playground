@@ -57,8 +57,8 @@ producer inputs to be committed deliberately; it does not commit user work.
 These generated bootstrap commits identify rebuilt packages, not a new release
 qualification of the original publication commit.
 
-The all-sample gate evaluates all 36 projects, builds the 30 runnable sample
-projects and shared/test projects, including real PostgreSQL/HTTP inventory tests.
+The all-sample gate evaluates all 56 listed projects: 50 sample projects plus
+six shared or test projects, including real PostgreSQL/HTTP inventory tests.
 Rootless Podman starts the default PostgreSQL instance. Missing database evidence
 fails the gate. Six actual invalid MSBuild configurations must fail with their
 corresponding mandate diagnostics.

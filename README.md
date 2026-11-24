@@ -7,6 +7,9 @@ The playground consumes locally packed `CsAssay.Tool` and `CsAssay.Analyzers` `0
 The [application workflow preview](docs/application-workflow.md) adds reusable
 assessment and typed Decision Assist APIs, bounded Mutation/CodeRisk/Contract/
 Resilience checks, a real Polly consumer, and standalone application scaffolding.
+The [portable playground convergence map](docs/portable-playground-convergence.md)
+keeps the C# examples useful as a language-specific reference without claiming
+that every Assay shares their policy or verification authority.
 The [inventory reservation application](samples/80-inventory-reservation/README.md)
 adds a second domain with real HTTP and PostgreSQL, declared worker contracts,
 named acceptance criteria and registered investigations.
@@ -68,7 +71,13 @@ its own domain code. The catalogue also links to the pinned source archives.
 - [`70-polly-resilience`](samples/70-polly-resilience/README.md): pinned original Polly packages, native domain outcomes, 16 controlled executions and six state/concurrency/fallback checks, six mutations and the new-app requirement loop. Bounded consumer qualification, with preview modules and survivors kept visible.
 - [`80-inventory-reservation`](samples/80-inventory-reservation/README.md): immutable native decisions, HTTP hosting, transactional PostgreSQL stock/reservation/outbox writes, concurrency and idempotency tests, a registered requirement change and an actual wire-contract regression investigation.
 - [`100-expenseguard`](samples/100-expenseguard/README.md): native-union expense decisions, receipt/category/FX/duplicate rules, manager/finance approvals, PostgreSQL audit receipts/outbox, authenticated HTTP, offline advisory and simulated payment adapters, an evidence viewer, CSAssay and typed DAA evidence coordination, and controlled business/structural counterexamples. Run `eng/run-expenseguard.sh` for its source-bound qualification.
+- [`110-newtonsoft-functional`](samples/110-newtonsoft-functional/README.md): a clean-room strict feature-flag JSON boundary comparison between a `Newtonsoft.Json.Linq.JObject` adapter and an immutable functional projection, with contract probes and an equality-checked opt-in benchmark.
 - [`110-saga-assay`](samples/110-saga-assay/README.md) walks through a simulated cross-border payout, dispute, reconciliation and refund. Thirteen negative controls show what the compiler, Assay rules and required tests detect. A SQLite exercise recovers a pending refund and retries after a lost acknowledgement.
+- [`120-configuration-firewall`](samples/120-configuration-firewall/README.md): explicit validated service settings from a small key/value boundary, with no silent defaults.
+- [`130-versioned-webhook`](samples/130-versioned-webhook/README.md): pure version/event routing after the shell has established signature and delivery facts.
+- [`140-rules-dsl`](samples/140-rules-dsl/README.md): a small parsed rules language, native-union AST, and explicit eligibility decisions.
+- [`150-scheduling-decisions`](samples/150-scheduling-decisions/README.md): reproducible decisions for valid, skipped, and ambiguous local times around the time-zone boundary.
+- [`160-source-generated-json`](samples/160-source-generated-json/README.md): strict feature-flag gate followed by source-generated `System.Text.Json` projection.
 - [`native-parity`](cross-playground/README.md) adds native C# counterparts for the F# enterprise, functional patterns, wallet, and offline mutation-advice scenarios.
 - `20-eshop-agent-assay`: historical external .NET 10 case study, excluded from the current gate. The separate eShop repository is outside this migration.
 
@@ -112,3 +121,10 @@ that remains open.
 ## Understand, change, verify
 
 The static [Playground explorer](docs/index.html) now distinguishes current native development from historical public packages. It displays digest-bound recorded rule variants and six ExpenseGuard scenarios; edits are Unverified, never browser-verified. A read-only guide extends the existing ExpenseGuard workbench. The local [distribution pack](docs/distribution/README.md) contains drafts, claims, controls and reproduction instructions; nothing is deployed or posted by preparing it.
+
+## Estate evidence
+
+Use `./eng/run-all-samples.sh` after package preparation for the authored
+sample suite. Keep the prepared local packages bound to the declared engine
+and checked-in locks. The independent `eng/run-assay.sh` lane retains the
+refined verifier receipt and the two expected negative controls.
