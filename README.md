@@ -112,3 +112,10 @@ that remains open.
 ## Understand, change, verify
 
 The static [Playground explorer](docs/index.html) now distinguishes current native development from historical public packages. It displays digest-bound recorded rule variants and six ExpenseGuard scenarios; edits are Unverified, never browser-verified. A read-only guide extends the existing ExpenseGuard workbench. The local [distribution pack](docs/distribution/README.md) contains drafts, claims, controls and reproduction instructions; nothing is deployed or posted by preparing it.
+
+## Estate evidence
+
+Use `./eng/run-all-samples.sh` after package preparation for the authored
+sample suite. Keep the prepared local packages bound to the declared engine
+and checked-in locks. The independent `eng/run-assay.sh` lane retains the
+refined verifier receipt and the two expected negative controls.
